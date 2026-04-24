@@ -1,73 +1,59 @@
-import Database from "better-sqlite3";
+import { execSync } from "node:child_process";
 import pg from "pg";
+import { readFileSync } from "node:fs";
 
 const SQLITE_PATH = "./cet6_cloudflare_deploy_db/db/cet6_importable.sqlite";
 const PG_URL = process.env.DATABASE_URL;
 
 if (!PG_URL) {
   console.error("❌ 请设置 DATABASE_URL 环境变量（Neon 连接字符串）");
-  console.error("   例如：");
   console.error('   $env:DATABASE_URL="postgresql://neondb_owner:xxxx@ep-xxx.neon.tech/neondb?sslmode=require"');
   console.error("   node scripts/migrate-sqlite-to-neon.mjs");
   process.exit(1);
 }
 
-async function main() {
-  const sqlite = new Database(SQLITE_PATH, { readonly: true });
-  const pool = new pg.Pool({ connectionString: PG_URL });
+function sqliteQuery(sql) {
+  const result = execSync(`sqlite3 "${SQLITE_PATH}" -json "${sql}"`, { encoding: "utf8" });
+  return result.trim() ? JSON.parse(result) : [];
+}
 
+async function main() {
+  const pool = new pg.Pool({ connectionString: PG_URL });
   console.log("✅ 连接成功！开始迁移...\n");
 
   const tables = [
     {
       name: "papers",
-      columns: [
-        "paper_id", "year", "month", "set_no", "original_pdf",
-        "answer_pdf", "answer_docx", "answer_pair_status",
-        "original_page_count", "answer_text_coverage", "notes",
-        "writing_prompt", "translation_prompt",
-      ],
+      columns: ["paper_id","year","month","set_no","original_pdf","answer_pdf","answer_docx","answer_pair_status","original_page_count","answer_text_coverage","notes","writing_prompt","translation_prompt"],
     },
     {
       name: "answer_resources",
-      columns: [
-        "answer_id", "year", "month", "set_part", "answer_pdf",
-        "answer_docx", "source_format", "text_coverage",
-        "parsed_question_count", "answer_key_count", "linked_papers",
-      ],
+      columns: ["answer_id","year","month","set_part","answer_pdf","answer_docx","source_format","text_coverage","parsed_question_count","answer_key_count","linked_papers"],
     },
     {
       name: "paper_answer_links",
-      columns: ["paper_id", "answer_id", "link_type"],
+      columns: ["paper_id","answer_id","link_type"],
     },
     {
       name: "question_shells",
-      columns: [
-        "paper_id", "question_no", "section_code", "question_type",
-        "stem", "option_a", "option_b", "option_c", "option_d",
-        "answer_key", "answer_status", "source_updated_from",
-      ],
+      columns: ["paper_id","question_no","section_code","question_type","stem","option_a","option_b","option_c","option_d","answer_key","answer_status","source_updated_from"],
     },
     {
       name: "section_texts",
-      columns: ["paper_id", "section_code", "source_type", "text"],
+      columns: ["paper_id","section_code","source_type","text"],
     },
     {
       name: "answer_question_details",
-      columns: [
-        "paper_id", "answer_id", "question_no", "answer_key",
-        "source_type", "explanation_text", "raw_block",
-        "provenance", "confidence", "review_status",
-      ],
+      columns: ["paper_id","answer_id","question_no","answer_key","source_type","explanation_text","raw_block","provenance","confidence","review_status"],
     },
     {
       name: "word_bank_items",
-      columns: ["paper_id", "section_code", "letter", "word"],
+      columns: ["paper_id","section_code","letter","word"],
     },
   ];
 
   for (const table of tables) {
-    const rows = sqlite.prepare(`SELECT * FROM ${table.name}`).all();
+    const rows = sqliteQuery(`SELECT * FROM ${table.name}`);
     if (rows.length === 0) {
       console.log(`⏭️  ${table.name}: 0 行，跳过`);
       continue;
@@ -98,7 +84,6 @@ async function main() {
   }
 
   await pool.end();
-  sqlite.close();
   console.log("\n🎉 迁移完成！");
 }
 
