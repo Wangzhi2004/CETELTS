@@ -1,0 +1,2210 @@
+{
+  "package": "cet6_importable_package_final_v3",
+  "papers": 18,
+  "total_questions": 990,
+  "answered_questions": 692,
+  "coverage_by_paper": [
+    {
+      "paper_id": "cet6_2023_06_1",
+      "total_questions": 55,
+      "answered_questions": 55,
+      "answer_coverage_pct": 100.0
+    },
+    {
+      "paper_id": "cet6_2023_06_2",
+      "total_questions": 55,
+      "answered_questions": 52,
+      "answer_coverage_pct": 94.5
+    },
+    {
+      "paper_id": "cet6_2023_06_3",
+      "total_questions": 55,
+      "answered_questions": 29,
+      "answer_coverage_pct": 52.7
+    },
+    {
+      "paper_id": "cet6_2023_12_1",
+      "total_questions": 55,
+      "answered_questions": 45,
+      "answer_coverage_pct": 81.8
+    },
+    {
+      "paper_id": "cet6_2023_12_2",
+      "total_questions": 55,
+      "answered_questions": 23,
+      "answer_coverage_pct": 41.8
+    },
+    {
+      "paper_id": "cet6_2023_12_3",
+      "total_questions": 55,
+      "answered_questions": 22,
+      "answer_coverage_pct": 40.0
+    },
+    {
+      "paper_id": "cet6_2024_06_1",
+      "total_questions": 55,
+      "answered_questions": 40,
+      "answer_coverage_pct": 72.7
+    },
+    {
+      "paper_id": "cet6_2024_06_2",
+      "total_questions": 55,
+      "answered_questions": 23,
+      "answer_coverage_pct": 41.8
+    },
+    {
+      "paper_id": "cet6_2024_06_3",
+      "total_questions": 55,
+      "answered_questions": 22,
+      "answer_coverage_pct": 40.0
+    },
+    {
+      "paper_id": "cet6_2024_12_1",
+      "total_questions": 55,
+      "answered_questions": 54,
+      "answer_coverage_pct": 98.2
+    },
+    {
+      "paper_id": "cet6_2024_12_2",
+      "total_questions": 55,
+      "answered_questions": 54,
+      "answer_coverage_pct": 98.2
+    },
+    {
+      "paper_id": "cet6_2024_12_3",
+      "total_questions": 55,
+      "answered_questions": 54,
+      "answer_coverage_pct": 98.2
+    },
+    {
+      "paper_id": "cet6_2025_06_1",
+      "total_questions": 55,
+      "answered_questions": 44,
+      "answer_coverage_pct": 80.0
+    },
+    {
+      "paper_id": "cet6_2025_06_2",
+      "total_questions": 55,
+      "answered_questions": 49,
+      "answer_coverage_pct": 89.1
+    },
+    {
+      "paper_id": "cet6_2025_06_3",
+      "total_questions": 55,
+      "answered_questions": 38,
+      "answer_coverage_pct": 69.1
+    },
+    {
+      "paper_id": "cet6_2025_12_1",
+      "total_questions": 55,
+      "answered_questions": 21,
+      "answer_coverage_pct": 38.2
+    },
+    {
+      "paper_id": "cet6_2025_12_2",
+      "total_questions": 55,
+      "answered_questions": 47,
+      "answer_coverage_pct": 85.5
+    },
+    {
+      "paper_id": "cet6_2025_12_3",
+      "total_questions": 55,
+      "answered_questions": 20,
+      "answer_coverage_pct": 36.4
+    }
+  ],
+  "unanswered_by_paper": {
+    "cet6_2023_06_1": [],
+    "cet6_2023_06_2": [
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 51,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2023_06_3": [
+      {
+        "question_no": 1,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 2,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 3,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 5,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 8,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 9,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 10,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 11,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 12,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 16,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 17,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 18,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 19,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 20,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 21,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 22,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 25,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 54,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2023_12_1": [
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 8,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 16,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2023_12_2": [
+      {
+        "question_no": 10,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 11,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 17,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 20,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 26,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 27,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 28,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 29,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 30,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 31,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 32,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 33,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 34,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 35,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 36,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 37,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 38,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 39,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 40,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 41,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 42,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 43,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 44,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 45,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 53,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2023_12_3": [
+      {
+        "question_no": 1,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 2,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 3,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 5,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 8,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 9,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 10,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 11,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 12,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 16,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 17,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 18,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 19,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 20,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 21,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 22,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 25,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 26,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 27,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 28,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 29,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 30,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 31,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 32,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 33,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 34,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 35,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 36,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 37,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 38,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 39,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 40,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 41,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 42,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 43,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 44,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 45,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 48,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 53,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2024_06_1": [
+      {
+        "question_no": 3,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 27,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 48,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 52,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 53,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2024_06_2": [
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 8,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 12,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 16,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 18,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 26,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 27,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 28,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 29,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 30,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 31,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 32,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 33,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 34,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 35,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 36,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 37,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 38,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 39,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 40,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 41,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 42,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 43,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 44,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 45,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 48,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2024_06_3": [
+      {
+        "question_no": 1,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 2,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 3,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 5,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 8,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 9,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 10,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 11,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 12,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 16,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 17,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 18,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 19,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 20,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 21,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 22,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 25,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 26,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 27,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 28,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 29,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 30,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 31,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 32,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 33,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 34,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 35,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 36,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 37,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 38,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 39,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 40,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 41,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 42,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 43,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 44,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 45,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 48,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2024_12_1": [
+      {
+        "question_no": 25,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      }
+    ],
+    "cet6_2024_12_2": [
+      {
+        "question_no": 1,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      }
+    ],
+    "cet6_2024_12_3": [
+      {
+        "question_no": 1,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 2,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 3,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 5,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 8,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 9,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 10,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 11,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 12,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 16,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 17,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 18,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 19,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 20,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 21,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 22,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 25,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      }
+    ],
+    "cet6_2025_06_1": [
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 17,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 20,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 28,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 33,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 35,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 48,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2025_06_2": [
+      {
+        "question_no": 32,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 34,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 35,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2025_06_3": [
+      {
+        "question_no": 1,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 2,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 3,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 5,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 8,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 9,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 10,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 11,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 12,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 16,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 17,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 18,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 19,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 20,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 21,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 22,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 25,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 28,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 33,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 36,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 37,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 38,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 39,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 40,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 41,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 42,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 43,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 44,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 45,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2025_12_1": [
+      {
+        "question_no": 1,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 2,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 22,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 25,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 26,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 27,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 28,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 29,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 30,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 31,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 32,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 33,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 34,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 35,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 36,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 37,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 38,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 39,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 40,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 41,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 42,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 43,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 44,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 45,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 54,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 55,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2025_12_2": [
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 12,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 48,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 49,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 52,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ],
+    "cet6_2025_12_3": [
+      {
+        "question_no": 1,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 2,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 3,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 4,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 5,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 6,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 7,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 8,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 9,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 10,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 11,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 12,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 13,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 14,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 15,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 16,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 17,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 18,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 19,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 20,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 21,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 22,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 23,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 24,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 25,
+        "section_code": "listening",
+        "question_type": "listening_mcq"
+      },
+      {
+        "question_no": 26,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 27,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 28,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 29,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 30,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 31,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 32,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 33,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 34,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 35,
+        "section_code": "reading_a",
+        "question_type": "cloze_blank"
+      },
+      {
+        "question_no": 36,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 37,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 38,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 39,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 40,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 41,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 42,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 43,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 44,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 45,
+        "section_code": "reading_b",
+        "question_type": "matching"
+      },
+      {
+        "question_no": 46,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 47,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 48,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 50,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 51,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 52,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      },
+      {
+        "question_no": 54,
+        "section_code": "reading_c",
+        "question_type": "reading_mcq"
+      }
+    ]
+  },
+  "provenance_breakdown": [
+    {
+      "provenance": null,
+      "cnt": 125
+    },
+    {
+      "provenance": "public_answer_key_compiled",
+      "cnt": 109
+    },
+    {
+      "provenance": "official_docx:cet6_2024_12_2_ans.docx",
+      "cnt": 52
+    },
+    {
+      "provenance": "official_docx:cet6_2025_06_2_ans.docx",
+      "cnt": 49
+    },
+    {
+      "provenance": "official_docx:cet6_2023_06_2_ans.docx",
+      "cnt": 49
+    },
+    {
+      "provenance": "official_docx:cet6_2024_12_3_ans.docx",
+      "cnt": 30
+    },
+    {
+      "provenance": "official_docx:cet6_2023_06_3_ans.docx",
+      "cnt": 29
+    },
+    {
+      "provenance": "official_docx:cet6_2025_12_2_ans.docx",
+      "cnt": 27
+    },
+    {
+      "provenance": "official_docx:cet6_2025_06_1_ans.docx",
+      "cnt": 26
+    },
+    {
+      "provenance": "official_docx:cet6_2023_12_1_ans.docx",
+      "cnt": 24
+    },
+    {
+      "provenance": "official_docx:cet6_2024_06_2_ans.docx",
+      "cnt": 23
+    },
+    {
+      "provenance": "official_docx:cet6_2023_12_2_ans.docx",
+      "cnt": 23
+    },
+    {
+      "provenance": "official_docx:cet6_2025_12_1_ans.docx",
+      "cnt": 21
+    },
+    {
+      "provenance": "official_docx:cet6_2024_06_1_ans.docx",
+      "cnt": 18
+    },
+    {
+      "provenance": "official_docx:cet6_2025_06_3_ans.docx",
+      "cnt": 17
+    },
+    {
+      "provenance": "official_docx:cet6_2024_06_3_ans.docx",
+      "cnt": 5
+    },
+    {
+      "provenance": "official_docx:cet6_2023_12_3_ans.docx",
+      "cnt": 4
+    },
+    {
+      "provenance": "official_docx:cet6_2025_12_3_ans.docx",
+      "cnt": 3
+    }
+  ],
+  "same_listening_mapped_count": 0,
+  "notes": [
+    "已合并现有数据库、DOCX 自动抽取、部分公开答案键补录、第三套同听力顺序映射。",
+    "2023-06-1 使用公开答案键补录；2024-12-1 仅补到已可靠取得的答案键，Q25 仍缺。",
+    "仍有少量题目未能在当前环境下可靠抽取或复核，详见 unanswered_by_paper。",
+    "对官方明确说明“第三套听力与第一/第二套相同”的套卷，数据库已用来源套卷的听力题干/选项/答案生成教学代理表示。"
+  ],
+  "surrogate_shared_listening_copied": 97
+}

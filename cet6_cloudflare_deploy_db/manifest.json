@@ -1,0 +1,20 @@
+{
+  "database": "/mnt/data/cet6_cloudflare_deploy_db/db/cet6_importable.sqlite",
+  "source": "/mnt/data/cet6_importable_package_final_v3/db/cet6_importable.sqlite",
+  "sha256": "13bca67f31608040a8f44ea16db22d53d963d9c7d4c7c8d1ed4b6659970ccd49",
+  "table_counts": {
+    "answer_question_details": 731,
+    "answer_resources": 19,
+    "paper_answer_links": 19,
+    "papers": 18,
+    "question_shells": 990,
+    "section_texts": 62,
+    "sqlite_sequence": 4,
+    "word_bank_items": 45
+  },
+  "coverage": {
+    "total_questions": 990,
+    "answered_questions": 692,
+    "answer_coverage_pct": 69.9
+  }
+}

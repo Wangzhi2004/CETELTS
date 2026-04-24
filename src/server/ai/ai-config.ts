@@ -66,7 +66,11 @@ export async function loadAiProviderSettings() {
 
 export async function saveAiProviderSettings(settings: Partial<AiProviderSettings>) {
   const normalized = normalizeAiProviderSettings(settings);
-  await mkdir(path.dirname(SETTINGS_FILE), { recursive: true });
-  await writeFile(SETTINGS_FILE, JSON.stringify(normalized, null, 2), "utf8");
+  try {
+    await mkdir(path.dirname(SETTINGS_FILE), { recursive: true });
+    await writeFile(SETTINGS_FILE, JSON.stringify(normalized, null, 2), "utf8");
+  } catch {
+    // Workers environment may not support fs; settings persist via env vars only
+  }
   return normalized;
 }

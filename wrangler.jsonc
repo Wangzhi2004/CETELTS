@@ -7,5 +7,8 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
+  },
+  "vars": {
+    "NEXT_TELEMETRY_DISABLED": "1"
   }
 }

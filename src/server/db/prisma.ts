@@ -5,12 +5,15 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-const connectionString =
-  process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/cetelts";
+function createPrismaClient() {
+  const connectionString =
+    process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/cetelts";
 
-const adapter = new PrismaPg({ connectionString });
+  const adapter = new PrismaPg({ connectionString });
+  return new PrismaClient({ adapter });
+}
 
-export const prisma = globalThis.prisma || new PrismaClient({ adapter });
+export const prisma = globalThis.prisma || createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
   globalThis.prisma = prisma;
