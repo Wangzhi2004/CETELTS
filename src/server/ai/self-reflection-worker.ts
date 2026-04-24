@@ -21,7 +21,7 @@ export async function runSelfReflectionPolicyUpdate() {
     }
 
     // 2. Pure Algorithm Execution (Decoupled from DB)
-    const logsData = recentLogs.map((l: { weights: unknown; propensityScore: number; reward: number | null }) => ({
+    const logsData = recentLogs.map((l) => ({
       weights: l.weights as Record<string, number>,
       propensityScore: l.propensityScore,
       reward: l.reward ?? 0
@@ -33,8 +33,7 @@ export async function runSelfReflectionPolicyUpdate() {
     console.log(`[Self-Reflection] Gradients computed:`, opeResult.gradients);
 
     // 3. Batch Transaction for System Updates
-    await prisma.$transaction(async (tx: { oPEReport: { create: (args: unknown) => Promise<unknown> }; userState: { findMany: (args: unknown) => Promise<Array<{ id: string; customWeights: unknown }>>; update: (args: unknown) => Promise<unknown> } }) => {
-      // Record the analytical report
+    await prisma.$transaction(async (tx) => {
       await tx.oPEReport.create({
         data: {
           policyVersion: recentLogs[0].policyVersion || "v1",
@@ -48,13 +47,12 @@ export async function runSelfReflectionPolicyUpdate() {
         }
       });
 
-      // Update all active user states
       const usersToUpdate = await tx.userState.findMany({
         where: { targetExam: "cet6" },
         select: { id: true, customWeights: true }
       });
 
-      const updatePromises = usersToUpdate.map((state: { id: string; customWeights: unknown }) => {
+      const updatePromises = usersToUpdate.map((state) => {
         const currentWeights = (state.customWeights as Record<string, number>) ?? {
           examWeight: 0.2, weaknessSeverity: 0.17, recurrence: 0.12,
           forgettingRisk: 0.12, transferGain: 0.09, deadlinePressure: 0.08,

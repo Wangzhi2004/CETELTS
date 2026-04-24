@@ -56,7 +56,6 @@ describe("score center runtime helpers", () => {
         cardId: "card-score-task-reading-1",
         taskId: "task-reading-1",
         cardType: "score_boost",
-        taskId: "task-reading-1",
         title: "Reading drill",
         whyThisNow: "High utility",
         estimatedTime: 20,
