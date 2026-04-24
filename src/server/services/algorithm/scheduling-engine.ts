@@ -6,6 +6,18 @@ import {
 } from "@/server/services/score-center-runtime";
 import type { DailyTask, ExamType, Goal, ReviewQueueEntry } from "@/types/domain";
 
+type SkillSignal = {
+  skillNode: string;
+  mastery: number;
+  confidence: number;
+  decayRisk: number;
+  speedDeficit: number;
+  recurrence: number;
+  transferGain: number;
+  stressDrop: number;
+  evidenceCount: number;
+};
+
 export async function generateDailyTaskStack(
   userId: string,
   examType: ExamType,
@@ -56,7 +68,7 @@ export async function generateDailyTaskStack(
           ? "sprint"
           : "intensive",
   };
-  const reviewQueue: ReviewQueueEntry[] = reviewQueueRecords.map((entry) => ({
+  const reviewQueue: ReviewQueueEntry[] = reviewQueueRecords.map((entry: { entityType: string; entityId: string; reason: string; priority: number; nextReviewAt: Date }) => ({
     entityType: entry.entityType as ReviewQueueEntry["entityType"],
     entityId: entry.entityId,
     reason: entry.reason as ReviewQueueEntry["reason"],
@@ -65,7 +77,7 @@ export async function generateDailyTaskStack(
     intervalDays: 1,
   }));
   const mistakeLogs = mapDiagnosticRecordsToMistakeLogs(
-    recentDiagnostics.map((diagnostic) => ({
+    recentDiagnostics.map((diagnostic: { diagnosticId: string; userId: string; primaryError: string; evidence: unknown }) => ({
       id: diagnostic.diagnosticId,
       userId: diagnostic.userId,
       primaryError: diagnostic.primaryError,
@@ -75,7 +87,7 @@ export async function generateDailyTaskStack(
   const state = createScoreCenterState({
     exam: examType,
     goal,
-    tasks: candidateTasks.map((task) => ({
+    tasks: candidateTasks.map((task: { [key: string]: unknown; scheduledAt: Date }) => ({
       ...task,
       examType,
       scheduledAt: task.scheduledAt.toISOString(),
@@ -84,7 +96,7 @@ export async function generateDailyTaskStack(
     mistakeLogs,
     totalMinutes: userState.dailyBudgetMinutes,
     energy: userState.mode === "light" ? "low" : "normal",
-    skillStates: skillStates.map((skillState) => ({
+    skillStates: skillStates.map((skillState: { skillNode: string; mastery: number; confidence: number; decayRisk: number; speedDeficit: number; recurrence: number; transferGain: number; stressDrop: number; evidenceCount: number }): SkillSignal => ({
       skillNode: skillState.skillNode,
       mastery: skillState.mastery,
       confidence: skillState.confidence,

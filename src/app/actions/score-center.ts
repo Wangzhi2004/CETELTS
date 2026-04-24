@@ -40,6 +40,33 @@ import type {
   TaskType,
 } from "@/types/domain";
 
+type DiagnosticRecordRow = {
+  diagnosticId: string;
+  userId: string;
+  primaryError: string;
+  evidence: unknown;
+};
+
+type ReviewQueueRow = {
+  entityType: string;
+  entityId: string;
+  reason: string;
+  priority: number;
+  nextReviewAt: Date;
+};
+
+type SkillSignal = {
+  skillNode: string;
+  mastery: number;
+  confidence: number;
+  decayRisk: number;
+  speedDeficit: number;
+  recurrence: number;
+  transferGain: number;
+  stressDrop: number;
+  evidenceCount: number;
+};
+
 const DEFAULT_USER_ID = "user-alex";
 const fallbackStates = new Map<string, ScoreCenterState>();
 
@@ -272,7 +299,7 @@ async function getBaseScoreCenterInputs(userId: string, examType: ExamType) {
   });
 
   const mistakeLogs = mapDiagnosticRecordsToMistakeLogs(
-    diagnostics.map((diagnostic: { diagnosticId: string; userId: string; primaryError: string; evidence: unknown }) => ({
+    diagnostics.map((diagnostic: DiagnosticRecordRow) => ({
       id: diagnostic.diagnosticId,
       userId: diagnostic.userId,
       primaryError: diagnostic.primaryError,
@@ -280,7 +307,7 @@ async function getBaseScoreCenterInputs(userId: string, examType: ExamType) {
     })),
   );
 
-  const reviewQueue: ReviewQueueEntry[] = reviewQueueRecords.map((entry: { entityType: string; entityId: string; reason: string; priority: number; nextReviewAt: Date }) => ({
+  const reviewQueue: ReviewQueueEntry[] = reviewQueueRecords.map((entry: ReviewQueueRow) => ({
     entityType: entry.entityType as ReviewQueueEntry["entityType"],
     entityId: entry.entityId,
     reason: entry.reason as ReviewQueueEntry["reason"],
@@ -293,7 +320,7 @@ async function getBaseScoreCenterInputs(userId: string, examType: ExamType) {
     sessionId: getTodaySessionId(examType),
     userState,
     goal: toGoal(userId, userState),
-    tasks: tasks.map((task) => ({
+    tasks: tasks.map((task: { [key: string]: unknown; scheduledAt: Date }) => ({
       ...task,
       examType,
       scheduledAt: task.scheduledAt.toISOString(),
@@ -351,7 +378,7 @@ async function buildOrLoadScoreCenterState(userId: string, examType: ExamType) {
       tasks: base.tasks,
       reviewQueue: base.reviewQueue,
       mistakeLogs: base.mistakeLogs,
-      skillStates: base.skillStates.map((skillState) => ({
+      skillStates: base.skillStates.map((skillState: { skillNode: string; mastery: number; confidence: number; decayRisk: number; speedDeficit: number; recurrence: number; transferGain: number; stressDrop: number; evidenceCount: number }): SkillSignal => ({
         skillNode: skillState.skillNode,
         mastery: skillState.mastery,
         confidence: skillState.confidence,
@@ -417,7 +444,7 @@ async function buildOrLoadScoreCenterState(userId: string, examType: ExamType) {
     tasks: base.tasks,
     reviewQueue: base.reviewQueue,
     mistakeLogs: base.mistakeLogs,
-    skillStates: base.skillStates.map((skillState) => ({
+    skillStates: base.skillStates.map((skillState: { skillNode: string; mastery: number; confidence: number; decayRisk: number; speedDeficit: number; recurrence: number; transferGain: number; stressDrop: number; evidenceCount: number }): SkillSignal => ({
       skillNode: skillState.skillNode,
       mastery: skillState.mastery,
       confidence: skillState.confidence,
@@ -865,7 +892,7 @@ export async function getMistakeBookData(userId: string = DEFAULT_USER_ID) {
   }
 
   return mapDiagnosticRecordsToMistakeLogs(
-    diagnostics.map((diagnostic) => ({
+    diagnostics.map((diagnostic: DiagnosticRecordRow) => ({
       id: diagnostic.diagnosticId,
       userId: diagnostic.userId,
       primaryError: diagnostic.primaryError,
