@@ -1,0 +1,462 @@
+import {
+  DailyTask,
+  EssayFeedback,
+  EssayPrompt,
+  ExamPaper,
+  ListeningLesson,
+  MockExamSummary,
+  Passage,
+  Question,
+  Section,
+  StudyReportSnapshot,
+  User,
+  VocabItem,
+} from "@/types/domain";
+
+export const mockUser: User = {
+  id: "user-alex",
+  name: "Alex",
+  role: "student",
+  timezone: "Asia/Shanghai",
+  preferredExam: "cet6",
+};
+
+export const mockTasks: DailyTask[] = [
+  {
+    id: "task-reading",
+    title: "阅读理解精练",
+    subtitle: "真题 2019-12 第 2 套",
+    examType: "cet6",
+    taskType: "reading",
+    status: "in_progress",
+    estimatedMinutes: 45,
+    scheduledAt: "2026-04-22T08:00:00+08:00",
+    priority: 100,
+    sourceEntityType: "section",
+    sourceEntityId: "section-reading-2019-12-a",
+  },
+  {
+    id: "task-listening",
+    title: "听力精听",
+    subtitle: "真题 2020-06 第 1 套",
+    examType: "cet6",
+    taskType: "listening",
+    status: "todo",
+    estimatedMinutes: 30,
+    scheduledAt: "2026-04-22T09:30:00+08:00",
+    priority: 90,
+    sourceEntityType: "section",
+    sourceEntityId: "section-listening-2020-06-a",
+  },
+  {
+    id: "task-vocab",
+    title: "词汇复习",
+    subtitle: "高频错词 16 个",
+    examType: "cet6",
+    taskType: "vocab",
+    status: "todo",
+    estimatedMinutes: 20,
+    scheduledAt: "2026-04-22T11:00:00+08:00",
+    priority: 84,
+    sourceEntityType: "review_queue",
+    sourceEntityId: "review-batch-a",
+  },
+  {
+    id: "task-writing",
+    title: "写作训练",
+    subtitle: "互联网议论文",
+    examType: "cet6",
+    taskType: "writing",
+    status: "todo",
+    estimatedMinutes: 40,
+    scheduledAt: "2026-04-22T15:00:00+08:00",
+    priority: 80,
+    sourceEntityType: "essay_prompt",
+    sourceEntityId: "essay-cet6-1",
+  },
+  {
+    id: "task-reading-ielts",
+    title: "IELTS 阅读精练",
+    subtitle: "Academic Passage 2",
+    examType: "ielts",
+    taskType: "reading",
+    status: "in_progress",
+    estimatedMinutes: 50,
+    scheduledAt: "2026-04-22T08:00:00+08:00",
+    priority: 100,
+    sourceEntityType: "section",
+    sourceEntityId: "section-reading-2019-12-a",
+  },
+  {
+    id: "task-listening-ielts",
+    title: "IELTS 听力定位",
+    subtitle: "Section 1 错句回放",
+    examType: "ielts",
+    taskType: "listening",
+    status: "todo",
+    estimatedMinutes: 35,
+    scheduledAt: "2026-04-22T09:30:00+08:00",
+    priority: 90,
+    sourceEntityType: "section",
+    sourceEntityId: "section-listening-2020-06-a",
+  },
+  {
+    id: "task-writing-ielts",
+    title: "IELTS Task 2",
+    subtitle: "政府投资类议论文",
+    examType: "ielts",
+    taskType: "writing",
+    status: "todo",
+    estimatedMinutes: 45,
+    scheduledAt: "2026-04-22T14:00:00+08:00",
+    priority: 86,
+    sourceEntityType: "essay_prompt",
+    sourceEntityId: "essay-ielts-task2-1",
+  },
+  {
+    id: "task-mock-ielts",
+    title: "IELTS 模考",
+    subtitle: "Academic Mock A",
+    examType: "ielts",
+    taskType: "mock",
+    status: "todo",
+    estimatedMinutes: 180,
+    scheduledAt: "2026-04-23T09:00:00+08:00",
+    priority: 72,
+    sourceEntityType: "paper",
+    sourceEntityId: "paper-2024-ielts-01",
+  },
+];
+
+export const mockDashboardStats = {
+  streakDays: 7,
+  remainingDays: 128,
+  accuracy: 0.68,
+  todayMinutes: 155,
+  completedQuestions: 45,
+  masteredWords: 1245,
+  weekHours: [2.4, 1.8, 2.7, 4, 3.1, 1.2, 2.4],
+  moduleScores: [
+    { label: "阅读理解", value: 72 },
+    { label: "听力理解", value: 63 },
+    { label: "写作表达", value: 65 },
+    { label: "翻译能力", value: 58 },
+  ],
+};
+
+export const readingPaper: ExamPaper = {
+  id: "paper-2019-12-set2",
+  examType: "cet6",
+  year: 2019,
+  month: 12,
+  session: "第 2 套",
+  title: "2019 年 12 月 CET-6 第 2 套",
+  status: "published",
+  sourceDocumentId: "doc-2019-12-paper",
+};
+
+export const readingSection: Section = {
+  id: "section-reading-2019-12-a",
+  paperId: readingPaper.id,
+  title: "仔细阅读 Section A",
+  sectionType: "reading",
+  order: 1,
+  instructions: "先完成自我判断，再查看系统反馈。",
+};
+
+export const readingPassage: Passage = {
+  id: "passage-rivers",
+  sectionId: readingSection.id,
+  title: "Passage 1",
+  order: 1,
+  content:
+    "Rivers make life possible for communities and people around the world. They are a pervasive part of the landscape, providing water for drinking, irrigation, and industrial use. They also serve as transportation routes and support a wide range of ecosystems.\n\nDespite their importance, rivers are facing serious threats. Pollution from industries, agriculture, and households has degraded water quality in many places. Dams and water diversion projects have altered the natural flow of rivers, affecting both the environment and the people who depend on them.\n\nRestoring and protecting rivers requires collective efforts. Effective management, stronger regulations, and public awareness are essential to ensure that rivers continue to sustain life and support development.",
+  outline: [
+    "段落 1：河流的重要性与普遍存在。",
+    "段落 2：污染与人为改造带来的威胁。",
+    "段落 3：保护河流需要系统治理。",
+  ],
+};
+
+export const readingQuestions: Question[] = [
+  {
+    id: "q-1",
+    sectionId: readingSection.id,
+    passageId: readingPassage.id,
+    number: 1,
+    questionType: "single_choice",
+    stem: "What does the author say about the underlined word “pervasive” in paragraph 1?",
+    difficulty: "medium",
+    tags: ["vocab", "detail"],
+    correctAnswer: "A",
+    choices: [
+      { id: "q1-a", questionId: "q-1", label: "A", content: "It is widespread.", order: 1 },
+      { id: "q1-b", questionId: "q-1", label: "B", content: "It is increasingly popular.", order: 2 },
+      { id: "q1-c", questionId: "q-1", label: "C", content: "It causes many problems.", order: 3 },
+      { id: "q1-d", questionId: "q-1", label: "D", content: "It is difficult to control.", order: 4 },
+    ],
+    explanation: {
+      id: "exp-q1",
+      questionId: "q-1",
+      source: "original",
+      content: "pervasive 指普遍存在、无处不在，应选 A。",
+      evidenceSpans: ["They are a pervasive part of the landscape"],
+      mistakeTemplateIds: ["词汇不认识"],
+    },
+  },
+  {
+    id: "q-2",
+    sectionId: readingSection.id,
+    passageId: readingPassage.id,
+    number: 2,
+    questionType: "single_choice",
+    stem: "Which factor is NOT mentioned as a threat to rivers?",
+    difficulty: "medium",
+    tags: ["detail", "定位"],
+    correctAnswer: "D",
+    choices: [
+      { id: "q2-a", questionId: "q-2", label: "A", content: "Industrial pollution", order: 1 },
+      { id: "q2-b", questionId: "q-2", label: "B", content: "Agricultural waste", order: 2 },
+      { id: "q2-c", questionId: "q-2", label: "C", content: "Water diversion", order: 3 },
+      { id: "q2-d", questionId: "q-2", label: "D", content: "Climate migration", order: 4 },
+    ],
+    explanation: {
+      id: "exp-q2",
+      questionId: "q-2",
+      source: "original",
+      content: "原文只提到污染、筑坝、调水，没有提 climate migration，应选 D。",
+      evidenceSpans: ["Pollution...", "Dams and water diversion projects..."],
+      mistakeTemplateIds: ["定位错误", "干扰项误选"],
+    },
+  },
+  {
+    id: "q-3",
+    sectionId: readingSection.id,
+    passageId: readingPassage.id,
+    number: 3,
+    questionType: "single_choice",
+    stem: "What is the main idea of the final paragraph?",
+    difficulty: "hard",
+    tags: ["main_idea", "sentence"],
+    correctAnswer: "A",
+    choices: [
+      { id: "q3-a", questionId: "q-3", label: "A", content: "Protecting rivers requires collective action.", order: 1 },
+      { id: "q3-b", questionId: "q-3", label: "B", content: "Public awareness is enough to solve the issue.", order: 2 },
+      { id: "q3-c", questionId: "q-3", label: "C", content: "Economic growth should come before conservation.", order: 3 },
+      { id: "q3-d", questionId: "q-3", label: "D", content: "Industrial use of rivers must be prohibited.", order: 4 },
+    ],
+    explanation: {
+      id: "exp-q3",
+      questionId: "q-3",
+      source: "original",
+      content: "末段主旨是“集体治理”，不是只靠某一个单点措施。",
+      evidenceSpans: ["requires collective efforts", "Effective management..."],
+      mistakeTemplateIds: ["主旨误判", "长难句没读懂"],
+    },
+  },
+];
+
+export const listeningLesson: ListeningLesson = {
+  paper: {
+    id: "paper-2020-06-set1",
+    examType: "cet6",
+    year: 2020,
+    month: 6,
+    session: "第 1 套",
+    title: "2020 年 6 月 CET-6 第 1 套",
+    status: "published",
+    sourceDocumentId: "doc-2020-06-paper",
+  },
+  section: {
+    id: "section-listening-2020-06-a",
+    paperId: "paper-2020-06-set1",
+    title: "长对话 Section A",
+    sectionType: "listening",
+    order: 1,
+    instructions: "先做题，再精听错句片段。",
+    audioAssetId: "asset-listening-2020-06-a",
+  },
+  segments: [
+    {
+      id: "segment-1",
+      startSec: 0,
+      endSec: 28,
+      transcript:
+        "Good morning, I am calling to confirm whether you are available for the research interview next Tuesday afternoon.",
+      keywords: ["confirm", "available", "interview"],
+      prompt: "找出说话人的目的。",
+    },
+    {
+      id: "segment-2",
+      startSec: 29,
+      endSec: 52,
+      transcript:
+        "I can make it at three, but I might need to leave a little early because I have another appointment at five.",
+      keywords: ["three", "leave early", "appointment"],
+      prompt: "抓住时间安排和转折信息。",
+    },
+  ],
+  questions: [
+    {
+      id: "lq-1",
+      sectionId: "section-listening-2020-06-a",
+      number: 1,
+      questionType: "single_choice",
+      stem: "Why does the speaker call?",
+      difficulty: "medium",
+      tags: ["purpose", "listening"],
+      correctAnswer: "B",
+      choices: [
+        { id: "lq1-a", questionId: "lq-1", label: "A", content: "To cancel an interview", order: 1 },
+        { id: "lq1-b", questionId: "lq-1", label: "B", content: "To confirm a schedule", order: 2 },
+        { id: "lq1-c", questionId: "lq-1", label: "C", content: "To ask for directions", order: 3 },
+        { id: "lq1-d", questionId: "lq-1", label: "D", content: "To discuss payment", order: 4 },
+      ],
+      explanation: {
+        id: "exp-lq1",
+        questionId: "lq-1",
+        source: "original",
+        content: "关键动词是 confirm，因此是确认时间安排。",
+        evidenceSpans: ["confirm whether you are available"],
+        mistakeTemplateIds: ["干扰项误选"],
+      },
+    },
+  ],
+};
+
+export const vocabItems: VocabItem[] = [
+  {
+    id: "vocab-pervasive",
+    lemma: "pervasive",
+    phonetic: "/pəˈveɪsɪv/",
+    partOfSpeech: "adj.",
+    definitions: ["遍布的", "普遍存在的"],
+    collocations: ["a pervasive influence", "pervasive technology"],
+    sourceExamTypes: ["cet6", "ielts"],
+    sourceQuestionIds: ["q-1"],
+    example: "They are a pervasive part of the landscape.",
+    mastery: 0.62,
+    dueLabel: "今日到期",
+  },
+  {
+    id: "vocab-diversion",
+    lemma: "diversion",
+    phonetic: "/daɪˈvɜːrʒn/",
+    partOfSpeech: "n.",
+    definitions: ["转移", "改道"],
+    collocations: ["water diversion", "traffic diversion"],
+    sourceExamTypes: ["cet6"],
+    sourceQuestionIds: ["q-2"],
+    example: "Water diversion projects have altered the natural flow of rivers.",
+    mastery: 0.44,
+    dueLabel: "高风险遗忘",
+  },
+  {
+    id: "vocab-collective",
+    lemma: "collective",
+    phonetic: "/kəˈlektɪv/",
+    partOfSpeech: "adj.",
+    definitions: ["共同的", "集体的"],
+    collocations: ["collective efforts", "collective responsibility"],
+    sourceExamTypes: ["cet6", "ielts"],
+    sourceQuestionIds: ["q-3"],
+    example: "Restoring and protecting rivers requires collective efforts.",
+    mastery: 0.55,
+    dueLabel: "建议复习",
+  },
+];
+
+export const essayPrompts: EssayPrompt[] = [
+  {
+    id: "essay-cet6-1",
+    mode: "cet6",
+    title: "六级写作",
+    prompt: "随着网络的普及，人们的生活变得更加便利。但也有人认为网络使人们变得孤独。对此，你怎么看？",
+    outline: ["便利的表现（正面）", "孤独的原因（反面）", "我的观点（辩证）", "结论总结"],
+  },
+  {
+    id: "essay-ielts-task1-1",
+    mode: "ielts-task1",
+    title: "IELTS Task 1",
+    prompt: "The chart below shows the percentage of students choosing online courses from 2019 to 2024.",
+    outline: ["概述整体趋势", "比较两个最高点", "补充最低点与变化速度"],
+  },
+  {
+    id: "essay-ielts-task2-1",
+    mode: "ielts-task2",
+    title: "IELTS Task 2",
+    prompt: "Some people think governments should invest more in public transport than in roads. Discuss both views and give your opinion.",
+    outline: ["支持公共交通的理由", "支持道路扩建的理由", "给出立场并总结"],
+  },
+];
+
+export const mockEssayFeedback: EssayFeedback = {
+  overallScore: 14.5,
+  summary: "文章结构清晰，但中段展开偏泛，句式重复影响表达层次。",
+  dimensions: [
+    { key: "task_response", label: "任务完成度", score: 14.5 },
+    { key: "coherence", label: "结构与逻辑", score: 15 },
+    { key: "lexical_resource", label: "词汇运用", score: 14 },
+    { key: "grammar", label: "语法准确性", score: 13.5 },
+  ],
+  mistakes: [
+    {
+      title: "词汇重复",
+      evidence: "benefits far outweigh the drawbacks",
+      suggestion: "可改写为 bring more lasting gains than short-term convenience costs。",
+    },
+    {
+      title: "论证偏空",
+      evidence: "The Internet indeed brings challenges.",
+      suggestion: "补充一个面对面沟通被线上替代的具体场景。",
+    },
+  ],
+  suggestions: ["第二段增加具体例证。", "收尾句改成更强的判断句。"],
+  nextActions: ["对第二段进行重写，并引入现实案例。"],
+  confidence: 0.81,
+  referenceRewrite:
+    "While digital tools may weaken some face-to-face interaction, they create broader opportunities for connection and efficiency when used with restraint.",
+};
+
+export const mockEssayDraft =
+  "With the widespread of the Internet, people's life has become much more convenient. However, some people argue that the Internet makes people lonely. In my opinion, while the Internet indeed brings challenges to face-to-face communication, its benefits far outweigh the drawbacks if we use it properly.\n\nFirstly, the Internet has made our life more efficient and colorful. We can get information, communicate with others and enjoy entertainment anytime and anywhere. Online learning and remote working also provide more flexibility and opportunities.\n\nOn the other hand, excessive use of the Internet may lead to loneliness. Many people spend too much time on social media and virtual world, which reduces real-life interaction and weakens emotional connection.\n\nTo conclude, the Internet is a tool. What matters is how we use it.";
+
+export const mockExams: MockExamSummary[] = [
+  {
+    paper: readingPaper,
+    lastScore: 520,
+    sections: [
+      { id: "mock-reading", label: "阅读", durationMin: 40, status: "ready" },
+      { id: "mock-listening", label: "听力", durationMin: 30, status: "ready" },
+      { id: "mock-writing", label: "写作", durationMin: 30, status: "ready" },
+    ],
+  },
+  {
+    paper: {
+      id: "paper-2024-ielts-01",
+      examType: "ielts",
+      year: 2024,
+      month: 5,
+      session: "Academic A",
+      title: "IELTS Academic Mock A",
+      status: "published",
+      sourceDocumentId: "doc-ielts-2024-a",
+    },
+    sections: [
+      { id: "ielts-reading", label: "阅读", durationMin: 60, status: "ready" },
+      { id: "ielts-listening", label: "听力", durationMin: 30, status: "locked" },
+      { id: "ielts-writing", label: "写作", durationMin: 60, status: "locked" },
+    ],
+  },
+];
+
+export const mockReport: StudyReportSnapshot = {
+  weekHours: 15.2,
+  completedTasks: 26,
+  readingAccuracyTrend: [0.52, 0.58, 0.61, 0.64, 0.68],
+  listeningAccuracyTrend: [0.43, 0.48, 0.52, 0.56, 0.6],
+  vocabMasteryTrend: [0.4, 0.44, 0.49, 0.54, 0.61],
+  writingScoreTrend: [11.5, 12, 12.5, 13.5, 14.5],
+  weakestModule: "听力定位",
+  nextFocus: "未来 7 天加大听力错句精听和阅读定位题补练。",
+};

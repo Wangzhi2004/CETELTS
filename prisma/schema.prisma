@@ -1,0 +1,363 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  student
+  admin
+}
+
+enum ExamType {
+  cet6
+  ielts
+}
+
+enum LearningPhase {
+  recovery
+  intensive
+  sprint
+}
+
+enum TaskStatus {
+  todo
+  in_progress
+  done
+  skipped
+}
+
+enum TaskType {
+  reading
+  listening
+  vocab
+  writing
+  mock
+  review
+}
+
+enum SectionType {
+  reading
+  listening
+  writing
+  translation
+}
+
+enum ParsingStage {
+  text_extraction
+  structuring
+  mapping
+  review
+  published
+}
+
+enum ParsingStatus {
+  queued
+  processing
+  review_required
+  failed
+  completed
+}
+
+model User {
+  id            String      @id @default(cuid())
+  name          String
+  email         String      @unique
+  role          UserRole    @default(student)
+  timezone      String      @default("Asia/Shanghai")
+  preferredExam ExamType    @default(cet6)
+  wechatId      String?     @unique
+  goals         Goal[]
+  tasks         DailyTask[]
+}
+
+model Goal {
+  id          String        @id @default(cuid())
+  userId      String
+  examType    ExamType
+  targetScore Int
+  examDate    DateTime
+  dailyMinutes Int
+  phase       LearningPhase
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DailyTask {
+  id               String     @id @default(cuid())
+  userId           String
+  taskType         TaskType
+  status           TaskStatus @default(todo)
+  title            String
+  subtitle         String
+  estimatedMinutes Int
+  scheduledAt      DateTime
+  sourceEntityType String
+  sourceEntityId   String
+  priority         Int        @default(0)
+  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SourceDocument {
+  id           String      @id @default(cuid())
+  documentType String
+  filename     String
+  storageKey   String
+  checksum     String
+  uploadedBy   String
+  status       String
+  papers       ExamPaper[]
+  jobs         ParsingJob[]
+}
+
+model ExamPaper {
+  id               String    @id @default(cuid())
+  examType         ExamType
+  year             Int
+  month            Int
+  session          String
+  title            String
+  status           String
+  sourceDocumentId String
+  sourceDocument   SourceDocument @relation(fields: [sourceDocumentId], references: [id], onDelete: Cascade)
+  sections         Section[]
+}
+
+model Section {
+  id           String      @id @default(cuid())
+  paperId      String
+  title        String
+  sectionType  SectionType
+  order        Int
+  instructions String
+  audioAssetId String?
+  paper        ExamPaper   @relation(fields: [paperId], references: [id], onDelete: Cascade)
+}
+
+model ParsingJob {
+  id               String        @id @default(cuid())
+  sourceDocumentId String
+  stage            ParsingStage
+  status           ParsingStatus
+  rawOutput        Json?
+  structuredDraft  Json?
+  errorLog         Json?
+  retryCount       Int           @default(0)
+  sourceDocument   SourceDocument @relation(fields: [sourceDocumentId], references: [id], onDelete: Cascade)
+}
+
+// ==========================================
+// Score Center & Algorithm System Entities
+// ==========================================
+
+model UserState {
+  id                 String   @id @default(cuid())
+  userId             String
+  targetExam         ExamType
+  targetScore        Int
+  examDate           DateTime
+  dailyBudgetMinutes Int
+  mode               String
+  estimatedScore     Float?
+  fatigueLevel       Float    @default(0.0)
+  confidenceGlobal   Float    @default(0.0)
+  customWeights      Json?    // Self-Improving Agent customized policy weights
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@unique([userId, targetExam])
+}
+
+model SkillState {
+  id            String   @id @default(cuid())
+  userId        String
+  skillNode     String
+  mastery       Float    @default(0.0)
+  confidence    Float    @default(0.0)
+  decayRisk     Float    @default(0.0)
+  speedDeficit  Float    @default(0.0)
+  recurrence    Float    @default(0.0)
+  transferGain  Float    @default(0.0)
+  stressDrop    Float    @default(0.0)
+  evidenceCount Int      @default(0)
+  // BKT parameters (Fix 1)
+  pInit         Float    @default(0.3)  // P(L₀) prior knowledge
+  pLearn        Float    @default(0.1)  // P(T) transition probability
+  pSlip         Float    @default(0.1)  // P(S) slip probability
+  pGuess        Float    @default(0.2)  // P(G) guess probability
+  lastSeenAt    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, skillNode])
+}
+
+model ScoreCenterSession {
+  id            String   @id @default(cuid())
+  userId        String
+  sessionId     String   @unique
+  sessionDate   DateTime
+  budgetMinutes Int
+  mode          String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  cards         TaskCard[]
+  events        LearningEvent[]
+}
+
+model TaskCard {
+  id              String   @id @default(cuid())
+  sessionId       String
+  session         ScoreCenterSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  userId          String
+  cardId          String
+  taskId          String?
+  taskType        String
+  cardType        String
+  title           String
+  whyThisNow      String
+  estimatedMinutes Int
+  difficulty      String
+  expectedImpact  String
+  expectedOutcome String?
+  targetSkills    Json
+  prerequisite    Json?
+  actionLabel     String?
+  destinationPage String
+  successSignal   String
+  fallbackAction  String?
+  alternative     String?
+  anchorTo        String?
+  expiry          DateTime?
+  confidence      Float    @default(0.0)
+  utilityScore    Float?
+  priorityScore   Float    @default(0.0)
+  weightBreakdown Json?
+  relation        Json?
+  evidenceRefs    Json?
+  status          String
+  sequence        Int
+  originEngine    String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model LearningEvent {
+  id         String   @id @default(cuid())
+  eventId    String   @unique
+  userId     String
+  sessionId  String?
+  session    ScoreCenterSession? @relation(fields: [sessionId], references: [sessionId], onDelete: SetNull)
+  cardId     String?
+  pageType   String
+  action     String
+  payload    Json?
+  timestamp  DateTime @default(now())
+  createdAt  DateTime @default(now())
+  diagnostic DiagnosticRecord?
+}
+
+model DiagnosticRecord {
+  id              String   @id @default(cuid())
+  diagnosticId    String   @unique
+  eventId         String   @unique
+  event           LearningEvent @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
+  userId          String
+  primaryError    String
+  secondaryErrors Json?
+  severity        Float
+  confidence      Float
+  evidence        Json?
+  repairPlanIds   Json?
+  createdAt       DateTime @default(now())
+}
+
+model ReviewQueue {
+  id             String   @id @default(cuid())
+  userId         String
+  entityType     String
+  entityId       String
+  reason         String
+  skillNodes     Json?
+  lastSuccessAt  DateTime?
+  nextReviewAt   DateTime
+  stability      Float    @default(0.0)
+  difficulty     Float    @default(0.0)
+  forgettingRisk Float    @default(0.0)
+  priority       Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([userId, entityType, entityId])
+}
+
+// ==========================================
+// Fix 1: BKT / IRT / Bandit Models
+// ==========================================
+
+model BanditArm {
+  id          String   @id @default(cuid())
+  userId      String
+  armId       String   // e.g. "reading", "listening", "vocab"
+  alpha       Float    @default(1.0) // Beta distribution α (successes + 1)
+  beta        Float    @default(1.0) // Beta distribution β (failures + 1)
+  pulls       Int      @default(0)
+  totalReward Float    @default(0.0)
+  lastPulledAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, armId])
+}
+
+// ==========================================
+// Fix 2: Conversation Compaction
+// ==========================================
+
+model ConversationSummary {
+  id              String   @id @default(cuid())
+  userId          String
+  examType        ExamType
+  windowIndex     Int      // 0 = most recent compacted window
+  compactedCount  Int      // how many messages were compacted
+  summary         String   // the compacted text
+  keyDecisions    Json?    // array of key decision strings
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, examType, windowIndex])
+}
+
+// ==========================================
+// Fix 3: OPE / DR Evaluation
+// ==========================================
+
+model PolicyLog {
+  id              String   @id @default(cuid())
+  userId          String
+  sessionId       String
+  policyVersion   String   @default("v1")
+  selectedArm     String   // taskType chosen
+  utilityScore    Float    // computed utility at selection time
+  weights         Json     // snapshot of utilityWeights used
+  featureVector   Json     // snapshot of feature values
+  propensityScore Float    // P(selected | features, policy)
+  reward          Float?   // observed reward after completion (null if pending)
+  rewardSignal    String?  // what signal produced the reward
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model OPEReport {
+  id                String   @id @default(cuid())
+  policyVersion     String
+  evaluationWindow  String   // e.g. "7d", "30d"
+  sampleSize        Int
+  drEstimate        Float    // Doubly Robust estimator value
+  ipsEstimate       Float    // Inverse Propensity Score estimate
+  dmEstimate        Float    // Direct Method estimate
+  weightAttribution Json     // per-weight contribution scores
+  confidence        Float    // confidence interval width
+  createdAt         DateTime @default(now())
+}

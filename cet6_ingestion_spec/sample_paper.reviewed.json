@@ -1,0 +1,74 @@
+{
+  "exam_type": "cet6",
+  "year": 2021,
+  "month": 12,
+  "set_no": 1,
+  "title": "CET-6 2021-12 Set 1",
+  "source_documents": {
+    "paper_pdf": "2021-12-set1-paper.pdf",
+    "explanation_pdf": "2021-12-set1-expl.pdf"
+  },
+  "sections": [
+    {
+      "section_type": "writing",
+      "section_order": 1,
+      "title": "Writing"
+    },
+    {
+      "section_type": "listening",
+      "section_order": 2,
+      "title": "Listening Comprehension"
+    },
+    {
+      "section_type": "reading",
+      "section_order": 3,
+      "title": "Reading Comprehension"
+    },
+    {
+      "section_type": "translation",
+      "section_order": 4,
+      "title": "Translation"
+    }
+  ],
+  "passages": [
+    {
+      "passage_ref": "reading-passage-1",
+      "section_type": "reading",
+      "passage_order": 1,
+      "title": null,
+      "content": "[Put cleaned passage text here]",
+      "source_page_start": 12,
+      "source_page_end": 13
+    }
+  ],
+  "questions": [
+    {
+      "question_no": 16,
+      "section_type": "reading",
+      "question_type": "reading_mcq",
+      "passage_ref": "reading-passage-1",
+      "stem": "What does the author imply about city transport?",
+      "choices": [
+        {"choice_key": "A", "choice_text": "It is becoming more affordable."},
+        {"choice_key": "B", "choice_text": "It has not changed much."},
+        {"choice_key": "C", "choice_text": "It requires structural redesign."},
+        {"choice_key": "D", "choice_text": "It mainly depends on private cars."}
+      ],
+      "answer": {
+        "answer_type": "single_choice",
+        "answer_value": "C"
+      },
+      "explanation": {
+        "source_type": "official_pdf",
+        "explanation_text": "The author argues that solving transport problems requires redesigning the broader urban system rather than adding more roads.",
+        "evidence_span": "paragraph 3"
+      },
+      "skill_tags": [
+        {"tag_code": "reading.main_idea", "weight": 0.4},
+        {"tag_code": "reading.locating", "weight": 0.3},
+        {"tag_code": "reading.paraphrase", "weight": 0.3}
+      ],
+      "source_page": 13
+    }
+  ]
+}
