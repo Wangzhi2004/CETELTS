@@ -272,7 +272,7 @@ async function getBaseScoreCenterInputs(userId: string, examType: ExamType) {
   });
 
   const mistakeLogs = mapDiagnosticRecordsToMistakeLogs(
-    diagnostics.map((diagnostic) => ({
+    diagnostics.map((diagnostic: { diagnosticId: string; userId: string; primaryError: string; evidence: unknown }) => ({
       id: diagnostic.diagnosticId,
       userId: diagnostic.userId,
       primaryError: diagnostic.primaryError,
@@ -280,7 +280,7 @@ async function getBaseScoreCenterInputs(userId: string, examType: ExamType) {
     })),
   );
 
-  const reviewQueue: ReviewQueueEntry[] = reviewQueueRecords.map((entry) => ({
+  const reviewQueue: ReviewQueueEntry[] = reviewQueueRecords.map((entry: { entityType: string; entityId: string; reason: string; priority: number; nextReviewAt: Date }) => ({
     entityType: entry.entityType as ReviewQueueEntry["entityType"],
     entityId: entry.entityId,
     reason: entry.reason as ReviewQueueEntry["reason"],
