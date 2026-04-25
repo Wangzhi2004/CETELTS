@@ -19,10 +19,12 @@ function createPrismaClient(): PrismaClientLike {
   const connectionString =
     process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/cetelts";
 
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { PrismaPg } = require("@prisma/adapter-pg") as { PrismaPg: new (opts: { connectionString: string }) => unknown };
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { PrismaClient } = require("@prisma/client") as { PrismaClient: new (opts: { adapter: unknown }) => PrismaClientLike };
+  // Use eval to prevent esbuild from statically analyzing these requires
+  // This is necessary for Cloudflare Workers compatibility where pg is not available
+  // eslint-disable-next-line @typescript-eslint/no-implied-eval
+  const { PrismaPg } = eval('require("@prisma/adapter-pg")') as { PrismaPg: new (opts: { connectionString: string }) => unknown };
+  // eslint-disable-next-line @typescript-eslint/no-implied-eval
+  const { PrismaClient } = eval('require("@prisma/client")') as { PrismaClient: new (opts: { adapter: unknown }) => PrismaClientLike };
   const adapter = new PrismaPg({ connectionString });
   return new PrismaClient({ adapter });
 }
@@ -48,7 +50,7 @@ export const prisma = new Proxy({} as PrismaClientLike, {
     if (prop === "$$typeof") return undefined;
     if (prop === "then") return undefined;
     const client = getPrismaClient();
-    const value = (client as Record<string, unknown>)[prop];
+    const value = (client as unknown as Record<string, unknown>)[prop];
     if (typeof value === "function") {
       return value.bind(client);
     }
