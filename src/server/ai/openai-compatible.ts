@@ -1,59 +1,69 @@
-import { buildResponsesApiUrl, type AiProviderSettings } from "@/server/ai/ai-config";
+import { type AiProviderSettings } from "@/server/ai/ai-config";
 
-type ResponsesRequestInput = {
+type ChatCompletionRequestInput = {
   model: string;
   instructions: string;
   input: string;
   schemaName: string;
   schema: Record<string, unknown>;
-  previousResponseId?: string;
 };
 
-export function buildResponsesRequestBody(input: ResponsesRequestInput) {
+export function buildChatCompletionRequestBody(input: ChatCompletionRequestInput) {
   return {
     model: input.model,
-    instructions: input.instructions,
-    input: input.input,
-    ...(input.previousResponseId && {
-      previous_response_id: input.previousResponseId,
-    }),
-    text: {
-      format: {
-        type: "json_schema",
-        name: input.schemaName,
-        schema: input.schema,
-        strict: true,
+    messages: [
+      {
+        role: "system",
+        content: `${input.instructions}\n\nYou must respond with valid JSON matching this schema: ${JSON.stringify(input.schema)}. Do not include any text outside the JSON object.`,
       },
-    },
-    store: false,
+      {
+        role: "user",
+        content: input.input,
+      },
+    ],
+    response_format: { type: "json_object" },
   };
 }
 
-export async function callOpenAICompatibleResponses<T>(
+export function buildChatCompletionUrl(baseURL: string) {
+  return `${baseURL.replace(/\/+$/, "")}/chat/completions`;
+}
+
+export async function callAIForStructuredOutput<T>(
   settings: AiProviderSettings,
-  input: ResponsesRequestInput,
-): Promise<{ data: T; responseId?: string }> {
-  const response = await fetch(buildResponsesApiUrl(settings.baseURL), {
+  input: ChatCompletionRequestInput,
+): Promise<{ data: T }> {
+  const url = buildChatCompletionUrl(settings.baseURL);
+  const body = buildChatCompletionRequestBody(input);
+
+  console.log("[AI] Calling", url, "model:", input.model);
+
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${settings.apiKey}`,
     },
-    body: JSON.stringify(buildResponsesRequestBody(input)),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Responses API request failed: ${response.status} ${errorText}`);
+    throw new Error(`Chat Completions API request failed: ${response.status} ${errorText}`);
   }
 
-  const payload = (await response.json()) as { id?: string; output_text?: string };
-  if (!payload.output_text) {
-    throw new Error("Responses API returned no output_text");
+  const payload = (await response.json()) as {
+    choices?: Array<{
+      message?: { content?: string };
+    }>;
+  };
+
+  const content = payload.choices?.[0]?.message?.content;
+  if (!content) {
+    throw new Error("Chat Completions API returned no content in choices[0].message");
   }
 
   return {
-    data: JSON.parse(payload.output_text) as T,
-    responseId: payload.id,
+    data: JSON.parse(content) as T,
   };
 }

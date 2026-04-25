@@ -1,13 +1,11 @@
 import { z } from "zod";
 
 import { loadAiProviderSettings } from "@/server/ai/ai-config";
-import { callOpenAICompatibleResponses } from "@/server/ai/openai-compatible";
+import { callAIForStructuredOutput } from "@/server/ai/openai-compatible";
 import {
   compactTeacherConversation,
   getTeacherConversationSummary,
-  getTeacherPreviousResponseId,
   saveTeacherConversationSummary,
-  saveTeacherPreviousResponseId,
 } from "@/server/ai/teacher-memory";
 import { buildTeacherMessages } from "@/server/services/score-center-runtime";
 import type { ScoreCenterState, TeacherMessage } from "@/types/domain";
@@ -123,7 +121,6 @@ export async function generateTeacherExplanationBundle(input: {
   }
 
   try {
-    const previousResponseId = await getTeacherPreviousResponseId(input.userId, input.exam);
     const compacted = compactTeacherConversation({
       messages: input.state.teacherMessages,
       maxRecentMessages: 4,
@@ -152,7 +149,7 @@ export async function generateTeacherExplanationBundle(input: {
       evidenceSnippets: input.evidenceSnippets,
       memorySummary: persistedSummary ?? compacted.summary,
     });
-    const result = await callOpenAICompatibleResponses<z.infer<typeof teacherBundleSchema>>(
+    const result = await callAIForStructuredOutput<z.infer<typeof teacherBundleSchema>>(
       settings,
       {
         model: settings.teacherModel,
@@ -222,13 +219,8 @@ export async function generateTeacherExplanationBundle(input: {
           },
           required: ["briefing", "update", "evidenceUsed", "decisionSummary"],
         },
-        previousResponseId,
       },
     );
-
-    if (result.responseId) {
-      await saveTeacherPreviousResponseId(input.userId, input.exam, result.responseId);
-    }
 
     const parsed = teacherBundleSchema.parse(result.data);
     return {

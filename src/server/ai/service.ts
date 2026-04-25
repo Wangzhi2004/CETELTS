@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { normalizeEssayFeedback } from "@/server/ai/essay-feedback";
 import { loadAiProviderSettings } from "@/server/ai/ai-config";
-import { callOpenAICompatibleResponses } from "@/server/ai/openai-compatible";
+import { callAIForStructuredOutput } from "@/server/ai/openai-compatible";
 
 const essayFeedbackApiSchema = z.object({
   overallScore: z.number(),
@@ -33,7 +33,7 @@ export const aiService = {
 
     if (settings.enabled && settings.apiKey) {
       try {
-        const result = await callOpenAICompatibleResponses<
+        const result = await callAIForStructuredOutput<
           z.infer<typeof essayFeedbackApiSchema>
         >(settings, {
           model: settings.model,
@@ -103,8 +103,8 @@ export const aiService = {
         });
 
         return normalizeEssayFeedback(essayFeedbackApiSchema.parse(result));
-      } catch {
-        // Fallback below.
+      } catch (error) {
+        console.error("[ai-service] Essay feedback AI call failed:", error);
       }
     }
 

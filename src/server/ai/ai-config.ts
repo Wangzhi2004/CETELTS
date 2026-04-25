@@ -15,9 +15,9 @@ const SETTINGS_FILE = path.join(process.cwd(), ".tmp", "ai-provider-settings.jso
 const DEFAULT_SETTINGS: AiProviderSettings = {
   provider: "openai-compatible",
   apiKey: process.env.OPENAI_API_KEY ?? "",
-  baseURL: process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1",
-  model: process.env.OPENAI_MODEL ?? "gpt-4o",
-  teacherModel: process.env.OPENAI_TEACHER_MODEL ?? process.env.OPENAI_MODEL ?? "gpt-4o",
+  baseURL: process.env.OPENAI_BASE_URL ?? "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  model: process.env.OPENAI_MODEL ?? "glm-5",
+  teacherModel: process.env.OPENAI_TEACHER_MODEL ?? process.env.OPENAI_MODEL ?? "glm-5",
   enabled: Boolean(process.env.OPENAI_API_KEY),
 };
 
@@ -51,10 +51,6 @@ export function redactAiProviderSettings(settings: AiProviderSettings) {
   };
 }
 
-export function buildResponsesApiUrl(baseURL: string) {
-  return `${baseURL.replace(/\/+$/, "")}/responses`;
-}
-
 export async function loadAiProviderSettings() {
   try {
     const raw = await readFile(SETTINGS_FILE, "utf8");
@@ -69,8 +65,8 @@ export async function saveAiProviderSettings(settings: Partial<AiProviderSetting
   try {
     await mkdir(path.dirname(SETTINGS_FILE), { recursive: true });
     await writeFile(SETTINGS_FILE, JSON.stringify(normalized, null, 2), "utf8");
-  } catch {
-    // Workers environment may not support fs; settings persist via env vars only
+  } catch (error) {
+    console.error("[ai-config] Failed to save settings file:", error);
   }
   return normalized;
 }
