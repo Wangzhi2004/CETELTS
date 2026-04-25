@@ -845,18 +845,10 @@ function TaskStackCard({
   return (
     <div
       className={cn(
-        "rounded-[24px] border bg-white dark:border-[#2a2739] dark:bg-[#1c1a28]",
+        "rounded-[24px] border",
         compact ? "p-4" : "p-5",
         card.isNew && "ring-2 ring-[#cdbdfd]",
-        !card.cardType?.match(/repair|pitfall|verification|recovery|review|foundation|bridge/) && "border-[#efe8fb] shadow-[0_8px_24px_rgba(124,92,250,0.05)]",
-        card.cardType === "repair" && "border-[#fcd34d]/50 bg-[#fffbeb]/5 dark:bg-[rgba(245,158,11,0.08)]",
-        card.cardType === "pitfall" && "border-[#fcd34d]/50 bg-[#fffbeb]/5 dark:bg-[rgba(245,158,11,0.08)]",
-        card.cardType === "verification" && "border-[#34d399]/50 bg-[#ecfdf5]/5 dark:bg-[rgba(52,211,153,0.08)]",
-        card.cardType === "recovery" && "border-[#e2e8f0] bg-[#f8fafc] dark:border-[#374151] dark:bg-[#1f2937]",
-        card.cardType === "review" && "border-[#e2e8f0] bg-[#f8fafc] dark:border-[#374151] dark:bg-[#1f2937]",
-        card.cardType === "foundation" && "border-[#e2e8f0] bg-[#f8fafc] dark:border-[#374151] dark:bg-[#1f2937]",
-        card.cardType === "bridge" && "border-[#99f6e4]/50 bg-[#f0fdfa]/5 dark:bg-[rgba(20,184,166,0.08)]",
-        card.cardType === "mock_anchor" && "border-[#c4b5fd] bg-[#f5f3ff] dark:border-[#6d56d9] dark:bg-[rgba(109,86,217,0.12)]",
+        cardStyleMap[card.cardType] || cardStyleMap.score_boost,
         card.anchorTo && "ring-2 ring-[#8b63ff] shadow-[0_16px_32px_rgba(124,92,250,0.2)] dark:shadow-[0_16px_32px_rgba(0,0,0,0.25)]"
       )}
     >
