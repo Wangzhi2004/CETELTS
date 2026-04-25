@@ -1,19 +1,33 @@
+import type { Prisma } from "@prisma/client";
+
 import { prisma } from "@/server/db/prisma";
 import { evaluatePolicyGradients, applyGradientsToWeights } from "@/server/algorithms/policy-gradient";
 
 const BATCH_SIZE = 500;
+
+type ReflectionPolicyLog = {
+  weights: Prisma.JsonValue;
+  propensityScore: number;
+  reward: number | null;
+  policyVersion: string;
+};
+
+type ReflectionUserState = {
+  id: string;
+  customWeights: Prisma.JsonValue | null;
+};
 
 export async function runSelfReflectionPolicyUpdate() {
   console.log("[Self-Reflection] Worker starting: Initializing Policy Gradient Ascent...");
   
   try {
     // 1. Fetch recent policy logs with rewards in batch
-    const recentLogs = await prisma.policyLog.findMany({
+    const recentLogs = (await prisma.policyLog.findMany({
       where: { reward: { not: null } },
       orderBy: { createdAt: "desc" },
       take: BATCH_SIZE,
       select: { weights: true, propensityScore: true, reward: true, policyVersion: true }
-    });
+    })) as ReflectionPolicyLog[];
 
     if (recentLogs.length < 5) {
       console.log("[Self-Reflection] Not enough policy logs to evaluate. Skipping.");
@@ -21,10 +35,10 @@ export async function runSelfReflectionPolicyUpdate() {
     }
 
     // 2. Pure Algorithm Execution (Decoupled from DB)
-    const logsData = recentLogs.map((l) => ({
-      weights: l.weights as Record<string, number>,
-      propensityScore: l.propensityScore,
-      reward: l.reward ?? 0
+    const logsData = recentLogs.map((log) => ({
+      weights: log.weights as Record<string, number>,
+      propensityScore: log.propensityScore,
+      reward: log.reward ?? 0
     }));
     
     const opeResult = evaluatePolicyGradients(logsData);
@@ -33,7 +47,7 @@ export async function runSelfReflectionPolicyUpdate() {
     console.log(`[Self-Reflection] Gradients computed:`, opeResult.gradients);
 
     // 3. Batch Transaction for System Updates
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       await tx.oPEReport.create({
         data: {
           policyVersion: recentLogs[0].policyVersion || "v1",
@@ -47,10 +61,10 @@ export async function runSelfReflectionPolicyUpdate() {
         }
       });
 
-      const usersToUpdate = await tx.userState.findMany({
+      const usersToUpdate = (await tx.userState.findMany({
         where: { targetExam: "cet6" },
         select: { id: true, customWeights: true }
-      });
+      })) as ReflectionUserState[];
 
       const updatePromises = usersToUpdate.map((state) => {
         const currentWeights = (state.customWeights as Record<string, number>) ?? {
