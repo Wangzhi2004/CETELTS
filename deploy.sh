@@ -12,10 +12,10 @@ if [ ! -f .env.production ]; then
   echo "请先创建 .env.production 文件，参考 .env.production.example:"
   echo ""
   echo "  DATABASE_URL=postgresql://user:password@ep-xxx.region.aws.neon.tech/cetelts?sslmode=require"
-  echo "  OPENAI_API_KEY=sk-xxx"
-  echo "  OPENAI_BASE_URL=https://api.openai.com/v1"
-  echo "  OPENAI_MODEL=gpt-4o"
-  echo "  OPENAI_TEACHER_MODEL=gpt-4o"
+  echo "  OPENAI_API_KEY=sk-你的DashScope-Key"
+  echo "  OPENAI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1"
+  echo "  OPENAI_MODEL=glm-5"
+  echo "  OPENAI_TEACHER_MODEL=glm-5"
   echo ""
   echo "创建方法:"
   echo "  nano .env.production"
@@ -26,7 +26,7 @@ fi
 echo "✅ 找到 .env.production"
 echo ""
 
-echo "▶ 步骤 1/4: 检查 Docker..."
+echo "▶ 步骤 1/5: 检查 Docker..."
 if ! command -v docker &> /dev/null; then
   echo "❌ Docker 未安装，正在安装..."
   curl -fsSL https://get.docker.com | sh
@@ -45,17 +45,28 @@ else
 fi
 echo ""
 
-echo "▶ 步骤 2/4: 构建镜像..."
+echo "▶ 步骤 2/5: 推送数据库 schema..."
+export $(grep -v '^#' .env.production | xargs)
+if ! command -v node &> /dev/null; then
+  echo "⚠️  Node.js 未安装，跳过 db push（假设数据库 schema 已存在）"
+else
+  npm install
+  npx prisma db push --skip-generate
+  echo "✅ 数据库 schema 已同步"
+fi
+echo ""
+
+echo "▶ 步骤 3/5: 构建镜像..."
 docker compose build
 echo "✅ 构建完成"
 echo ""
 
-echo "▶ 步骤 3/4: 启动服务..."
+echo "▶ 步骤 4/5: 启动服务..."
 docker compose up -d
 echo "✅ 服务启动完成"
 echo ""
 
-echo "▶ 步骤 4/4: 检查状态..."
+echo "▶ 步骤 5/5: 检查状态..."
 sleep 3
 docker compose ps
 echo ""
@@ -71,5 +82,5 @@ echo "  查看日志:    docker compose logs -f"
 echo "  查看应用日志: docker compose logs -f app"
 echo "  停止服务:    docker compose down"
 echo "  重启服务:    docker compose restart"
-echo "  重新部署:    docker compose build && docker compose up -d"
+echo "  重新部署:    ./deploy.sh"
 echo ""
