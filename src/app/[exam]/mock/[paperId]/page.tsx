@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { Clock3, Send } from "lucide-react";
 
@@ -12,11 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { mockUser } from "@/mocks/student-data";
 
-export default function MockSessionPage({
-  params,
-}: {
-  params: { exam: "cet6" | "ielts"; paperId: string };
-}) {
+export default function MockSessionPage() {
+  const params = useParams<{ exam: "cet6" | "ielts"; paperId: string }>();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
