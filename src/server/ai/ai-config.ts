@@ -16,8 +16,8 @@ const DEFAULT_SETTINGS: AiProviderSettings = {
   provider: "openai-compatible",
   apiKey: process.env.OPENAI_API_KEY ?? "",
   baseURL: process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1",
-  model: process.env.OPENAI_MODEL ?? "gpt-5.2",
-  teacherModel: process.env.OPENAI_TEACHER_MODEL ?? process.env.OPENAI_MODEL ?? "gpt-5.2",
+  model: process.env.OPENAI_MODEL ?? "gpt-4o",
+  teacherModel: process.env.OPENAI_TEACHER_MODEL ?? process.env.OPENAI_MODEL ?? "gpt-4o",
   enabled: Boolean(process.env.OPENAI_API_KEY),
 };
 

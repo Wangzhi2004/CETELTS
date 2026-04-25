@@ -110,6 +110,7 @@ export async function generateTeacherExplanationBundle(input: {
   const settings = await loadAiProviderSettings();
 
   if (!settings.enabled || !settings.apiKey) {
+    console.warn("[teacher-explainer] AI disabled or missing API key, using template messages");
     return {
       teacherMessages: buildTeacherMessages({
         totalMinutes: input.state.budget.totalMinutes,
@@ -254,7 +255,8 @@ export async function generateTeacherExplanationBundle(input: {
       ],
       decisionSummary: parsed.decisionSummary,
     };
-  } catch {
+  } catch (error) {
+    console.error("[teacher-explainer] AI call failed:", error);
     return {
       teacherMessages: buildTeacherMessages({
         totalMinutes: input.state.budget.totalMinutes,
