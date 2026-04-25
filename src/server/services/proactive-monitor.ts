@@ -28,7 +28,9 @@ export async function runProactiveMonitor() {
       select: { id: true, wechatId: true, preferredExam: true }
     });
     
-    const userMap = new Map(users.map((u: { id: string; wechatId: string | null; preferredExam: string | null }) => [u.id, u]));
+    const userMap = new Map<string, { id: string; wechatId: string | null; preferredExam: string | null }>(
+      users.map((u: { id: string; wechatId: string | null; preferredExam: string | null }) => [u.id, u])
+    );
 
     const now = new Date().getTime();
     const skillsToUpdate: { id: string; decayRisk: number }[] = [];
@@ -79,8 +81,8 @@ export async function runProactiveMonitor() {
     }
 
     // 4. Batch Transaction execution for all DB updates
-    await prisma.$transaction(async (tx) => {
-      const updatePromises = skillsToUpdate.map((s) => 
+    await prisma.$transaction(async (tx: { skillState: { update: (args: unknown) => Promise<unknown> }; scoreCenterSession: { findFirst: (args: unknown) => Promise<{ sessionId: string } | null> }; taskCard: { create: (args: unknown) => Promise<unknown> } }) => {
+      const updatePromises = skillsToUpdate.map((s) =>
         tx.skillState.update({ where: { id: s.id }, data: { decayRisk: s.decayRisk } })
       );
       await Promise.all(updatePromises);

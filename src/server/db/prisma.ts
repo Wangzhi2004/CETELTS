@@ -1,5 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PrismaClientLike = any;
+
 declare global {
-  var prisma: import("@prisma/client").PrismaClient | undefined;
+  var prisma: PrismaClientLike | undefined;
 }
 
 function isEdgeRuntime() {
@@ -12,17 +15,19 @@ function isEdgeRuntime() {
   );
 }
 
-function createPrismaClient() {
+function createPrismaClient(): PrismaClientLike {
   const connectionString =
     process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/cetelts";
 
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { PrismaPg } = require("@prisma/adapter-pg") as { PrismaPg: new (opts: { connectionString: string }) => unknown };
-  const { PrismaClient } = require("@prisma/client") as { PrismaClient: new (opts: { adapter: unknown }) => import("@prisma/client").PrismaClient };
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { PrismaClient } = require("@prisma/client") as { PrismaClient: new (opts: { adapter: unknown }) => PrismaClientLike };
   const adapter = new PrismaPg({ connectionString });
   return new PrismaClient({ adapter });
 }
 
-function getPrismaClient() {
+function getPrismaClient(): PrismaClientLike {
   if (isEdgeRuntime()) {
     throw new Error("DATABASE_UNAVAILABLE");
   }
@@ -38,12 +43,12 @@ function getPrismaClient() {
   return globalThis.prisma;
 }
 
-export const prisma = new Proxy({} as import("@prisma/client").PrismaClient, {
+export const prisma = new Proxy({} as PrismaClientLike, {
   get(_target, prop: string) {
     if (prop === "$$typeof") return undefined;
     if (prop === "then") return undefined;
     const client = getPrismaClient();
-    const value = (client as unknown as Record<string, unknown>)[prop];
+    const value = (client as Record<string, unknown>)[prop];
     if (typeof value === "function") {
       return value.bind(client);
     }
