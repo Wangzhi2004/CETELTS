@@ -72,6 +72,21 @@ export type ExamPaper = Prisma.ExamPaperModel
  */
 export type Section = Prisma.SectionModel
 /**
+ * Model Passage
+ * 
+ */
+export type Passage = Prisma.PassageModel
+/**
+ * Model Question
+ * 
+ */
+export type Question = Prisma.QuestionModel
+/**
+ * Model Choice
+ * 
+ */
+export type Choice = Prisma.ChoiceModel
+/**
  * Model ParsingJob
  * 
  */

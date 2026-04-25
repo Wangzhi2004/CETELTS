@@ -390,6 +390,9 @@ export const ModelName = {
   SourceDocument: 'SourceDocument',
   ExamPaper: 'ExamPaper',
   Section: 'Section',
+  Passage: 'Passage',
+  Question: 'Question',
+  Choice: 'Choice',
   ParsingJob: 'ParsingJob',
   UserState: 'UserState',
   SkillState: 'SkillState',
@@ -417,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "goal" | "dailyTask" | "sourceDocument" | "examPaper" | "section" | "parsingJob" | "userState" | "skillState" | "scoreCenterSession" | "taskCard" | "learningEvent" | "diagnosticRecord" | "reviewQueue" | "banditArm" | "conversationSummary" | "policyLog" | "oPEReport"
+    modelProps: "user" | "goal" | "dailyTask" | "sourceDocument" | "examPaper" | "section" | "passage" | "question" | "choice" | "parsingJob" | "userState" | "skillState" | "scoreCenterSession" | "taskCard" | "learningEvent" | "diagnosticRecord" | "reviewQueue" | "banditArm" | "conversationSummary" | "policyLog" | "oPEReport"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -862,6 +865,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SectionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SectionCountAggregateOutputType> | number
+        }
+      }
+    }
+    Passage: {
+      payload: Prisma.$PassagePayload<ExtArgs>
+      fields: Prisma.PassageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PassageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PassageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>
+        }
+        findFirst: {
+          args: Prisma.PassageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PassageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>
+        }
+        findMany: {
+          args: Prisma.PassageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>[]
+        }
+        create: {
+          args: Prisma.PassageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>
+        }
+        createMany: {
+          args: Prisma.PassageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PassageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>[]
+        }
+        delete: {
+          args: Prisma.PassageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>
+        }
+        update: {
+          args: Prisma.PassageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>
+        }
+        deleteMany: {
+          args: Prisma.PassageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PassageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PassageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>[]
+        }
+        upsert: {
+          args: Prisma.PassageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PassagePayload>
+        }
+        aggregate: {
+          args: Prisma.PassageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePassage>
+        }
+        groupBy: {
+          args: Prisma.PassageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PassageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PassageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PassageCountAggregateOutputType> | number
+        }
+      }
+    }
+    Question: {
+      payload: Prisma.$QuestionPayload<ExtArgs>
+      fields: Prisma.QuestionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
+        }
+        findFirst: {
+          args: Prisma.QuestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
+        }
+        findMany: {
+          args: Prisma.QuestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>[]
+        }
+        create: {
+          args: Prisma.QuestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
+        }
+        createMany: {
+          args: Prisma.QuestionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>[]
+        }
+        delete: {
+          args: Prisma.QuestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
+        }
+        update: {
+          args: Prisma.QuestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuestionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuestionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
+        }
+        aggregate: {
+          args: Prisma.QuestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuestion>
+        }
+        groupBy: {
+          args: Prisma.QuestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionCountAggregateOutputType> | number
+        }
+      }
+    }
+    Choice: {
+      payload: Prisma.$ChoicePayload<ExtArgs>
+      fields: Prisma.ChoiceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChoiceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChoiceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>
+        }
+        findFirst: {
+          args: Prisma.ChoiceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChoiceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>
+        }
+        findMany: {
+          args: Prisma.ChoiceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>[]
+        }
+        create: {
+          args: Prisma.ChoiceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>
+        }
+        createMany: {
+          args: Prisma.ChoiceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChoiceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>[]
+        }
+        delete: {
+          args: Prisma.ChoiceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>
+        }
+        update: {
+          args: Prisma.ChoiceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>
+        }
+        deleteMany: {
+          args: Prisma.ChoiceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChoiceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChoiceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>[]
+        }
+        upsert: {
+          args: Prisma.ChoiceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChoicePayload>
+        }
+        aggregate: {
+          args: Prisma.ChoiceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChoice>
+        }
+        groupBy: {
+          args: Prisma.ChoiceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChoiceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChoiceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChoiceCountAggregateOutputType> | number
         }
       }
     }
@@ -1875,6 +2100,44 @@ export const SectionScalarFieldEnum = {
 export type SectionScalarFieldEnum = (typeof SectionScalarFieldEnum)[keyof typeof SectionScalarFieldEnum]
 
 
+export const PassageScalarFieldEnum = {
+  id: 'id',
+  sectionId: 'sectionId',
+  title: 'title',
+  body: 'body',
+  order: 'order'
+} as const
+
+export type PassageScalarFieldEnum = (typeof PassageScalarFieldEnum)[keyof typeof PassageScalarFieldEnum]
+
+
+export const QuestionScalarFieldEnum = {
+  id: 'id',
+  sectionId: 'sectionId',
+  passageId: 'passageId',
+  questionType: 'questionType',
+  stem: 'stem',
+  explanation: 'explanation',
+  difficulty: 'difficulty',
+  skillTags: 'skillTags',
+  errorTags: 'errorTags',
+  order: 'order'
+} as const
+
+export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
+export const ChoiceScalarFieldEnum = {
+  id: 'id',
+  questionId: 'questionId',
+  label: 'label',
+  content: 'content',
+  isCorrect: 'isCorrect'
+} as const
+
+export type ChoiceScalarFieldEnum = (typeof ChoiceScalarFieldEnum)[keyof typeof ChoiceScalarFieldEnum]
+
+
 export const ParsingJobScalarFieldEnum = {
   id: 'id',
   sourceDocumentId: 'sourceDocumentId',
@@ -2285,6 +2548,41 @@ export type ListEnumSectionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'ParsingStage'
  */
 export type EnumParsingStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParsingStage'>
@@ -2309,34 +2607,6 @@ export type EnumParsingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'ParsingStatus[]'
  */
 export type ListEnumParsingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParsingStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -2455,6 +2725,9 @@ export type GlobalOmitConfig = {
   sourceDocument?: Prisma.SourceDocumentOmit
   examPaper?: Prisma.ExamPaperOmit
   section?: Prisma.SectionOmit
+  passage?: Prisma.PassageOmit
+  question?: Prisma.QuestionOmit
+  choice?: Prisma.ChoiceOmit
   parsingJob?: Prisma.ParsingJobOmit
   userState?: Prisma.UserStateOmit
   skillState?: Prisma.SkillStateOmit

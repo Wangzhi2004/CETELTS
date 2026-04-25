@@ -12,7 +12,9 @@
     "docker:build": "docker compose build",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f app"
+    "docker:logs": "docker compose logs -f app",
+    "db:seed": "npx tsx prisma/seed.ts",
+    "db:push": "npx prisma db push --skip-generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -55,6 +57,7 @@
     "prisma": "^7.8.0",
     "qrcode-terminal": "^0.12.0",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5",
     "vite": "^8.0.9",
     "vite-tsconfig-paths": "^6.1.1",

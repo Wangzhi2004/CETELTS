@@ -134,6 +134,43 @@ model Section {
   instructions String
   audioAssetId String?
   paper        ExamPaper   @relation(fields: [paperId], references: [id], onDelete: Cascade)
+  passages     Passage[]
+  questions    Question[]
+}
+
+model Passage {
+  id        String   @id @default(cuid())
+  sectionId String
+  title     String?
+  body      String
+  order     Int      @default(0)
+  section   Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  questions Question[]
+}
+
+model Question {
+  id            String      @id @default(cuid())
+  sectionId     String
+  passageId     String?
+  questionType  String
+  stem          String
+  explanation   String?
+  difficulty    Float       @default(0.5)
+  skillTags     Json?
+  errorTags     Json?
+  order         Int         @default(0)
+  section       Section     @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  passage       Passage?    @relation(fields: [passageId], references: [id], onDelete: Cascade)
+  choices       Choice[]
+}
+
+model Choice {
+  id         String   @id @default(cuid())
+  questionId String
+  label      String
+  content    String
+  isCorrect  Boolean  @default(false)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }
 
 model ParsingJob {

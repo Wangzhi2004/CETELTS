@@ -233,6 +233,8 @@ export type SectionWhereInput = {
   instructions?: Prisma.StringFilter<"Section"> | string
   audioAssetId?: Prisma.StringNullableFilter<"Section"> | string | null
   paper?: Prisma.XOR<Prisma.ExamPaperScalarRelationFilter, Prisma.ExamPaperWhereInput>
+  passages?: Prisma.PassageListRelationFilter
+  questions?: Prisma.QuestionListRelationFilter
 }
 
 export type SectionOrderByWithRelationInput = {
@@ -244,6 +246,8 @@ export type SectionOrderByWithRelationInput = {
   instructions?: Prisma.SortOrder
   audioAssetId?: Prisma.SortOrderInput | Prisma.SortOrder
   paper?: Prisma.ExamPaperOrderByWithRelationInput
+  passages?: Prisma.PassageOrderByRelationAggregateInput
+  questions?: Prisma.QuestionOrderByRelationAggregateInput
 }
 
 export type SectionWhereUniqueInput = Prisma.AtLeast<{
@@ -258,6 +262,8 @@ export type SectionWhereUniqueInput = Prisma.AtLeast<{
   instructions?: Prisma.StringFilter<"Section"> | string
   audioAssetId?: Prisma.StringNullableFilter<"Section"> | string | null
   paper?: Prisma.XOR<Prisma.ExamPaperScalarRelationFilter, Prisma.ExamPaperWhereInput>
+  passages?: Prisma.PassageListRelationFilter
+  questions?: Prisma.QuestionListRelationFilter
 }, "id">
 
 export type SectionOrderByWithAggregationInput = {
@@ -296,6 +302,8 @@ export type SectionCreateInput = {
   instructions: string
   audioAssetId?: string | null
   paper: Prisma.ExamPaperCreateNestedOneWithoutSectionsInput
+  passages?: Prisma.PassageCreateNestedManyWithoutSectionInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutSectionInput
 }
 
 export type SectionUncheckedCreateInput = {
@@ -306,6 +314,8 @@ export type SectionUncheckedCreateInput = {
   order: number
   instructions: string
   audioAssetId?: string | null
+  passages?: Prisma.PassageUncheckedCreateNestedManyWithoutSectionInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutSectionInput
 }
 
 export type SectionUpdateInput = {
@@ -316,6 +326,8 @@ export type SectionUpdateInput = {
   instructions?: Prisma.StringFieldUpdateOperationsInput | string
   audioAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paper?: Prisma.ExamPaperUpdateOneRequiredWithoutSectionsNestedInput
+  passages?: Prisma.PassageUpdateManyWithoutSectionNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionUncheckedUpdateInput = {
@@ -326,6 +338,8 @@ export type SectionUncheckedUpdateInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   instructions?: Prisma.StringFieldUpdateOperationsInput | string
   audioAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passages?: Prisma.PassageUncheckedUpdateManyWithoutSectionNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionCreateManyInput = {
@@ -405,6 +419,11 @@ export type SectionSumOrderByAggregateInput = {
   order?: Prisma.SortOrder
 }
 
+export type SectionScalarRelationFilter = {
+  is?: Prisma.SectionWhereInput
+  isNot?: Prisma.SectionWhereInput
+}
+
 export type SectionCreateNestedManyWithoutPaperInput = {
   create?: Prisma.XOR<Prisma.SectionCreateWithoutPaperInput, Prisma.SectionUncheckedCreateWithoutPaperInput> | Prisma.SectionCreateWithoutPaperInput[] | Prisma.SectionUncheckedCreateWithoutPaperInput[]
   connectOrCreate?: Prisma.SectionCreateOrConnectWithoutPaperInput | Prisma.SectionCreateOrConnectWithoutPaperInput[]
@@ -451,6 +470,34 @@ export type EnumSectionTypeFieldUpdateOperationsInput = {
   set?: $Enums.SectionType
 }
 
+export type SectionCreateNestedOneWithoutPassagesInput = {
+  create?: Prisma.XOR<Prisma.SectionCreateWithoutPassagesInput, Prisma.SectionUncheckedCreateWithoutPassagesInput>
+  connectOrCreate?: Prisma.SectionCreateOrConnectWithoutPassagesInput
+  connect?: Prisma.SectionWhereUniqueInput
+}
+
+export type SectionUpdateOneRequiredWithoutPassagesNestedInput = {
+  create?: Prisma.XOR<Prisma.SectionCreateWithoutPassagesInput, Prisma.SectionUncheckedCreateWithoutPassagesInput>
+  connectOrCreate?: Prisma.SectionCreateOrConnectWithoutPassagesInput
+  upsert?: Prisma.SectionUpsertWithoutPassagesInput
+  connect?: Prisma.SectionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SectionUpdateToOneWithWhereWithoutPassagesInput, Prisma.SectionUpdateWithoutPassagesInput>, Prisma.SectionUncheckedUpdateWithoutPassagesInput>
+}
+
+export type SectionCreateNestedOneWithoutQuestionsInput = {
+  create?: Prisma.XOR<Prisma.SectionCreateWithoutQuestionsInput, Prisma.SectionUncheckedCreateWithoutQuestionsInput>
+  connectOrCreate?: Prisma.SectionCreateOrConnectWithoutQuestionsInput
+  connect?: Prisma.SectionWhereUniqueInput
+}
+
+export type SectionUpdateOneRequiredWithoutQuestionsNestedInput = {
+  create?: Prisma.XOR<Prisma.SectionCreateWithoutQuestionsInput, Prisma.SectionUncheckedCreateWithoutQuestionsInput>
+  connectOrCreate?: Prisma.SectionCreateOrConnectWithoutQuestionsInput
+  upsert?: Prisma.SectionUpsertWithoutQuestionsInput
+  connect?: Prisma.SectionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SectionUpdateToOneWithWhereWithoutQuestionsInput, Prisma.SectionUpdateWithoutQuestionsInput>, Prisma.SectionUncheckedUpdateWithoutQuestionsInput>
+}
+
 export type SectionCreateWithoutPaperInput = {
   id?: string
   title: string
@@ -458,6 +505,8 @@ export type SectionCreateWithoutPaperInput = {
   order: number
   instructions: string
   audioAssetId?: string | null
+  passages?: Prisma.PassageCreateNestedManyWithoutSectionInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutSectionInput
 }
 
 export type SectionUncheckedCreateWithoutPaperInput = {
@@ -467,6 +516,8 @@ export type SectionUncheckedCreateWithoutPaperInput = {
   order: number
   instructions: string
   audioAssetId?: string | null
+  passages?: Prisma.PassageUncheckedCreateNestedManyWithoutSectionInput
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutSectionInput
 }
 
 export type SectionCreateOrConnectWithoutPaperInput = {
@@ -508,6 +559,126 @@ export type SectionScalarWhereInput = {
   audioAssetId?: Prisma.StringNullableFilter<"Section"> | string | null
 }
 
+export type SectionCreateWithoutPassagesInput = {
+  id?: string
+  title: string
+  sectionType: $Enums.SectionType
+  order: number
+  instructions: string
+  audioAssetId?: string | null
+  paper: Prisma.ExamPaperCreateNestedOneWithoutSectionsInput
+  questions?: Prisma.QuestionCreateNestedManyWithoutSectionInput
+}
+
+export type SectionUncheckedCreateWithoutPassagesInput = {
+  id?: string
+  paperId: string
+  title: string
+  sectionType: $Enums.SectionType
+  order: number
+  instructions: string
+  audioAssetId?: string | null
+  questions?: Prisma.QuestionUncheckedCreateNestedManyWithoutSectionInput
+}
+
+export type SectionCreateOrConnectWithoutPassagesInput = {
+  where: Prisma.SectionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SectionCreateWithoutPassagesInput, Prisma.SectionUncheckedCreateWithoutPassagesInput>
+}
+
+export type SectionUpsertWithoutPassagesInput = {
+  update: Prisma.XOR<Prisma.SectionUpdateWithoutPassagesInput, Prisma.SectionUncheckedUpdateWithoutPassagesInput>
+  create: Prisma.XOR<Prisma.SectionCreateWithoutPassagesInput, Prisma.SectionUncheckedCreateWithoutPassagesInput>
+  where?: Prisma.SectionWhereInput
+}
+
+export type SectionUpdateToOneWithWhereWithoutPassagesInput = {
+  where?: Prisma.SectionWhereInput
+  data: Prisma.XOR<Prisma.SectionUpdateWithoutPassagesInput, Prisma.SectionUncheckedUpdateWithoutPassagesInput>
+}
+
+export type SectionUpdateWithoutPassagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionType?: Prisma.EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.StringFieldUpdateOperationsInput | string
+  audioAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paper?: Prisma.ExamPaperUpdateOneRequiredWithoutSectionsNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutSectionNestedInput
+}
+
+export type SectionUncheckedUpdateWithoutPassagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  paperId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionType?: Prisma.EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.StringFieldUpdateOperationsInput | string
+  audioAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutSectionNestedInput
+}
+
+export type SectionCreateWithoutQuestionsInput = {
+  id?: string
+  title: string
+  sectionType: $Enums.SectionType
+  order: number
+  instructions: string
+  audioAssetId?: string | null
+  paper: Prisma.ExamPaperCreateNestedOneWithoutSectionsInput
+  passages?: Prisma.PassageCreateNestedManyWithoutSectionInput
+}
+
+export type SectionUncheckedCreateWithoutQuestionsInput = {
+  id?: string
+  paperId: string
+  title: string
+  sectionType: $Enums.SectionType
+  order: number
+  instructions: string
+  audioAssetId?: string | null
+  passages?: Prisma.PassageUncheckedCreateNestedManyWithoutSectionInput
+}
+
+export type SectionCreateOrConnectWithoutQuestionsInput = {
+  where: Prisma.SectionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SectionCreateWithoutQuestionsInput, Prisma.SectionUncheckedCreateWithoutQuestionsInput>
+}
+
+export type SectionUpsertWithoutQuestionsInput = {
+  update: Prisma.XOR<Prisma.SectionUpdateWithoutQuestionsInput, Prisma.SectionUncheckedUpdateWithoutQuestionsInput>
+  create: Prisma.XOR<Prisma.SectionCreateWithoutQuestionsInput, Prisma.SectionUncheckedCreateWithoutQuestionsInput>
+  where?: Prisma.SectionWhereInput
+}
+
+export type SectionUpdateToOneWithWhereWithoutQuestionsInput = {
+  where?: Prisma.SectionWhereInput
+  data: Prisma.XOR<Prisma.SectionUpdateWithoutQuestionsInput, Prisma.SectionUncheckedUpdateWithoutQuestionsInput>
+}
+
+export type SectionUpdateWithoutQuestionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionType?: Prisma.EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.StringFieldUpdateOperationsInput | string
+  audioAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paper?: Prisma.ExamPaperUpdateOneRequiredWithoutSectionsNestedInput
+  passages?: Prisma.PassageUpdateManyWithoutSectionNestedInput
+}
+
+export type SectionUncheckedUpdateWithoutQuestionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  paperId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  sectionType?: Prisma.EnumSectionTypeFieldUpdateOperationsInput | $Enums.SectionType
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  instructions?: Prisma.StringFieldUpdateOperationsInput | string
+  audioAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passages?: Prisma.PassageUncheckedUpdateManyWithoutSectionNestedInput
+}
+
 export type SectionCreateManyPaperInput = {
   id?: string
   title: string
@@ -524,6 +695,8 @@ export type SectionUpdateWithoutPaperInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   instructions?: Prisma.StringFieldUpdateOperationsInput | string
   audioAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passages?: Prisma.PassageUpdateManyWithoutSectionNestedInput
+  questions?: Prisma.QuestionUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionUncheckedUpdateWithoutPaperInput = {
@@ -533,6 +706,8 @@ export type SectionUncheckedUpdateWithoutPaperInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   instructions?: Prisma.StringFieldUpdateOperationsInput | string
   audioAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passages?: Prisma.PassageUncheckedUpdateManyWithoutSectionNestedInput
+  questions?: Prisma.QuestionUncheckedUpdateManyWithoutSectionNestedInput
 }
 
 export type SectionUncheckedUpdateManyWithoutPaperInput = {
@@ -545,6 +720,44 @@ export type SectionUncheckedUpdateManyWithoutPaperInput = {
 }
 
 
+/**
+ * Count Type SectionCountOutputType
+ */
+
+export type SectionCountOutputType = {
+  passages: number
+  questions: number
+}
+
+export type SectionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  passages?: boolean | SectionCountOutputTypeCountPassagesArgs
+  questions?: boolean | SectionCountOutputTypeCountQuestionsArgs
+}
+
+/**
+ * SectionCountOutputType without action
+ */
+export type SectionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SectionCountOutputType
+   */
+  select?: Prisma.SectionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * SectionCountOutputType without action
+ */
+export type SectionCountOutputTypeCountPassagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PassageWhereInput
+}
+
+/**
+ * SectionCountOutputType without action
+ */
+export type SectionCountOutputTypeCountQuestionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuestionWhereInput
+}
+
 
 export type SectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -555,6 +768,9 @@ export type SectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   instructions?: boolean
   audioAssetId?: boolean
   paper?: boolean | Prisma.ExamPaperDefaultArgs<ExtArgs>
+  passages?: boolean | Prisma.Section$passagesArgs<ExtArgs>
+  questions?: boolean | Prisma.Section$questionsArgs<ExtArgs>
+  _count?: boolean | Prisma.SectionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["section"]>
 
 export type SectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -592,6 +808,9 @@ export type SectionSelectScalar = {
 export type SectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "paperId" | "title" | "sectionType" | "order" | "instructions" | "audioAssetId", ExtArgs["result"]["section"]>
 export type SectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   paper?: boolean | Prisma.ExamPaperDefaultArgs<ExtArgs>
+  passages?: boolean | Prisma.Section$passagesArgs<ExtArgs>
+  questions?: boolean | Prisma.Section$questionsArgs<ExtArgs>
+  _count?: boolean | Prisma.SectionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SectionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   paper?: boolean | Prisma.ExamPaperDefaultArgs<ExtArgs>
@@ -604,6 +823,8 @@ export type $SectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Section"
   objects: {
     paper: Prisma.$ExamPaperPayload<ExtArgs>
+    passages: Prisma.$PassagePayload<ExtArgs>[]
+    questions: Prisma.$QuestionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1008,6 +1229,8 @@ readonly fields: SectionFieldRefs;
 export interface Prisma__SectionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   paper<T extends Prisma.ExamPaperDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExamPaperDefaultArgs<ExtArgs>>): Prisma.Prisma__ExamPaperClient<runtime.Types.Result.GetResult<Prisma.$ExamPaperPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  passages<T extends Prisma.Section$passagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Section$passagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PassagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  questions<T extends Prisma.Section$questionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Section$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1442,6 +1665,54 @@ export type SectionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Sections to delete.
    */
   limit?: number
+}
+
+/**
+ * Section.passages
+ */
+export type Section$passagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Passage
+   */
+  select?: Prisma.PassageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Passage
+   */
+  omit?: Prisma.PassageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PassageInclude<ExtArgs> | null
+  where?: Prisma.PassageWhereInput
+  orderBy?: Prisma.PassageOrderByWithRelationInput | Prisma.PassageOrderByWithRelationInput[]
+  cursor?: Prisma.PassageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PassageScalarFieldEnum | Prisma.PassageScalarFieldEnum[]
+}
+
+/**
+ * Section.questions
+ */
+export type Section$questionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Question
+   */
+  select?: Prisma.QuestionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Question
+   */
+  omit?: Prisma.QuestionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuestionInclude<ExtArgs> | null
+  where?: Prisma.QuestionWhereInput
+  orderBy?: Prisma.QuestionOrderByWithRelationInput | Prisma.QuestionOrderByWithRelationInput[]
+  cursor?: Prisma.QuestionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuestionScalarFieldEnum | Prisma.QuestionScalarFieldEnum[]
 }
 
 /**

@@ -57,6 +57,9 @@ export const ModelName = {
   SourceDocument: 'SourceDocument',
   ExamPaper: 'ExamPaper',
   Section: 'Section',
+  Passage: 'Passage',
+  Question: 'Question',
+  Choice: 'Choice',
   ParsingJob: 'ParsingJob',
   UserState: 'UserState',
   SkillState: 'SkillState',
@@ -168,6 +171,44 @@ export const SectionScalarFieldEnum = {
 } as const
 
 export type SectionScalarFieldEnum = (typeof SectionScalarFieldEnum)[keyof typeof SectionScalarFieldEnum]
+
+
+export const PassageScalarFieldEnum = {
+  id: 'id',
+  sectionId: 'sectionId',
+  title: 'title',
+  body: 'body',
+  order: 'order'
+} as const
+
+export type PassageScalarFieldEnum = (typeof PassageScalarFieldEnum)[keyof typeof PassageScalarFieldEnum]
+
+
+export const QuestionScalarFieldEnum = {
+  id: 'id',
+  sectionId: 'sectionId',
+  passageId: 'passageId',
+  questionType: 'questionType',
+  stem: 'stem',
+  explanation: 'explanation',
+  difficulty: 'difficulty',
+  skillTags: 'skillTags',
+  errorTags: 'errorTags',
+  order: 'order'
+} as const
+
+export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
+export const ChoiceScalarFieldEnum = {
+  id: 'id',
+  questionId: 'questionId',
+  label: 'label',
+  content: 'content',
+  isCorrect: 'isCorrect'
+} as const
+
+export type ChoiceScalarFieldEnum = (typeof ChoiceScalarFieldEnum)[keyof typeof ChoiceScalarFieldEnum]
 
 
 export const ParsingJobScalarFieldEnum = {
