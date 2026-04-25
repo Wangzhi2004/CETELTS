@@ -1,12 +1,12 @@
-import type { Prisma } from "@prisma/client";
-
 import { prisma } from "@/server/db/prisma";
 import { evaluatePolicyGradients, applyGradientsToWeights } from "@/server/algorithms/policy-gradient";
 
 const BATCH_SIZE = 500;
 
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
 type ReflectionPolicyLog = {
-  weights: Prisma.JsonValue;
+  weights: JsonValue;
   propensityScore: number;
   reward: number | null;
   policyVersion: string;
@@ -14,7 +14,7 @@ type ReflectionPolicyLog = {
 
 type ReflectionUserState = {
   id: string;
-  customWeights: Prisma.JsonValue | null;
+  customWeights: JsonValue | null;
 };
 
 export async function runSelfReflectionPolicyUpdate() {
@@ -47,7 +47,7 @@ export async function runSelfReflectionPolicyUpdate() {
     console.log(`[Self-Reflection] Gradients computed:`, opeResult.gradients);
 
     // 3. Batch Transaction for System Updates
-    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+    await prisma.$transaction(async (tx) => {
       await tx.oPEReport.create({
         data: {
           policyVersion: recentLogs[0].policyVersion || "v1",
