@@ -1,4 +1,7 @@
-﻿import { defineConfig } from "@prisma/config";
+import { defineConfig } from "@prisma/config";
 
 export default defineConfig({
+  migrate: {
+    datasourceUrl: process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/cetelts",
+  },
 });

@@ -9,15 +9,13 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-build": "prisma generate && next build --webpack && opennextjs-cloudflare build --skipNextBuild",
-    "cf-deploy": "opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f app"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@opennextjs/cloudflare": "^1.19.4",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@radix-ui/react-slot": "^1.2.4",
@@ -36,7 +34,6 @@
     "react-hook-form": "^7.73.1",
     "recharts": "^3.8.1",
     "tailwind-merge": "^3.5.0",
-    "wrangler": "^4.85.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -45,6 +42,7 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/qrcode-terminal": "^0.12.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",

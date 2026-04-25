@@ -81,7 +81,7 @@ export async function runProactiveMonitor() {
     }
 
     // 4. Batch Transaction execution for all DB updates
-    await prisma.$transaction(async (tx: { skillState: { update: (args: unknown) => Promise<unknown> }; scoreCenterSession: { findFirst: (args: unknown) => Promise<{ sessionId: string } | null> }; taskCard: { create: (args: unknown) => Promise<unknown> } }) => {
+    await prisma.$transaction(async (tx) => {
       const updatePromises = skillsToUpdate.map((s) =>
         tx.skillState.update({ where: { id: s.id }, data: { decayRisk: s.decayRisk } })
       );

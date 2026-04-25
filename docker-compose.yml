@@ -1,0 +1,29 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cetelts-app
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      - app-tmp:/app/.tmp
+
+  nginx:
+    image: nginx:alpine
+    container_name: cetelts-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - app
+
+volumes:
+  app-tmp:

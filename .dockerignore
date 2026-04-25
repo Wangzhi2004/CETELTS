@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.open-next
+.wrangler
+.dev.vars
+.env*
+.tmp
+coverage
+.DS_Store
+*.pem
+*.tsbuildinfo
