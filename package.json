@@ -11,7 +11,7 @@
     "test:watch": "vitest",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-build": "next build --webpack && opennextjs-cloudflare build --skipNextBuild",
+    "cf-build": "prisma generate && next build --webpack && opennextjs-cloudflare build --skipNextBuild",
     "cf-deploy": "opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
