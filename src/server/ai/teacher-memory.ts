@@ -1,10 +1,7 @@
-import { prisma } from "@/server/db/prisma";
 import type { ExamType, TeacherMessage } from "@/types/domain";
 
 type TeacherMemoryMap = Record<string, string>;
 
-// Use a simple in-memory map or Redis for previousResponseId
-// since it's transient and not part of the PRD persistence requirement
 const memoryMap: TeacherMemoryMap = {};
 
 export async function getTeacherPreviousResponseId(userId: string, exam: string) {
@@ -18,8 +15,6 @@ export async function saveTeacherPreviousResponseId(
 ) {
   memoryMap[`${userId}:${exam}`] = responseId;
 }
-
-
 
 export function compactTeacherConversation(input: {
   messages: TeacherMessage[];
@@ -52,27 +47,32 @@ export function compactTeacherConversation(input: {
   };
 }
 
-export async function getTeacherConversationSummary(userId: string, exam: ExamType) {
-  const record = await prisma.conversationSummary.findUnique({
-    where: {
-      userId_examType_windowIndex: {
-        userId,
-        examType: exam,
-        windowIndex: 0,
+export async function getTeacherConversationSummary(_userId: string, _exam: ExamType) {
+  try {
+    const { prisma } = await import("@/server/db/prisma");
+    const record = await prisma.conversationSummary.findUnique({
+      where: {
+        userId_examType_windowIndex: {
+          userId: _userId,
+          examType: _exam,
+          windowIndex: 0,
+        },
       },
-    },
-  });
+    });
 
-  if (!record) {
+    if (!record) {
+      return undefined;
+    }
+
+    return {
+      summary: record.summary,
+      keyDecisions: record.keyDecisions as string[] | undefined,
+      compactedCount: record.compactedCount,
+      updatedAt: record.updatedAt.toISOString(),
+    };
+  } catch {
     return undefined;
   }
-
-  return {
-    summary: record.summary,
-    keyDecisions: record.keyDecisions as string[] | undefined,
-    compactedCount: record.compactedCount,
-    updatedAt: record.updatedAt.toISOString(),
-  };
 }
 
 export async function saveTeacherConversationSummary(input: {
@@ -82,26 +82,29 @@ export async function saveTeacherConversationSummary(input: {
   keyDecisions: string[];
   compactedCount: number;
 }) {
-  await prisma.conversationSummary.upsert({
-    where: {
-      userId_examType_windowIndex: {
+  try {
+    const { prisma } = await import("@/server/db/prisma");
+    await prisma.conversationSummary.upsert({
+      where: {
+        userId_examType_windowIndex: {
+          userId: input.userId,
+          examType: input.exam,
+          windowIndex: 0,
+        },
+      },
+      update: {
+        summary: input.summary,
+        keyDecisions: input.keyDecisions,
+        compactedCount: input.compactedCount,
+      },
+      create: {
         userId: input.userId,
         examType: input.exam,
         windowIndex: 0,
+        summary: input.summary,
+        keyDecisions: input.keyDecisions,
+        compactedCount: input.compactedCount,
       },
-    },
-    update: {
-      summary: input.summary,
-      keyDecisions: input.keyDecisions,
-      compactedCount: input.compactedCount,
-    },
-    create: {
-      userId: input.userId,
-      examType: input.exam,
-      windowIndex: 0,
-      summary: input.summary,
-      keyDecisions: input.keyDecisions,
-      compactedCount: input.compactedCount,
-    },
-  });
+    });
+  } catch {}
 }

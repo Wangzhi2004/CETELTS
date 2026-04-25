@@ -1,6 +1,7 @@
 generator client {
-  provider      = "prisma-client-js"
-  compilerBuild = "small"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  runtime  = "cloudflare"
 }
 
 datasource db {

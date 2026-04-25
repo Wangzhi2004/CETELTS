@@ -85,6 +85,9 @@ function isFallbackSession(sessionId: string) {
 
 function isDatabaseUnavailableError(error: unknown) {
   if (!error || typeof error !== "object") {
+    if (error instanceof Error && error.message === "DATABASE_UNAVAILABLE") {
+      return true;
+    }
     return false;
   }
 
@@ -97,9 +100,12 @@ function isDatabaseUnavailableError(error: unknown) {
     code === "P1001" ||
     code === "P2021" ||
     code === "P2022" ||
+    code === "ERR_MODULE_NOT_FOUND" ||
     message.includes("ECONNREFUSED") ||
     message.includes("Can't reach database server") ||
-    message.includes("does not exist in the current database")
+    message.includes("does not exist in the current database") ||
+    message.includes("DATABASE_UNAVAILABLE") ||
+    message.includes("ERR_MODULE_NOT_FOUND")
   );
 }
 
@@ -354,17 +360,18 @@ async function persistScoreCenterCards(userId: string, sessionId: string, cards:
 }
 
 async function buildOrLoadScoreCenterState(userId: string, examType: ExamType) {
-  let base: Awaited<ReturnType<typeof getBaseScoreCenterInputs>>;
-
   try {
-    base = await getBaseScoreCenterInputs(userId, examType);
+    return await buildOrLoadScoreCenterStateInner(userId, examType);
   } catch (error) {
     if (isDatabaseUnavailableError(error)) {
       return createFallbackScoreCenterResult(userId, examType);
     }
-
     throw error;
   }
+}
+
+async function buildOrLoadScoreCenterStateInner(userId: string, examType: ExamType) {
+  const base = await getBaseScoreCenterInputs(userId, examType);
 
   const existingCards = await prisma.taskCard.findMany({
     where: { userId, sessionId: base.sessionId },
