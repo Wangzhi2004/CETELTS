@@ -1,36 +1,45 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Check, ChevronLeft, Clock3, Link2, List, Pause, RotateCcw, RotateCw } from "lucide-react";
 
 import { submitTaskResult } from "@/app/actions/score-center";
-import { essayPrompts, mockEssayDraft, mockUser } from "@/mocks/student-data";
+import { getWritingQuestions } from "@/app/actions/questions";
 
 export function WritingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; taskId?: string }) {
   const router = useRouter();
   const [mode, setMode] = useState<"cet6" | "ielts-task1" | "ielts-task2">(
     exam === "cet6" ? "cet6" : "ielts-task2",
   );
-  const [draft, setDraft] = useState(mockEssayDraft);
+  const [draft, setDraft] = useState("");
   const [isPending, startTransition] = useTransition();
-  const activePrompt = essayPrompts.find((item) => item.mode === mode) ?? essayPrompts[0];
+  const [prompts, setPrompts] = useState<{ id: string; stem: string }[]>([]);
+  const [activePromptIndex, setActivePromptIndex] = useState(0);
+
+  useEffect(() => {
+    let mounted = true;
+    getWritingQuestions(exam).then((questions) => {
+      if (mounted && questions.length > 0) {
+        setPrompts(questions.map((q) => ({ id: q.id, stem: q.stem })));
+      }
+    });
+    return () => { mounted = false; };
+  }, [exam]);
+
+  const activePrompt = prompts[activePromptIndex] ?? null;
 
   function submitEssay() {
+    if (!activePrompt) return;
     startTransition(async () => {
       const response = await fetch("/api/ai/essay-feedback", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          draft,
-          prompt: activePrompt.prompt,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ draft, prompt: activePrompt.stem }),
       });
       const result = (await response.json()) as { data: unknown };
 
-      await submitTaskResult(mockUser.id, exam, {
+      await submitTaskResult("user-alex", exam, {
         taskId: taskId ?? "unknown",
         status: "success",
         accuracy: 0.74,
@@ -41,15 +50,10 @@ export function WritingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
         selfAssessment: "写作结构基本完整，但论证展开还不够扎实",
         subSkillSignals: [],
         reviewQueueDelta: [],
-        artifacts: [
-          {
-            draft,
-            feedback: result.data,
-          }
-        ],
+        artifacts: [{ draft, feedback: result.data }],
       });
 
-      router.push(`/${exam}/writing/submissions/latest`);
+      router.push(`/${exam}/dashboard`);
     });
   }
 
@@ -69,21 +73,17 @@ export function WritingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
         </div>
       </div>
 
-      <div className="flex items-center gap-8 overflow-x-auto border-b border-[#ece7f8] px-2 pb-3 text-[16px]">
-        {[
-          { key: "cet6", label: "六级写作" },
-          { key: "ielts-task1", label: "Task 1" },
-          { key: "ielts-task2", label: "Task 2" },
-        ].map((item) => (
+      <div className="flex items-center gap-4 overflow-x-auto border-b border-[#ece7f8] px-2 pb-3 text-[16px]">
+        {prompts.map((prompt, index) => (
           <button
-            key={item.key}
-            className={`border-b-2 pb-2.5 ${
-              mode === item.key ? "border-[#7c5cfa] font-semibold text-[#7c5cfa]" : "border-transparent text-[#5f6983]"
+            key={prompt.id}
+            className={`whitespace-nowrap border-b-2 pb-2.5 ${
+              activePromptIndex === index ? "border-[#7c5cfa] font-semibold text-[#7c5cfa]" : "border-transparent text-[#5f6983]"
             }`}
-            onClick={() => setMode(item.key as typeof mode)}
+            onClick={() => setActivePromptIndex(index)}
             type="button"
           >
-            {item.label}
+            题目 {index + 1}
           </button>
         ))}
       </div>
@@ -94,30 +94,18 @@ export function WritingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
             <div className="mb-3 flex items-center justify-between">
               <h2 className="text-[18px] font-[800] tracking-[-0.03em] text-[#1a1d26] sm:text-[28px]">当前题目</h2>
             </div>
-            <div className="space-y-3 sm:grid sm:gap-3 lg:grid-cols-[1fr_0.55fr]">
-              <div className="rounded-[16px] border border-[#efebf8] px-3 py-3 sm:px-4 sm:py-4">
-                <div className="inline-flex rounded-[8px] bg-[#fff3df] px-2 py-1 text-[11px] font-medium text-[#d39119]">
-                  题目
-                </div>
-                <p className="mt-3 text-[14px] leading-7 text-[#232734] sm:text-[18px] sm:leading-9">
-                  {activePrompt.prompt}
-                </p>
+            <div className="rounded-[16px] border border-[#efebf8] px-3 py-3 sm:px-4 sm:py-4">
+              <div className="inline-flex rounded-[8px] bg-[#fff3df] px-2 py-1 text-[11px] font-medium text-[#d39119]">
+                题目
               </div>
-              <div className="rounded-[16px] border border-[#efebf8] px-3 py-3 sm:px-4 sm:py-4">
-                <p className="text-[14px] font-semibold text-[#232734] sm:text-[18px]">提纲</p>
-                <ol className="mt-3 space-y-1.5 text-[12px] leading-5 text-[#5f6983] sm:text-sm">
-                  {activePrompt.outline.map((item, index) => (
-                    <li key={item}>
-                      {index + 1}. {item}
-                    </li>
-                  ))}
-                </ol>
-              </div>
+              <p className="mt-3 text-[14px] leading-7 text-[#232734] sm:text-[18px] sm:leading-9">
+                {activePrompt?.stem ?? "正在加载题目…"}
+              </p>
             </div>
           </div>
 
           <div className="rounded-[18px] border border-[#efebf8] bg-white px-4 py-3 sm:rounded-[22px] sm:px-5 sm:py-4">
-            <div className="grid gap-2 sm:grid-cols-[1fr_auto] sm:items-center">
+            <div className="grid gap-2 sm:grid-cols-[1fr-auto] sm:items-center">
               <div className="inline-flex flex-wrap items-center gap-2.5 text-[12px] text-[#5f6983] sm:text-sm">
                 <span>建议用时 30 分钟</span>
                 <Clock3 className="h-3.5 w-3.5 text-[#7c5cfa] sm:h-4 sm:w-4" />
@@ -150,12 +138,14 @@ export function WritingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
             </div>
             <textarea
               className="min-h-[180px] w-full resize-none border-none text-[15px] leading-[1.75] text-[#232734] outline-none sm:min-h-[320px] sm:text-[18px] sm:leading-[1.95]"
+              placeholder="在此输入你的作文..."
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
             />
             <div className="mt-4 flex justify-end">
               <button
-                className="h-12 rounded-[14px] bg-gradient-to-r from-[#7b5cf8] to-[#8b63ff] px-8 text-[15px] font-semibold text-white"
+                className="h-12 rounded-[14px] bg-gradient-to-r from-[#7b5cf8] to-[#8b63ff] px-8 text-[15px] font-semibold text-white disabled:opacity-50"
+                disabled={!draft.trim() || isPending}
                 onClick={submitEssay}
                 type="button"
               >

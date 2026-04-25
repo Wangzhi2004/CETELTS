@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import {
   ListRestart,
   MessageSquareText,
   Milestone,
+  RefreshCw,
   Settings,
   ShieldAlert,
   Sparkles,
@@ -104,23 +105,27 @@ export function ScoreCenterView({
   const [scoreCenter, setScoreCenter] = useState<ScoreCenterState | null>(null);
   const [showAllCards, setShowAllCards] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const config = examConfigs[exam];
+
+  async function loadScoreCenter() {
+    const state = await getScoreCenterState(mockUser.id, exam);
+    setScoreCenter(state as ScoreCenterState);
+  }
 
   useEffect(() => {
     let mounted = true;
-
-    async function load() {
-      const state = await getScoreCenterState(mockUser.id, exam);
-      if (mounted) {
-        setScoreCenter(state as ScoreCenterState);
-      }
-    }
-
-    void load();
-    return () => {
-      mounted = false;
-    };
+    loadScoreCenter().then(() => { if (!mounted) return; });
+    return () => { mounted = false; };
   }, [exam]);
+
+  function refreshScoreCenter() {
+    setIsRefreshing(true);
+    startTransition(async () => {
+      await loadScoreCenter();
+      setIsRefreshing(false);
+    });
+  }
 
   const latestTeacherMessage = scoreCenter?.teacherMessages
     ? [...scoreCenter.teacherMessages].reverse().find((item) => item.role === "teacher")
@@ -253,6 +258,15 @@ export function ScoreCenterView({
                 >
                   {modeLabelMap[scoreCenter.mode]}
                 </span>
+                <button
+                  className="ml-2 inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#ece7f8] text-[#7c5cfa] transition hover:bg-[#f3efff] disabled:opacity-50"
+                  disabled={isRefreshing}
+                  onClick={refreshScoreCenter}
+                  title="刷新提分中心"
+                  type="button"
+                >
+                  <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+                </button>
               </div>
             </div>
 
