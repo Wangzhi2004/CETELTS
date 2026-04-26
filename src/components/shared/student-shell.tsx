@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, CalendarDays, Flame, UserRound } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
+import { Bell, CalendarDays, Flame, LogOut, UserRound } from "lucide-react";
 
 import { SidebarNav } from "@/components/shared/sidebar-nav";
 import { studentNavigation } from "@/config/navigation";
 import { examConfigs } from "@/config/exams";
-import { mockUser } from "@/mocks/student-data";
 import { cn } from "@/lib/utils";
 
 export function StudentShell({
@@ -16,8 +16,10 @@ export function StudentShell({
   exam: "cet6" | "ielts";
   children: React.ReactNode;
 }) {
+  const { data: session } = useSession();
   const config = examConfigs[exam];
   const mobileTabs = studentNavigation.slice(0, 5);
+  const userName = session?.user?.name ?? "同学";
 
   return (
     <div className="h-[100dvh] overflow-hidden bg-[radial-gradient(circle_at_top_right,rgba(124,92,250,0.10),transparent_18%),#fcfbff] px-3 py-3 sm:px-4 lg:px-4 dark:bg-[radial-gradient(circle_at_top_right,rgba(149,128,255,0.06),transparent_18%),#0f0e17]">
@@ -44,8 +46,15 @@ export function StudentShell({
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#eef2ff] text-[#4c5c8a] dark:bg-[rgba(149,128,255,0.12)] dark:text-[#9580ff]">
                   <UserRound className="h-4 w-4" />
                 </span>
-                <span className="text-sm font-medium text-[#222] dark:text-[#edeef1]">{mockUser.name}</span>
+                <span className="text-sm font-medium text-[#222] dark:text-[#edeef1]">{userName}</span>
               </div>
+              <button
+                className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] border border-[#ede8f7] bg-white text-[#56627c] hover:text-[#dc2626] transition dark:border-[#2a2739] dark:bg-[#1c1a28] dark:text-[#8b91a3] dark:hover:text-[#f87171]"
+                title="退出登录"
+                onClick={() => signOut({ callbackUrl: "/sign-in" })}
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
               <button className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] border border-[#ede8f7] bg-white text-[#56627c] lg:hidden dark:border-[#2a2739] dark:bg-[#1c1a28] dark:text-[#8b91a3]" title="通知">
                 <Bell className="h-4 w-4" />
               </button>

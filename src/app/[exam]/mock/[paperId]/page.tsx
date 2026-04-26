@@ -10,19 +10,21 @@ import { PageHeader } from "@/components/shared/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockUser } from "@/mocks/student-data";
+import { useSession } from "next-auth/react";
 
 export default function MockSessionPage() {
   const params = useParams<{ exam: "cet6" | "ielts"; paperId: string }>();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "demo";
   const { exam, paperId } = params;
   const taskId = searchParams.get("taskId");
 
   function submitMock() {
     startTransition(async () => {
-      await submitTaskResult(mockUser.id, exam, {
+      await submitTaskResult(userId, exam, {
         taskId: taskId ?? "unknown",
         status: "success",
         accuracy: 0.66,

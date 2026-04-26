@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState, useTransition } from "react";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 
@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 
 export default function SignInPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +30,7 @@ export default function SignInPage() {
         setError(result.error);
         return;
       }
-      router.push("/");
+      router.push(callbackUrl);
       router.refresh();
     });
   }
@@ -101,12 +103,6 @@ export default function SignInPage() {
             </Link>
           </div>
         </form>
-
-        <div className="text-center text-xs text-[#8b91a3]">
-          <Link className="hover:text-[#6d53ea] dark:hover:text-[#9580ff]" href="/cet6/dashboard">
-            暂时跳过，以演示模式进入 →
-          </Link>
-        </div>
       </div>
     </div>
   );

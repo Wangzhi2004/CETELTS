@@ -40,7 +40,7 @@ import { Brand } from "@/components/shared/brand";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { examConfigs } from "@/config/exams";
-import { mockUser } from "@/mocks/student-data";
+import { useSession } from "next-auth/react";
 import { ScoreCenterCard, ScoreCenterMode, ScoreCenterState, TeacherMessage, TeacherMessageKind } from "@/types/domain";
 import { cn } from "@/lib/utils";
 
@@ -175,6 +175,8 @@ export function ScoreCenterView({
   standalone?: boolean;
 }) {
   const router = useRouter();
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "demo";
   const [message, setMessage] = useState("");
   const [scoreCenter, setScoreCenter] = useState<ScoreCenterState | null>(null);
   const [showAllCards, setShowAllCards] = useState(false);
@@ -183,7 +185,7 @@ export function ScoreCenterView({
   const config = examConfigs[exam];
 
   async function loadScoreCenter() {
-    const state = await getScoreCenterState(mockUser.id, exam);
+    const state = await getScoreCenterState(userId, exam);
     setScoreCenter(state as ScoreCenterState);
   }
 
@@ -209,7 +211,7 @@ export function ScoreCenterView({
     if (!input.trim()) return;
     setMessage("");
     startTransition(async () => {
-      const nextState = await submitScoreCenterCommand(mockUser.id, exam, input);
+      const nextState = await submitScoreCenterCommand(userId, exam, input);
       setScoreCenter(nextState as ScoreCenterState);
     });
   }
@@ -221,28 +223,28 @@ export function ScoreCenterView({
 
   function startCard(card: ScoreCenterCard) {
     startTransition(async () => {
-      await startCardAction(mockUser.id, exam, card.cardId);
+      await startCardAction(userId, exam, card.cardId);
       router.push(card.destinationPage);
     });
   }
 
   function postponeCard(card: ScoreCenterCard) {
     startTransition(async () => {
-      const nextState = await postponeCardAction(mockUser.id, exam, card.cardId, "用户从提分中心延后");
+      const nextState = await postponeCardAction(userId, exam, card.cardId, "用户从提分中心延后");
       setScoreCenter(nextState as ScoreCenterState);
     });
   }
 
   function skipCard(card: ScoreCenterCard) {
     startTransition(async () => {
-      const nextState = await skipCardAction(mockUser.id, exam, card.cardId, "用户从提分中心跳过");
+      const nextState = await skipCardAction(userId, exam, card.cardId, "用户从提分中心跳过");
       setScoreCenter(nextState as ScoreCenterState);
     });
   }
 
   function closeDay() {
     startTransition(async () => {
-      const nextState = await closeScoreCenterDay(mockUser.id, exam);
+      const nextState = await closeScoreCenterDay(userId, exam);
       setScoreCenter(nextState as ScoreCenterState);
     });
   }

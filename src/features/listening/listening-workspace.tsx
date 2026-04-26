@@ -5,10 +5,13 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, Clock3, FileText, Pause } from "lucide-react";
 
 import { submitTaskResult } from "@/app/actions/score-center";
-import { listeningLesson, mockUser } from "@/mocks/student-data";
+import { useSession } from "next-auth/react";
+import { listeningLesson } from "@/mocks/student-data";
 
 export function ListeningWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; taskId?: string }) {
   const router = useRouter();
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "demo";
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showTranscript, setShowTranscript] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -26,7 +29,7 @@ export function ListeningWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; t
 
   function submitListeningResult() {
     startTransition(async () => {
-      await submitTaskResult(mockUser.id, exam, {
+      await submitTaskResult(userId, exam, {
         taskId: taskId ?? "unknown",
         status: accuracy >= 0.7 ? "success" : "failed",
         accuracy,

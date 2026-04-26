@@ -1,11 +1,15 @@
-import { ScoreCenterView } from "@/features/score-center/score-center-view";
-import { mockUser } from "@/mocks/student-data";
-import { StudyStateProvider } from "@/state/study-state";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <StudyStateProvider exam={mockUser.preferredExam}>
-      <ScoreCenterView exam={mockUser.preferredExam} standalone />
-    </StudyStateProvider>
-  );
+import { auth } from "@/server/auth";
+
+export default async function Home() {
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect("/sign-in");
+  }
+
+  const preferredExam = (session.user as unknown as { preferredExam: string }).preferredExam ?? "cet6";
+
+  redirect(`/${preferredExam}/dashboard`);
 }

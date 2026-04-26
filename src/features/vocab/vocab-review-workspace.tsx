@@ -4,13 +4,16 @@ import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, Volume2 } from "lucide-react";
 
+import { useSession } from "next-auth/react";
 import { submitTaskResult } from "@/app/actions/score-center";
-import { mockUser, vocabItems as seedVocabItems } from "@/mocks/student-data";
+import { vocabItems as seedVocabItems } from "@/mocks/student-data";
 
 const desktopTabs = ["复习列表", "新学习列表", "掌握列表", "收藏列表"];
 
 export function VocabReviewWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; taskId?: string }) {
   const router = useRouter();
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "demo";
   const [activeTab, setActiveTab] = useState(desktopTabs[0]);
   const [items, setItems] = useState(seedVocabItems);
   const [isPending, startTransition] = useTransition();
@@ -22,7 +25,7 @@ export function VocabReviewWorkspace({ exam, taskId }: { exam: "cet6" | "ielts";
 
   function finishRound() {
     startTransition(async () => {
-      await submitTaskResult(mockUser.id, exam, {
+      await submitTaskResult(userId, exam, {
         taskId: taskId ?? "unknown",
         status: "success",
         accuracy: masteredCount / items.length,

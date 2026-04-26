@@ -5,18 +5,20 @@ import { useEffect, useState } from "react";
 import { getLatestWritingFeedback } from "@/app/actions/score-center";
 import { PageHeader } from "@/components/shared/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockUser } from "@/mocks/student-data";
+import { useSession } from "next-auth/react";
 
 type WritingFeedbackState = Awaited<ReturnType<typeof getLatestWritingFeedback>>;
 
 export default function WritingSubmissionPage() {
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "demo";
   const [state, setState] = useState<WritingFeedbackState | null>(null);
 
   useEffect(() => {
     let mounted = true;
 
     async function load() {
-      const payload = await getLatestWritingFeedback(mockUser.id);
+      const payload = await getLatestWritingFeedback(userId);
       if (mounted) {
         setState(payload);
       }

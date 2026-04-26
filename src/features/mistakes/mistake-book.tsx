@@ -7,10 +7,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buildMistakePracticePack } from "@/domain/review-insights";
-import { mockUser } from "@/mocks/student-data";
+import { useSession } from "next-auth/react";
 import { MistakeLog, MistakeTag } from "@/types/domain";
 
 export function MistakeBook() {
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "demo";
   const [mistakeLogs, setMistakeLogs] = useState<MistakeLog[]>([]);
   const tagCounts = Array.from(
     mistakeLogs.reduce((map, item) => {
@@ -24,7 +26,7 @@ export function MistakeBook() {
     let mounted = true;
 
     async function load() {
-      const logs = await getMistakeBookData(mockUser.id);
+      const logs = await getMistakeBookData(userId);
       if (mounted) {
         setMistakeLogs(logs);
         setSelectedTag((logs[0]?.systemTag as MistakeTag | undefined) ?? null);

@@ -6,10 +6,12 @@ import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 import { getReportOverviewData } from "@/app/actions/score-center";
 import { PageHeader } from "@/components/shared/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockUser } from "@/mocks/student-data";
+import { useSession } from "next-auth/react";
 import { MistakeLog } from "@/types/domain";
 
 export function ReportOverview({ exam }: { exam: "cet6" | "ielts" }) {
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "demo";
   const [data, setData] = useState<{
     reportSnapshot: {
       weekHours: number;
@@ -28,7 +30,7 @@ export function ReportOverview({ exam }: { exam: "cet6" | "ielts" }) {
     let mounted = true;
 
     async function load() {
-      const result = await getReportOverviewData(mockUser.id, exam);
+      const result = await getReportOverviewData(userId, exam);
       if (mounted) {
         setData(result);
       }
