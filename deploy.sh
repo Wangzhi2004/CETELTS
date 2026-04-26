@@ -28,7 +28,7 @@ fi
 echo "✅ 找到 .env.production"
 echo ""
 
-echo "▶ 步骤 1/7: 检查 Docker..."
+echo "▶ 步骤 1/6: 检查 Docker..."
 if ! command -v docker &> /dev/null; then
   echo "❌ Docker 未安装，正在安装..."
   curl -fsSL https://get.docker.com | sh
@@ -47,46 +47,34 @@ else
 fi
 echo ""
 
-echo "▶ 步骤 2/7: 推送数据库 schema..."
-export $(grep -v '^#' .env.production | xargs)
-if ! command -v node &> /dev/null; then
-  echo "⚠️  Node.js 未安装，跳过 db push（假设数据库 schema 已存在）"
-else
-  npm install
-  npx prisma db push --skip-generate
-  echo "✅ 数据库 schema 已同步"
-fi
-echo ""
-
-echo "▶ 步骤 3/7: 填充种子数据（管理员+演示账户+题目）..."
-if command -v node &> /dev/null; then
-  npx tsx prisma/seed.ts
-  echo "✅ 种子数据已填充"
-  echo ""
-  echo "  管理员账户: admin@cetelts.com / admin123"
-  echo "  演示账户:   demo@cetelts.com / demo123"
-else
-  echo "⚠️  Node.js 未安装，跳过 seed"
-fi
-echo ""
-
-echo "▶ 步骤 4/7: 构建镜像..."
+echo "▶ 步骤 2/6: 构建镜像..."
 docker compose build
 echo "✅ 构建完成"
 echo ""
 
-echo "▶ 步骤 5/7: 启动服务..."
+echo "▶ 步骤 3/6: 推送数据库 schema..."
+docker compose run --rm db-setup
+echo "✅ 数据库 schema 已同步"
+echo ""
+
+echo "▶ 步骤 4/6: 填充种子数据（管理员+演示账户）..."
+docker compose run --rm --no-deps db-setup npx tsx prisma/seed.ts
+echo "✅ 种子数据已填充"
+echo ""
+echo "  管理员账户: admin@cetelts.com / admin123"
+echo "  演示账户:   demo@cetelts.com / demo123"
+echo ""
+
+echo "▶ 步骤 5/6: 启动服务..."
 docker compose up -d
 echo "✅ 服务启动完成"
 echo ""
 
-echo "▶ 步骤 6/7: 检查状态..."
-sleep 3
+echo "▶ 步骤 6/6: 验证..."
+sleep 5
 docker compose ps
 echo ""
 
-echo "▶ 步骤 7/7: 验证..."
-sleep 2
 if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 | grep -q "200\|302"; then
   echo "✅ 网站响应正常"
 else
@@ -95,7 +83,7 @@ fi
 echo ""
 
 echo "========================================="
-echo "  🎉 部署完成！"
+echo "  🎉 郶署完成！"
 echo "========================================="
 echo ""
 echo "网站运行在 http://localhost:80"

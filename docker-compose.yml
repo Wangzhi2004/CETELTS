@@ -13,6 +13,16 @@ services:
     volumes:
       - app-tmp:/app/.tmp
 
+  db-setup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: cetelts-db-setup
+    env_file:
+      - .env.production
+    command: ["npx", "prisma", "db", "push", "--skip-generate"]
+
   nginx:
     image: nginx:alpine
     container_name: cetelts-nginx
