@@ -21,7 +21,7 @@ services:
     container_name: cetelts-db-setup
     env_file:
       - .env.production
-    command: ["npx", "prisma", "db", "push", "--skip-generate"]
+    command: ["npx", "prisma", "db", "push", "--accept-data-loss"]
 
   nginx:
     image: nginx:alpine

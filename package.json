@@ -14,7 +14,7 @@
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f app",
     "db:seed": "npx tsx prisma/seed.ts",
-    "db:push": "npx prisma db push --skip-generate"
+    "db:push": "npx prisma db push"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
