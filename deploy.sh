@@ -28,62 +28,42 @@ fi
 echo "✅ 找到 .env.production"
 echo ""
 
-echo "▶ 步骤 1/6: 检查 Docker..."
-if ! command -v docker &> /dev/null; then
-  echo "❌ Docker 未安装，正在安装..."
-  curl -fsSL https://get.docker.com | sh
-  systemctl start docker
-  systemctl enable docker
-  echo "✅ Docker 安装完成"
-else
-  echo "✅ Docker 已安装: $(docker --version)"
-fi
-
-if ! command -v docker compose &> /dev/null; then
-  echo "❌ Docker Compose 未安装"
-  exit 1
-else
-  echo "✅ Docker Compose 已安装"
-fi
+echo "▶ 步骤 1/4: 拉取最新代码..."
+git pull origin main
+echo "✅ 代码已更新"
 echo ""
 
-echo "▶ 步骤 2/6: 构建镜像..."
+echo "▶ 步骤 2/4: 停止旧容器并构建新镜像..."
+docker compose down
 docker compose build
 echo "✅ 构建完成"
 echo ""
 
-echo "▶ 步骤 3/6: 推送数据库 schema..."
-docker compose run --rm db-setup
-echo "✅ 数据库 schema 已同步"
-echo ""
-
-echo "▶ 步骤 4/6: 填充种子数据（管理员+演示账户）..."
-docker compose run --rm --no-deps db-setup npx tsx prisma/seed.ts
-echo "✅ 种子数据已填充"
-echo ""
-echo "  管理员账户: admin@cetelts.com / admin123"
-echo "  演示账户:   demo@cetelts.com / demo123"
-echo ""
-
-echo "▶ 步骤 5/6: 启动服务..."
+echo "▶ 步骤 3/4: 启动服务..."
 docker compose up -d
 echo "✅ 服务启动完成"
 echo ""
 
-echo "▶ 步骤 6/6: 验证..."
-sleep 5
+echo "▶ 步骤 4/4: 等待应用就绪并验证..."
+echo "  等待应用启动..."
+for i in $(seq 1 30); do
+  if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 2>/dev/null | grep -q "200\|302"; then
+    echo "  ✅ 应用已就绪 (第 ${i} 秒)"
+    break
+  fi
+  if [ $i -eq 30 ]; then
+    echo "  ⚠️  应用可能还在启动中，请稍后检查"
+    echo "  查看日志: docker compose logs app"
+  fi
+  sleep 1
+done
+echo ""
+
 docker compose ps
 echo ""
 
-if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 | grep -q "200\|302"; then
-  echo "✅ 网站响应正常"
-else
-  echo "⚠️  网站可能还在启动中，请稍等后检查"
-fi
-echo ""
-
 echo "========================================="
-echo "  🎉 郶署完成！"
+echo "  🎉 部署完成！"
 echo "========================================="
 echo ""
 echo "网站运行在 http://localhost:80"
@@ -96,6 +76,6 @@ echo "常用命令:"
 echo "  查看日志:    docker compose logs -f"
 echo "  查看应用日志: docker compose logs -f app"
 echo "  停止服务:    docker compose down"
-echo "  重启服务:    docker compose restart"
-echo "  重新部署:    ./deploy.sh"
+echo "  重启服务:    docker compose down && docker compose up -d"
+echo "  重新部署:    bash deploy.sh"
 echo ""
