@@ -1,17 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { FormEvent, useState, useTransition } from "react";
+import { signIn } from "next-auth/react";
 import { Eye, EyeOff, UserPlus } from "lucide-react";
 
-import { registerUser, loginWithCredentials } from "@/app/actions/auth";
+import { registerUser } from "@/app/actions/auth";
 import { Brand } from "@/components/shared/brand";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function SignUpPage() {
-  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,14 +36,11 @@ export default function SignUpPage() {
         return;
       }
 
-      const loginResult = await loginWithCredentials({ email, password });
-      if (loginResult.error) {
-        router.push("/sign-in");
-        return;
-      }
-
-      router.push("/");
-      router.refresh();
+      await signIn("credentials", {
+        email,
+        password,
+        redirectTo: "/",
+      });
     });
   }
 
@@ -79,6 +75,7 @@ export default function SignUpPage() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
+              disabled={isPending}
             />
           </label>
 
@@ -91,6 +88,7 @@ export default function SignUpPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={isPending}
             />
           </label>
 
@@ -104,6 +102,7 @@ export default function SignUpPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isPending}
               />
               <button
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8b91a3] hover:text-[#6d53ea]"
@@ -124,6 +123,7 @@ export default function SignUpPage() {
               type={showPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              disabled={isPending}
             />
           </label>
 

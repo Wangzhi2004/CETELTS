@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { FormEvent, useState, useTransition } from "react";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 
-import { loginWithCredentials } from "@/app/actions/auth";
 import { Brand } from "@/components/shared/brand";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,19 +17,24 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
+    setIsLoading(true);
 
-    startTransition(async () => {
-      const result = await loginWithCredentials({ email, password });
-      if (result.error) {
-        setError(result.error);
-        return;
-      }
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirectTo: callbackUrl,
     });
+
+    if (result === undefined) {
+      return;
+    }
+
+    setIsLoading(false);
   }
 
   return (
@@ -64,6 +69,7 @@ export default function SignInPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
             />
           </label>
 
@@ -77,6 +83,7 @@ export default function SignInPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
               />
               <button
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8b91a3] hover:text-[#6d53ea]"
@@ -88,8 +95,8 @@ export default function SignInPage() {
             </div>
           </label>
 
-          <Button className="h-12 w-full justify-between text-base" disabled={isPending} type="submit">
-            {isPending ? "登录中…" : "登录"}
+          <Button className="h-12 w-full justify-between text-base" disabled={isLoading} type="submit">
+            {isLoading ? "登录中…" : "登录"}
             <LogIn className="h-5 w-5" />
           </Button>
 
