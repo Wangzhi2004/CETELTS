@@ -5,15 +5,19 @@ import {
   FileText,
   Headphones,
   LayoutDashboard,
+  LibraryBig,
   ListTodo,
   PenSquare,
   ScrollText,
   Settings,
   Target,
+  UserRound,
 } from "lucide-react";
 
 export const studentNavigation = [
   { href: "dashboard", label: "提分中心", icon: LayoutDashboard },
+  { href: "library", label: "训练库", icon: LibraryBig },
+  { href: "/settings", label: "我的", icon: UserRound, absolute: true },
   { href: "reading", label: "阅读训练", icon: BookOpenText },
   { href: "listening", label: "听力训练", icon: Headphones },
   { href: "vocab", label: "词汇复习", icon: ScrollText },
@@ -21,7 +25,6 @@ export const studentNavigation = [
   { href: "mock", label: "模考冲刺", icon: ClipboardList },
   { href: "mistakes", label: "错因归档", icon: Target },
   { href: "reports", label: "学习报告", icon: FileChartColumnIncreasing },
-  { href: "/settings", label: "设置", icon: Settings, absolute: true },
 ];
 
 export const adminNavigation = [

@@ -9,11 +9,15 @@ import {
   BarChart3,
   Brain,
   CalendarClock,
+  CalendarDays,
   ChevronDown,
+  ChevronRight,
+  Clock,
   Clock3,
   Eye,
   Flame,
   Gauge,
+  Headphones,
   Layers2,
   Link2,
   ListRestart,
@@ -26,6 +30,8 @@ import {
   Target,
   TrendingUp,
   Zap,
+  Bell,
+  BookOpen,
 } from "lucide-react";
 
 import {
@@ -402,147 +408,267 @@ function MobileView({
   submitCommand: (value: string) => void;
   setShowAllCards: (fn: (prev: boolean) => boolean) => void;
 }) {
-  const firstCard = scoreCenter.cards[0];
+  const config = examConfigs[exam as "cet6" | "ielts"];
+  const studiedMinutes = scoreCenter.budget.totalMinutes - scoreCenter.panel.remainingBudgetMinutes;
+  const studyProgress = Math.min(100, (studiedMinutes / scoreCenter.budget.totalMinutes) * 100);
 
   return (
-    <>
-      <PanelCard className="overflow-hidden">
-        <div className="border-b border-[#efe8fb] px-4 py-4 dark:border-[#2a2739]">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#775deb] dark:text-[#9580ff]">
-                Score Center
-              </p>
-              <h1 className="mt-1 text-2xl font-black tracking-tight text-[#1d1730] dark:text-[#edeef1]">
-                提分中心
-              </h1>
-              <p className="mt-1.5 text-sm leading-6 text-[#627089] dark:text-[#8b91a3]">
-                今天先学什么，不需要你自己决定。
-              </p>
-            </div>
-            <span className={cn("shrink-0 rounded-full px-3 py-1 text-xs font-semibold ring-1", modeToneMap[scoreCenter.mode])}>
-              {modeLabelMap[scoreCenter.mode]}
-            </span>
+    <div className="space-y-4 pb-20">
+      {/* 顶部栏：今日模式 + 图标 */}
+      <div className="flex items-center justify-between px-1">
+        <button className="flex items-center gap-2 rounded-2xl bg-white px-4 py-2.5 shadow-sm border border-[#f0e8ff]">
+          <span className="text-sm font-semibold text-[#1d1730]">今日模式</span>
+          <span className="text-xs font-medium text-[#7c5cfa]">· {config.label}</span>
+          <ChevronDown className="h-4 w-4 text-[#7c5cfa]" />
+        </button>
+        <div className="flex items-center gap-2">
+          <button className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#f0e8ff] text-[#6b748a] shadow-sm">
+            <CalendarDays className="h-5 w-5" />
+          </button>
+          <button className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#f0e8ff] text-[#6b748a] shadow-sm relative">
+            <Bell className="h-5 w-5" />
+            <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white" />
+          </button>
+        </div>
+      </div>
+
+      {/* 统计行 - 4个紧凑指标卡片 */}
+      <div className="grid grid-cols-2 gap-3">
+        {/* 距考试 */}
+        <div className="col-span-2 rounded-2xl bg-gradient-to-br from-[#9580ff] to-[#7c5cfa] p-4 text-white shadow-lg shadow-purple-200/40">
+          <p className="text-xs font-medium text-white/80">距考试</p>
+          <div className="mt-1 flex items-baseline gap-2">
+            <span className="text-3xl font-black">{scoreCenter.panel.daysToExam}</span>
+            <span className="text-base font-semibold">天</span>
+          </div>
+          <p className="mt-1 text-xs text-white/70">{new Date(Date.now() + scoreCenter.panel.daysToExam * 86400000).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.')}</p>
+        </div>
+
+        {/* 今日学习 */}
+        <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#f0e8ff]">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-medium text-[#6b748a]">今日学习</p>
+            <Clock className="h-4 w-4 text-[#7c5cfa]" />
+          </div>
+          <div className="mt-1.5 flex items-baseline gap-1.5">
+            <span className="text-xl font-bold text-[#1d1730]">{studiedMinutes}</span>
+            <span className="text-sm text-[#9ca3af]">/</span>
+            <span className="text-sm font-medium text-[#6b748a]">{scoreCenter.budget.totalMinutes} 分钟</span>
+          </div>
+          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#f0e8ff]">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-[#9580ff] to-[#7c5cfa] transition-all duration-500"
+              style={{ width: `${studyProgress}%` }}
+            />
           </div>
         </div>
 
-        <div className="space-y-4 px-4 py-4">
-          <div className="grid grid-cols-2 gap-3">
-            <CompactMetric label="当前估分" value={`${scoreCenter.panel.estimatedScore}`} />
-            <CompactMetric label="剩余天数" value={`${scoreCenter.panel.daysToExam} 天`} />
-            <CompactMetric label="目标分数" value={`${scoreCenter.panel.targetScore}`} />
-            <CompactMetric label="今日剩余" value={`${scoreCenter.panel.remainingBudgetMinutes} 分钟`} />
+        {/* 预计得分 */}
+        <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#f0e8ff]">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-medium text-[#6b748a]">预计得分</p>
+            <TrendingUp className="h-4 w-4 text-emerald-500" />
           </div>
+          <div className="mt-1.5 flex items-baseline gap-1.5">
+            <span className="text-xl font-bold text-emerald-600">+{scoreCenter.panel.expectedGain}</span>
+          </div>
+          <p className="mt-1 text-xs text-emerald-600/70">较昨日 +3</p>
+        </div>
 
-          {latestTeacherMessage && (
-            <section className="rounded-2xl border border-[#eee5ff] bg-[linear-gradient(135deg,#fbf8ff_0%,#ffffff_62%,#faf6ff_100%)] p-4 dark:border-[#2a2739] dark:bg-[rgba(149,128,255,0.06)]">
-              <div className="flex items-center gap-2 text-[#6d53ea] dark:text-[#9580ff]">
-                {messageKindIconMap[latestTeacherMessage.kind] ?? <Sparkles className="h-4 w-4" />}
-                <span className="text-sm font-semibold">{messageKindLabelMap[latestTeacherMessage.kind]}</span>
+        {/* 本周风险 */}
+        <div className="col-span-2 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 p-4 shadow-sm border border-orange-100">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-[#92400e]">本周风险</p>
+              <div className="mt-1 flex items-center gap-2">
+                <span className="text-xl font-bold text-orange-600">中</span>
+                <AlertTriangle className="h-4 w-4 text-orange-500" />
               </div>
-              <p className="mt-2.5 text-[15px] leading-7 text-[#30384e] dark:text-[#c5c8d4]">
+            </div>
+            <p className="max-w-[140px] text-right text-xs leading-relaxed text-orange-700/80">努力正确率下滑</p>
+          </div>
+        </div>
+      </div>
+
+      {/* AI教师聊天区域 */}
+      {latestTeacherMessage && (
+        <div className="space-y-3 rounded-2xl bg-white p-4 shadow-sm border border-[#f0e8ff]">
+          <div className="flex items-start gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#9580ff] to-[#7c5cfa] text-white shadow-md">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div className="flex-1 space-y-2">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-[#f4edff] px-2.5 py-1 text-xs font-semibold text-[#7c5cfa]">
+                {messageKindIconMap[latestTeacherMessage.kind] ?? <Sparkles className="h-3.5 w-3.5" />}
+                {messageKindLabelMap[latestTeacherMessage.kind]}
+              </div>
+              <div className="rounded-2xl rounded-tl-md bg-[#faf8ff] px-4 py-3 text-sm leading-relaxed text-[#30384e] border border-[#efe8fb]">
                 {latestTeacherMessage.content}
-              </p>
+              </div>
               {latestTeacherMessage.evidenceUsed && latestTeacherMessage.evidenceUsed.length > 0 && (
-                <div className="mt-3 space-y-1.5">
+                <div className="space-y-1.5 pl-1">
                   {latestTeacherMessage.evidenceUsed.slice(0, 2).map((ev, i) => (
-                    <div key={i} className="rounded-lg bg-white/60 px-3 py-1.5 text-xs text-[#6b748a] dark:bg-[rgba(255,255,255,0.04)] dark:text-[#8b91a3]">
-                      <span className="font-medium text-[#7c5cfa] dark:text-[#9580ff]">{ev.source}</span>：{ev.quote}
+                    <div key={i} className="rounded-lg bg-white/80 px-3 py-2 text-xs text-[#6b748a] border border-[#f0e8ff]">
+                      <span className="font-medium text-[#7c5cfa]">{ev.source}</span>：{ev.quote}
                     </div>
                   ))}
                 </div>
               )}
-            </section>
-          )}
-
-          {firstCard && (
-            <HeroCard card={firstCard} onStart={() => startCard(firstCard)} />
-          )}
-
-          <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#775deb] dark:text-[#9580ff]">
-                  Task Stack
-                </p>
-                <h2 className="mt-1 text-xl font-black tracking-tight text-[#1d1730] dark:text-[#edeef1]">
-                  今日任务栈
-                </h2>
-              </div>
-              <span className="rounded-full bg-[#f4edff] px-3 py-1 text-xs font-semibold text-[#6b51ea] dark:bg-[rgba(149,128,255,0.12)] dark:text-[#9580ff]">
-                {scoreCenter.cards.length} 张卡
-              </span>
-            </div>
-
-            {mobileCards.map((card, index) => (
-              <TaskStackCard
-                key={card.cardId}
-                card={card}
-                index={index}
-                onStart={() => startCard(card)}
-                onPostpone={() => postponeCard(card)}
-                onSkip={() => skipCard(card)}
-                compact
-              />
-            ))}
-
-            {scoreCenter.cards.length > 3 && (
-              <button
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-2xl border border-[#ece4fb] bg-white text-sm font-semibold text-[#6b51ea] transition hover:bg-[#faf7ff] dark:border-[#2a2739] dark:bg-[#1c1a28] dark:text-[#9580ff] dark:hover:bg-[rgba(255,255,255,0.05)]"
-                onClick={() => setShowAllCards((current) => !current)}
-                type="button"
-              >
-                {showAllCards ? "收起后续任务" : `展开剩余 ${scoreCenter.cards.length - 3} 张卡`}
-                <ChevronDown className={cn("h-4 w-4 transition", showAllCards && "rotate-180")} />
-              </button>
-            )}
-          </section>
-        </div>
-      </PanelCard>
-
-      <PanelCard>
-        <div className="border-b border-[#efe8fb] px-4 py-4 dark:border-[#2a2739]">
-          <div className="flex items-center gap-3">
-            <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#f4edff] text-[#6d53ea] dark:bg-[rgba(149,128,255,0.12)] dark:text-[#9580ff]">
-              <MessageSquareText className="h-5 w-5" />
-            </div>
-            <div>
-              <h3 className="text-lg font-black tracking-tight text-[#241b35] dark:text-[#edeef1]">和老师说一句</h3>
-              <p className="mt-0.5 text-sm text-[#68748b] dark:text-[#8b91a3]">调整预算、优先级或追问为什么这样排。</p>
             </div>
           </div>
         </div>
+      )}
 
-        <div className="space-y-3 px-4 py-4">
-          <div className="grid grid-cols-2 gap-2">
-            {quickActions.map((action) => (
-              <button
-                key={action}
-                className="min-h-11 rounded-2xl bg-[#f5f0ff] px-3 py-2 text-left text-xs font-medium leading-5 text-[#6f57eb] transition hover:bg-[#ede5ff] dark:bg-[rgba(149,128,255,0.08)] dark:text-[#9580ff] dark:hover:bg-[rgba(149,128,255,0.14)]"
-                onClick={() => submitCommand(action)}
-                type="button"
-              >
-                {action}
-              </button>
-            ))}
-          </div>
+      {/* 任务卡片列表 */}
+      <div className="space-y-3">
+        {mobileCards.map((card, index) => (
+          <MobileTaskCard
+            key={card.cardId}
+            card={card}
+            index={index}
+            onStart={() => startCard(card)}
+            onPostpone={() => postponeCard(card)}
+            onSkip={() => skipCard(card)}
+          />
+        ))}
 
-          <form className="space-y-2" onSubmit={handleSubmit}>
-            <Input
-              placeholder="告诉老师你的时间、状态或优先级变化"
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-            />
-            <Button className="w-full justify-between" disabled={isPending} type="submit">
-              让老师重排今天任务
-              <MessageSquareText className="h-4 w-4" />
-            </Button>
-          </form>
+        {scoreCenter.cards.length > 3 && (
+          <button
+            className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-[#d8cbff] bg-white/50 text-sm font-semibold text-[#7c5cfa] transition hover:bg-[#faf8ff]"
+            onClick={() => setShowAllCards((current) => !current)}
+            type="button"
+          >
+            {showAllCards ? "收起后续任务" : `展开剩余 ${scoreCenter.cards.length - 3} 张任务卡`}
+            <ChevronDown className={cn("h-4 w-4 transition", showAllCards && "rotate-180")} />
+          </button>
+        )}
+      </div>
+
+      {/* 快捷操作区 */}
+      <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#f0e8ff]">
+        <div className="mb-3 flex items-center gap-2">
+          <MessageSquareText className="h-5 w-5 text-[#7c5cfa]" />
+          <h3 className="text-base font-bold text-[#1d1730]">和老师说一句</h3>
         </div>
-      </PanelCard>
+        <div className="mb-3 flex flex-wrap gap-2">
+          {quickActions.slice(0, 4).map((action) => (
+            <button
+              key={action}
+              className="rounded-xl bg-[#f5f0ff] px-3 py-2 text-left text-xs font-medium text-[#6f57eb] transition hover:bg-[#ede5ff]"
+              onClick={() => submitCommand(action)}
+              type="button"
+            >
+              {action}
+            </button>
+          ))}
+        </div>
+        <form className="space-y-2" onSubmit={handleSubmit}>
+          <Input
+            placeholder="告诉老师你的时间、状态或优先级变化"
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+          />
+          <Button className="w-full justify-between" disabled={isPending} type="submit">
+            让老师调整计划
+            <MessageSquareText className="h-4 w-4" />
+          </Button>
+        </form>
+      </div>
+    </div>
+  );
+}
 
-      <PanelColumn exam={exam as "cet6" | "ielts"} mobile scoreCenter={scoreCenter} />
-    </>
+/** 移动端任务卡片组件 */
+function MobileTaskCard({
+  card,
+  index,
+  onStart,
+  onPostpone,
+  onSkip,
+}: {
+  card: ScoreCenterCard;
+  index: number;
+  onStart: () => void;
+  onPostpone: () => void;
+  onSkip: () => void;
+}) {
+  const isDone = ["completed", "skipped", "postponed", "cancelled", "expired"].includes(card.status);
+  const iconMap: Record<ScoreCenterCard["cardType"], { icon: React.ReactNode; color: string; bgColor: string }> = {
+    review: { icon: <ListRestart className="h-5 w-5" />, color: "text-slate-600", bgColor: "bg-slate-100" },
+    score_boost: { icon: <Zap className="h-5 w-5" />, color: "text-violet-600", bgColor: "bg-violet-100" },
+    repair: { icon: <ShieldAlert className="h-5 w-5" />, color: "text-amber-600", bgColor: "bg-amber-100" },
+    pitfall: { icon: <AlertTriangle className="h-5 w-5" />, color: "text-amber-600", bgColor: "bg-amber-100" },
+    verification: { icon: <Eye className="h-5 w-5" />, color: "text-emerald-600", bgColor: "bg-emerald-100" },
+    recovery: { icon: <Clock3 className="h-5 w-5" />, color: "text-slate-500", bgColor: "bg-slate-50" },
+    sprint: { icon: <Flame className="h-5 w-5" />, color: "text-violet-600", bgColor: "bg-violet-100" },
+    foundation: { icon: <Layers2 className="h-5 w-5" />, color: "text-gray-600", bgColor: "bg-gray-100" },
+    bridge: { icon: <Link2 className="h-5 w-5" />, color: "text-teal-600", bgColor: "bg-teal-100" },
+    mock_anchor: { icon: <Target className="h-5 w-5" />, color: "text-purple-600", bgColor: "bg-purple-100" },
+  };
+
+  const cardStyle = iconMap[card.cardType] || iconMap.score_boost;
+
+  return (
+    <div className={cn(
+      "overflow-hidden rounded-2xl bg-white shadow-sm border border-[#f0e8ff] transition-all",
+      card.isNew && "ring-2 ring-[#cdbdfd]",
+      isDone && "opacity-60"
+    )}>
+      <div className="p-4">
+        {/* 卡片头部：图标 + 标题 + 元信息 */}
+        <div className="flex items-start gap-3">
+          <div className={cn("flex h-11 w-11 shrink-0 items-center justify-center rounded-xl", cardStyle.bgColor, cardStyle.color)}>
+            {cardStyle.icon}
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-semibold text-[#7c5cfa]">{cardLabelMap[card.cardType]}</span>
+              <span className="text-xs text-[#9ca3af]">|</span>
+              <span className="text-xs font-medium text-[#6b748a]">预计 {card.expectedImpact}</span>
+              <span className="text-xs text-[#9ca3af]">|</span>
+              <span className="text-xs font-medium text-[#6b748a]">{card.estimatedTime}分钟</span>
+            </div>
+            <h3 className="mt-1 text-base font-bold text-[#1d1730] leading-snug">{card.title}</h3>
+          </div>
+        </div>
+
+        {/* 描述文字 */}
+        <p className="mt-3 text-sm leading-relaxed text-[#627089]">{card.whyThisNow}</p>
+
+        {/* 操作按钮行 */}
+        {!isDone && (
+          <div className="mt-4 flex items-center gap-2">
+            <button
+              className="flex-1 inline-flex h-10 items-center justify-center rounded-xl bg-gradient-to-r from-[#9580ff] to-[#7c5cfa] text-sm font-semibold text-white shadow-md shadow-purple-200/50 transition hover:shadow-lg active:scale-[0.98]"
+              onClick={onStart}
+              type="button"
+            >
+              开始
+            </button>
+            <button
+              className="inline-flex h-10 w-16 items-center justify-center rounded-xl border border-[#ece4fb] bg-white text-sm font-medium text-[#647089] transition hover:bg-[#faf7ff]"
+              onClick={onPostpone}
+              type="button"
+            >
+              推迟
+            </button>
+            <button
+              className="inline-flex h-10 w-16 items-center justify-center rounded-xl border border-[#f1d7d7] bg-white text-sm font-medium text-[#a94e4e] transition hover:bg-[#fff8f8]"
+              onClick={onSkip}
+              type="button"
+            >
+              跳过
+            </button>
+            <button
+              className="inline-flex h-10 w-16 items-center justify-center rounded-xl border border-[#ece4fb] bg-white text-sm font-medium text-[#647089] transition hover:bg-[#faf7ff]"
+              type="button"
+            >
+              换一个
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 

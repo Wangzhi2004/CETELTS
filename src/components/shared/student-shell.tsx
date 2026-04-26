@@ -18,7 +18,7 @@ export function StudentShell({
 }) {
   const { data: session } = useSession();
   const config = examConfigs[exam];
-  const mobileTabs = studentNavigation.slice(0, 5);
+  const mobileTabs = studentNavigation.slice(0, 3);
   const userName = session?.user?.name ?? "同学";
 
   return (
@@ -67,7 +67,7 @@ export function StudentShell({
       </div>
 
       <nav className="fixed inset-x-3 bottom-3 z-20 rounded-[24px] border border-[#ebe5f5] bg-white/95 p-2 shadow-[0_12px_40px_rgba(124,92,250,0.12)] backdrop-blur lg:hidden dark:border-[#2a2739] dark:bg-[#181722]/95 dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
-        <div className="grid grid-cols-5 gap-1">
+        <div className="grid grid-cols-3 gap-1">
           {mobileTabs.map((item, index) => {
             const href = item.absolute ? item.href : `/${exam}/${item.href}`;
             const Icon = item.icon;
