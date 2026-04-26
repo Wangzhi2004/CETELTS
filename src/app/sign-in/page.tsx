@@ -51,7 +51,19 @@ export default function SignInPage() {
         <div className="relative w-full max-w-[1060px] flex rounded-[2.5rem] bg-white/70 backdrop-blur-2xl shadow-[0_8px_40px_rgba(124,92,250,0.06)] border border-white/80 overflow-hidden">
 
           {/* Left Panel - Brand */}
-          <div className="w-1/2 flex flex-col justify-between p-14 bg-gradient-to-br from-[#7c5cfa]/[0.08] to-transparent relative overflow-hidden">
+          <div className="w-1/2 flex flex-col justify-between p-14 bg-gradient-to-br from-[#7c5cfa]/[0.06] to-transparent relative overflow-hidden">
+            {/* Illustration as subtle background */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.12]">
+              <Image
+                src="/images/login-illustration.png"
+                alt=""
+                width={600}
+                height={500}
+                className="w-[85%] h-auto object-contain"
+                priority
+              />
+            </div>
+
             {/* Logo */}
             <div className="relative z-10 flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-[1rem] bg-gradient-to-br from-[#7c5cfa] to-[#5b3eb8] text-white shadow-lg shadow-[#7c5cfa]/30">
@@ -77,7 +89,7 @@ export default function SignInPage() {
                 { icon: BarChart3, title: "科学规划路径", desc: "AI定制专属学习方案" },
                 { icon: Sparkles, title: "沉浸式学习", desc: "互动式智能提分体验" },
               ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl bg-white/50 backdrop-blur-sm border border-white/60 shadow-sm w-fit pr-8">
+                <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/70 shadow-sm w-fit pr-8">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#7c5cfa] shadow-sm">
                     <item.icon className="h-5 w-5" />
                   </div>
@@ -88,19 +100,6 @@ export default function SignInPage() {
                 </div>
               ))}
             </div>
-
-            {/* 3D Illustration */}
-            <div className="absolute -bottom-10 -right-10 w-[120%] pointer-events-none select-none drop-shadow-2xl opacity-95">
-              <Image
-                src="/images/login-illustration.png"
-                alt="Login Illustration"
-                width={800}
-                height={800}
-                className="w-full h-auto object-contain"
-                priority
-              />
-            </div>
-            <div className="absolute left-[20%] bottom-[10%] w-[300px] h-[300px] rounded-full bg-[#7c5cfa]/10 blur-[60px] pointer-events-none" />
           </div>
 
           {/* Right Panel - Form */}
@@ -214,18 +213,17 @@ export default function SignInPage() {
             <div className="mt-2 w-8 h-[3px] rounded-full bg-gradient-to-r from-[#7c5cfa] to-[#9580ff]" />
           </div>
 
-          {/* 3D Illustration */}
-          <div className="relative mt-4 -mr-4 w-[140%] pointer-events-none select-none">
+          {/* Illustration as subtle background */}
+          <div className="relative mt-4 -mr-4 pointer-events-none select-none opacity-[0.15]">
             <Image
               src="/images/login-illustration.png"
-              alt="Login Illustration"
+              alt=""
               width={500}
               height={400}
-              className="w-full h-auto object-contain drop-shadow-xl"
+              className="w-full h-auto object-contain"
               priority
             />
           </div>
-          <div className="absolute bottom-[15%] left-[20%] w-[200px] h-[200px] rounded-full bg-[#7c5cfa]/10 blur-[50px] pointer-events-none" />
         </div>
 
         {/* Mobile Form Card */}
