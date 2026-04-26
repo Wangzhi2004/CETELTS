@@ -1,14 +1,12 @@
 import NextAuth from "next-auth";
 
+import { authConfig } from "@/server/auth.config";
+
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
 
-const { auth } = NextAuth({
-  providers: [],
-  session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_SECRET ?? "cetelts-dev-secret-change-in-production",
-});
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;

@@ -46,11 +46,11 @@ export default function SignUpPage() {
 
       if (signInResult?.error) {
         setError("注册成功但自动登录失败，请手动登录");
-        router.push("/sign-in");
+        window.location.href = "/sign-in";
         return;
       }
 
-      router.push("/");
+      window.location.href = "/";
     });
   }
 

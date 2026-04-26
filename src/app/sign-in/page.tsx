@@ -36,7 +36,7 @@ export default function SignInPage() {
       return;
     }
 
-    router.push(callbackUrl);
+    window.location.href = callbackUrl;
   }
 
   return (
