@@ -54,19 +54,17 @@ export async function loginWithCredentials(input: {
   password: string;
 }) {
   try {
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       email: input.email,
       password: input.password,
-      redirect: false,
+      redirectTo: "/",
     });
-
-    if (result?.error) {
-      return { error: "邮箱或密码不正确" };
-    }
-
     return { success: true };
-  } catch {
-    return { error: "登录失败，请重试" };
+  } catch (error) {
+    if ((error as unknown as { digest?: string }).digest?.startsWith("NEXT_REDIRECT")) {
+      return { success: true };
+    }
+    return { error: "邮箱或密码不正确" };
   }
 }
 

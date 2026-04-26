@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FormEvent, useState, useTransition } from "react";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 
@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function SignInPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
   const [email, setEmail] = useState("");
@@ -30,8 +29,6 @@ export default function SignInPage() {
         setError(result.error);
         return;
       }
-      router.push(callbackUrl);
-      router.refresh();
     });
   }
 
