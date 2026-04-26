@@ -1,18 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Eye, EyeOff, ArrowRight, Mail, Lock, BarChart3, Sparkles } from "lucide-react";
 
 export default function SignInPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+  const urlError = searchParams.get("error");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(urlError === "CredentialsSignin" ? "邮箱或密码不正确" : urlError ?? "");
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -23,11 +25,16 @@ export default function SignInPage() {
     const result = await signIn("credentials", {
       email,
       password,
-      redirectTo: callbackUrl,
+      redirect: false,
     });
 
-    if (result === undefined) return;
-    setIsLoading(false);
+    if (result?.error) {
+      setError("邮箱或密码不正确");
+      setIsLoading(false);
+      return;
+    }
+
+    router.push(callbackUrl);
   }
 
   return (
