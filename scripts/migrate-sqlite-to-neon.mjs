@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import initSqlJs from "sql.js";
 import pg from "pg";
 import { readFileSync } from "node:fs";
 
@@ -7,18 +7,21 @@ const PG_URL = process.env.DATABASE_URL;
 
 if (!PG_URL) {
   console.error("❌ 请设置 DATABASE_URL 环境变量（Neon 连接字符串）");
-  console.error('   $env:DATABASE_URL="postgresql://neondb_owner:xxxx@ep-xxx.neon.tech/neondb?sslmode=require"');
-  console.error("   node scripts/migrate-sqlite-to-neon.mjs");
+  console.error("  PowerShell: $env:DATABASE_URL=\"postgresql://...\"");
+  console.error("  CMD:        set DATABASE_URL=postgresql://...");
+  console.error("  然后:       node scripts/migrate-sqlite-to-neon.mjs");
   process.exit(1);
 }
 
-function sqliteQuery(sql) {
-  const result = execSync(`sqlite3 "${SQLITE_PATH}" -json "${sql}"`, { encoding: "utf8" });
-  return result.trim() ? JSON.parse(result) : [];
-}
-
 async function main() {
+  console.log("▶ 加载 SQLite 数据库...");
+  const SQL = await initSqlJs();
+  const fileBuffer = readFileSync(SQLITE_PATH);
+  const db = new SQL.Database(fileBuffer);
+
+  console.log("▶ 连接 Neon PostgreSQL...");
   const pool = new pg.Pool({ connectionString: PG_URL });
+  await pool.query("SELECT 1");
   console.log("✅ 连接成功！开始迁移...\n");
 
   const tables = [
@@ -53,7 +56,13 @@ async function main() {
   ];
 
   for (const table of tables) {
-    const rows = sqliteQuery(`SELECT * FROM ${table.name}`);
+    const stmt = db.prepare(`SELECT * FROM ${table.name}`);
+    const rows = [];
+    while (stmt.step()) {
+      rows.push(stmt.getAsObject());
+    }
+    stmt.free();
+
     if (rows.length === 0) {
       console.log(`⏭️  ${table.name}: 0 行，跳过`);
       continue;
@@ -76,13 +85,14 @@ async function main() {
         const result = await pool.query(insertSql, values);
         if (result.rowCount && result.rowCount > 0) inserted++;
       } catch (err) {
-        console.error(`  ⚠️  ${table.name} 插入失败: ${err.message.slice(0, 80)}`);
+        console.error(`  ⚠️  ${table.name} 插入失败: ${err.message.slice(0, 120)}`);
       }
     }
 
     console.log(`✅ ${table.name}: ${rows.length} 行读取，${inserted} 行插入`);
   }
 
+  db.close();
   await pool.end();
   console.log("\n🎉 迁移完成！");
 }
