@@ -128,9 +128,9 @@ export function WritingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
             </div>
             <div className="mb-3 flex flex-wrap items-center gap-3 border-b border-[#f1edf8] pb-2.5 text-[#5f6983]">
               <button className="rounded-[10px] border border-[#ece7f8] px-3 py-2 text-[12px] sm:text-sm">正文</button>
-              <button>B</button>
-              <button>I</button>
-              <button>U</button>
+              <button title="加粗">B</button>
+              <button title="斜体">I</button>
+              <button title="下划线">U</button>
               <button><List className="h-4 w-4" /></button>
               <button><Link2 className="h-4 w-4" /></button>
               <button><RotateCcw className="h-4 w-4" /></button>

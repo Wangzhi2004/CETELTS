@@ -60,7 +60,7 @@ export function ReportOverview({ exam }: { exam: "cet6" | "ielts" }) {
   }
 
   const chartData = data.reportSnapshot.readingAccuracyTrend.map((item, index) => ({
-    week: `W${index + 1}`,
+    week: `第${index + 1}周`,
     reading:
       (index === data.reportSnapshot.readingAccuracyTrend.length - 1 && data.completedReadingAccuracy
         ? data.completedReadingAccuracy
@@ -85,9 +85,9 @@ export function ReportOverview({ exam }: { exam: "cet6" | "ielts" }) {
             <LineChart data={chartData}>
               <XAxis dataKey="week" tickLine={false} axisLine={false} />
               <Tooltip />
-              <Line type="monotone" dataKey="reading" stroke="#7C5CFA" strokeWidth={3} />
-              <Line type="monotone" dataKey="listening" stroke="#16B364" strokeWidth={3} />
-              <Line type="monotone" dataKey="vocab" stroke="#F59E0B" strokeWidth={3} />
+              <Line type="monotone" dataKey="reading" name="阅读" stroke="#7C5CFA" strokeWidth={3} />
+              <Line type="monotone" dataKey="listening" name="听力" stroke="#16B364" strokeWidth={3} />
+              <Line type="monotone" dataKey="vocab" name="词汇" stroke="#F59E0B" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>

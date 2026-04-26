@@ -359,6 +359,72 @@ async function persistScoreCenterCards(userId: string, sessionId: string, cards:
   }
 }
 
+async function persistTeacherMessages(
+  userId: string,
+  examType: ExamType,
+  sessionId: string | undefined,
+  messages: ScoreCenterState["teacherMessages"],
+) {
+  if (!messages || messages.length === 0) return;
+
+  const recentMessages = messages.slice(-20);
+
+  for (const msg of recentMessages) {
+    await prisma.teacherMessage.upsert({
+      where: { id: msg.id },
+      create: {
+        id: msg.id,
+        userId,
+        examType,
+        sessionId: sessionId ?? null,
+        role: msg.role,
+        kind: msg.kind,
+        content: msg.content,
+        decisionSummary: msg.decisionSummary ?? null,
+        evidenceUsed: msg.evidenceUsed ?? undefined,
+        boundCards: msg.boundCards ?? undefined,
+        userActionExpected: msg.userActionExpected ?? null,
+        createdAt: new Date(msg.createdAt),
+      },
+      update: {
+        decisionSummary: msg.decisionSummary ?? null,
+        evidenceUsed: msg.evidenceUsed ?? undefined,
+        boundCards: msg.boundCards ?? undefined,
+        userActionExpected: msg.userActionExpected ?? null,
+      },
+    });
+  }
+}
+
+async function loadTeacherMessages(
+  userId: string,
+  examType: ExamType,
+): Promise<ScoreCenterState["teacherMessages"]> {
+  try {
+    const rows = await prisma.teacherMessage.findMany({
+      where: { userId, examType },
+      orderBy: { createdAt: "asc" },
+      take: 50,
+    });
+
+    if (rows.length === 0) return [];
+
+    return rows.map((row) => ({
+      id: row.id,
+      role: row.role as "teacher" | "user",
+      kind: row.kind as ScoreCenterState["teacherMessages"][0]["kind"],
+      content: row.content,
+      createdAt: row.createdAt.toISOString(),
+      decisionSummary: row.decisionSummary ?? undefined,
+      evidenceUsed: row.evidenceUsed as ScoreCenterState["teacherMessages"][0]["evidenceUsed"] ?? undefined,
+      boundCards: row.boundCards as string[] ?? undefined,
+      userActionExpected: row.userActionExpected ?? undefined,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 async function buildOrLoadScoreCenterState(userId: string, examType: ExamType) {
   try {
     return await buildOrLoadScoreCenterStateInner(userId, examType);
@@ -412,6 +478,7 @@ async function buildOrLoadScoreCenterStateInner(userId: string, examType: ExamTy
     } satisfies ScoreCenterState;
 
     await persistScoreCenterCards(userId, base.sessionId, stateWithAi.cards);
+    await persistTeacherMessages(userId, examType, base.sessionId, stateWithAi.teacherMessages);
     return {
       state: stateWithAi,
       sessionId: base.sessionId,
@@ -472,12 +539,7 @@ async function buildOrLoadScoreCenterStateInner(userId: string, examType: ExamTy
       totalMinutes: base.userState.dailyBudgetMinutes,
       remainingMinutes: deriveRemainingBudgetFromCards(base.userState.dailyBudgetMinutes, mappedCards),
     },
-    teacherMessages: buildTeacherMessages({
-      totalMinutes: base.userState.dailyBudgetMinutes,
-      mode: base.userState.mode,
-      latestCommand,
-      latestSubmit,
-    }),
+    teacherMessages: await loadTeacherMessages(userId, examType),
     lastUpdatedAt: new Date().toISOString(),
   } satisfies ScoreCenterState;
 
@@ -639,6 +701,7 @@ export async function submitCommand(
   } satisfies ScoreCenterState;
 
   await persistScoreCenterCards(userId, sessionId, enhancedState.cards);
+  await persistTeacherMessages(userId, examType, sessionId, enhancedState.teacherMessages);
   return enhancedState;
 }
 
@@ -846,6 +909,7 @@ export async function submitTaskResult(
   } satisfies ScoreCenterState;
 
   await persistScoreCenterCards(userId, sessionId, enhancedState.cards);
+  await persistTeacherMessages(userId, examType, sessionId, enhancedState.teacherMessages);
   return enhancedState;
 }
 

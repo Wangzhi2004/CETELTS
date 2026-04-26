@@ -15,7 +15,7 @@ import {
 
 export const mockUser: User = {
   id: "user-alex",
-  name: "Alex",
+  name: "同学",
   role: "student",
   timezone: "Asia/Shanghai",
   preferredExam: "cet6",

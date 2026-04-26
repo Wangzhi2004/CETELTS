@@ -153,19 +153,37 @@ export interface ScoreCenterCard {
   isNew?: boolean;
 }
 
+export type TeacherMessageKind =
+  | "opening_strategy"
+  | "task_push"
+  | "replan_explanation"
+  | "post_result_feedback"
+  | "constraint_ack"
+  | "risk_warning"
+  | "motivation_reset"
+  | "briefing"
+  | "explaining"
+  | "negotiating"
+  | "diagnosing"
+  | "replanning"
+  | "closing"
+  | "idle";
+
 export interface TeacherMessage {
   id: string;
   role: "teacher" | "user";
-  kind:
-    | "briefing"
-    | "explaining"
-    | "negotiating"
-    | "diagnosing"
-    | "replanning"
-    | "closing"
-    | "idle";
+  kind: TeacherMessageKind;
   content: string;
   createdAt: string;
+  decisionSummary?: string;
+  evidenceUsed?: Array<{
+    source: string;
+    signal: string;
+    quote: string;
+    confidence: number;
+  }>;
+  boundCards?: string[];
+  userActionExpected?: string;
 }
 
 export interface ScoreCenterPanel {

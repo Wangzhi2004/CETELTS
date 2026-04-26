@@ -28,6 +28,8 @@ export type UserMinAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
+  passwordHash: string | null
+  image: string | null
   role: $Enums.UserRole | null
   timezone: string | null
   preferredExam: $Enums.ExamType | null
@@ -38,6 +40,8 @@ export type UserMaxAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
+  passwordHash: string | null
+  image: string | null
   role: $Enums.UserRole | null
   timezone: string | null
   preferredExam: $Enums.ExamType | null
@@ -48,6 +52,8 @@ export type UserCountAggregateOutputType = {
   id: number
   name: number
   email: number
+  passwordHash: number
+  image: number
   role: number
   timezone: number
   preferredExam: number
@@ -60,6 +66,8 @@ export type UserMinAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  passwordHash?: true
+  image?: true
   role?: true
   timezone?: true
   preferredExam?: true
@@ -70,6 +78,8 @@ export type UserMaxAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  passwordHash?: true
+  image?: true
   role?: true
   timezone?: true
   preferredExam?: true
@@ -80,6 +90,8 @@ export type UserCountAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  passwordHash?: true
+  image?: true
   role?: true
   timezone?: true
   preferredExam?: true
@@ -163,6 +175,8 @@ export type UserGroupByOutputType = {
   id: string
   name: string
   email: string
+  passwordHash: string | null
+  image: string | null
   role: $Enums.UserRole
   timezone: string
   preferredExam: $Enums.ExamType
@@ -194,24 +208,36 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
+  image?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   timezone?: Prisma.StringFilter<"User"> | string
   preferredExam?: Prisma.EnumExamTypeFilter<"User"> | $Enums.ExamType
   wechatId?: Prisma.StringNullableFilter<"User"> | string | null
   goals?: Prisma.GoalListRelationFilter
   tasks?: Prisma.DailyTaskListRelationFilter
+  accounts?: Prisma.AccountListRelationFilter
+  sessions?: Prisma.SessionListRelationFilter
+  teacherMessages?: Prisma.TeacherMessageListRelationFilter
+  userSettings?: Prisma.UserSettingListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   preferredExam?: Prisma.SortOrder
   wechatId?: Prisma.SortOrderInput | Prisma.SortOrder
   goals?: Prisma.GoalOrderByRelationAggregateInput
   tasks?: Prisma.DailyTaskOrderByRelationAggregateInput
+  accounts?: Prisma.AccountOrderByRelationAggregateInput
+  sessions?: Prisma.SessionOrderByRelationAggregateInput
+  teacherMessages?: Prisma.TeacherMessageOrderByRelationAggregateInput
+  userSettings?: Prisma.UserSettingOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -222,17 +248,25 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableFilter<"User"> | string | null
+  image?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   timezone?: Prisma.StringFilter<"User"> | string
   preferredExam?: Prisma.EnumExamTypeFilter<"User"> | $Enums.ExamType
   goals?: Prisma.GoalListRelationFilter
   tasks?: Prisma.DailyTaskListRelationFilter
+  accounts?: Prisma.AccountListRelationFilter
+  sessions?: Prisma.SessionListRelationFilter
+  teacherMessages?: Prisma.TeacherMessageListRelationFilter
+  userSettings?: Prisma.UserSettingListRelationFilter
 }, "id" | "email" | "wechatId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   preferredExam?: Prisma.SortOrder
@@ -249,6 +283,8 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  passwordHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   timezone?: Prisma.StringWithAggregatesFilter<"User"> | string
   preferredExam?: Prisma.EnumExamTypeWithAggregatesFilter<"User"> | $Enums.ExamType
@@ -259,54 +295,80 @@ export type UserCreateInput = {
   id?: string
   name: string
   email: string
+  passwordHash?: string | null
+  image?: string | null
   role?: $Enums.UserRole
   timezone?: string
   preferredExam?: $Enums.ExamType
   wechatId?: string | null
   goals?: Prisma.GoalCreateNestedManyWithoutUserInput
   tasks?: Prisma.DailyTaskCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
   name: string
   email: string
+  passwordHash?: string | null
+  image?: string | null
   role?: $Enums.UserRole
   timezone?: string
   preferredExam?: $Enums.ExamType
   wechatId?: string | null
   goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.DailyTaskUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
   wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
   tasks?: Prisma.DailyTaskUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
   wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.DailyTaskUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
   name: string
   email: string
+  passwordHash?: string | null
+  image?: string | null
   role?: $Enums.UserRole
   timezone?: string
   preferredExam?: $Enums.ExamType
@@ -317,6 +379,8 @@ export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
@@ -327,6 +391,8 @@ export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
@@ -337,6 +403,8 @@ export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   preferredExam?: Prisma.SortOrder
@@ -347,6 +415,8 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   preferredExam?: Prisma.SortOrder
@@ -357,6 +427,8 @@ export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  passwordHash?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   role?: Prisma.SortOrder
   timezone?: Prisma.SortOrder
   preferredExam?: Prisma.SortOrder
@@ -372,16 +444,16 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
 }
 
 export type EnumExamTypeFieldUpdateOperationsInput = {
   set?: $Enums.ExamType
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type UserCreateNestedOneWithoutGoalsInput = {
@@ -412,26 +484,94 @@ export type UserUpdateOneRequiredWithoutTasksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTasksInput, Prisma.UserUpdateWithoutTasksInput>, Prisma.UserUncheckedUpdateWithoutTasksInput>
 }
 
+export type UserCreateNestedOneWithoutAccountsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountsInput
+  upsert?: Prisma.UserUpsertWithoutAccountsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
+}
+
+export type UserCreateNestedOneWithoutSessionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionsInput
+  upsert?: Prisma.UserUpsertWithoutSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionsInput, Prisma.UserUpdateWithoutSessionsInput>, Prisma.UserUncheckedUpdateWithoutSessionsInput>
+}
+
+export type UserCreateNestedOneWithoutTeacherMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTeacherMessagesInput, Prisma.UserUncheckedCreateWithoutTeacherMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTeacherMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTeacherMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTeacherMessagesInput, Prisma.UserUncheckedCreateWithoutTeacherMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTeacherMessagesInput
+  upsert?: Prisma.UserUpsertWithoutTeacherMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTeacherMessagesInput, Prisma.UserUpdateWithoutTeacherMessagesInput>, Prisma.UserUncheckedUpdateWithoutTeacherMessagesInput>
+}
+
+export type UserCreateNestedOneWithoutUserSettingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserSettingsInput, Prisma.UserUncheckedCreateWithoutUserSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserSettingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserSettingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserSettingsInput, Prisma.UserUncheckedCreateWithoutUserSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserSettingsInput
+  upsert?: Prisma.UserUpsertWithoutUserSettingsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserSettingsInput, Prisma.UserUpdateWithoutUserSettingsInput>, Prisma.UserUncheckedUpdateWithoutUserSettingsInput>
+}
+
 export type UserCreateWithoutGoalsInput = {
   id?: string
   name: string
   email: string
+  passwordHash?: string | null
+  image?: string | null
   role?: $Enums.UserRole
   timezone?: string
   preferredExam?: $Enums.ExamType
   wechatId?: string | null
   tasks?: Prisma.DailyTaskCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGoalsInput = {
   id?: string
   name: string
   email: string
+  passwordHash?: string | null
+  image?: string | null
   role?: $Enums.UserRole
   timezone?: string
   preferredExam?: $Enums.ExamType
   wechatId?: string | null
   tasks?: Prisma.DailyTaskUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGoalsInput = {
@@ -454,44 +594,68 @@ export type UserUpdateWithoutGoalsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
   wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tasks?: Prisma.DailyTaskUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGoalsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
   wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tasks?: Prisma.DailyTaskUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTasksInput = {
   id?: string
   name: string
   email: string
+  passwordHash?: string | null
+  image?: string | null
   role?: $Enums.UserRole
   timezone?: string
   preferredExam?: $Enums.ExamType
   wechatId?: string | null
   goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTasksInput = {
   id?: string
   name: string
   email: string
+  passwordHash?: string | null
+  image?: string | null
   role?: $Enums.UserRole
   timezone?: string
   preferredExam?: $Enums.ExamType
   wechatId?: string | null
   goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTasksInput = {
@@ -514,22 +678,370 @@ export type UserUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
   wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   timezone?: Prisma.StringFieldUpdateOperationsInput | string
   preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
   wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAccountsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  timezone?: string
+  preferredExam?: $Enums.ExamType
+  wechatId?: string | null
+  goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  tasks?: Prisma.DailyTaskCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAccountsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  timezone?: string
+  preferredExam?: $Enums.ExamType
+  wechatId?: string | null
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.DailyTaskUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAccountsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
+}
+
+export type UserUpsertWithoutAccountsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAccountsInput, Prisma.UserUncheckedUpdateWithoutAccountsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAccountsInput, Prisma.UserUncheckedCreateWithoutAccountsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAccountsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAccountsInput, Prisma.UserUncheckedUpdateWithoutAccountsInput>
+}
+
+export type UserUpdateWithoutAccountsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.DailyTaskUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAccountsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.DailyTaskUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSessionsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  timezone?: string
+  preferredExam?: $Enums.ExamType
+  wechatId?: string | null
+  goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  tasks?: Prisma.DailyTaskCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSessionsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  timezone?: string
+  preferredExam?: $Enums.ExamType
+  wechatId?: string | null
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.DailyTaskUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSessionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
+}
+
+export type UserUpsertWithoutSessionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSessionsInput, Prisma.UserUncheckedUpdateWithoutSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSessionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSessionsInput, Prisma.UserUncheckedUpdateWithoutSessionsInput>
+}
+
+export type UserUpdateWithoutSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.DailyTaskUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.DailyTaskUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTeacherMessagesInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  timezone?: string
+  preferredExam?: $Enums.ExamType
+  wechatId?: string | null
+  goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  tasks?: Prisma.DailyTaskCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTeacherMessagesInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  timezone?: string
+  preferredExam?: $Enums.ExamType
+  wechatId?: string | null
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.DailyTaskUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  userSettings?: Prisma.UserSettingUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTeacherMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTeacherMessagesInput, Prisma.UserUncheckedCreateWithoutTeacherMessagesInput>
+}
+
+export type UserUpsertWithoutTeacherMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTeacherMessagesInput, Prisma.UserUncheckedUpdateWithoutTeacherMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTeacherMessagesInput, Prisma.UserUncheckedCreateWithoutTeacherMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTeacherMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTeacherMessagesInput, Prisma.UserUncheckedUpdateWithoutTeacherMessagesInput>
+}
+
+export type UserUpdateWithoutTeacherMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.DailyTaskUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTeacherMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.DailyTaskUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  userSettings?: Prisma.UserSettingUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUserSettingsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  timezone?: string
+  preferredExam?: $Enums.ExamType
+  wechatId?: string | null
+  goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  tasks?: Prisma.DailyTaskCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUserSettingsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  timezone?: string
+  preferredExam?: $Enums.ExamType
+  wechatId?: string | null
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.DailyTaskUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUserSettingsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserSettingsInput, Prisma.UserUncheckedCreateWithoutUserSettingsInput>
+}
+
+export type UserUpsertWithoutUserSettingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserSettingsInput, Prisma.UserUncheckedUpdateWithoutUserSettingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserSettingsInput, Prisma.UserUncheckedCreateWithoutUserSettingsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserSettingsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserSettingsInput, Prisma.UserUncheckedUpdateWithoutUserSettingsInput>
+}
+
+export type UserUpdateWithoutUserSettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.DailyTaskUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserSettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  preferredExam?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  wechatId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.DailyTaskUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  teacherMessages?: Prisma.TeacherMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -540,11 +1052,19 @@ export type UserUncheckedUpdateWithoutTasksInput = {
 export type UserCountOutputType = {
   goals: number
   tasks: number
+  accounts: number
+  sessions: number
+  teacherMessages: number
+  userSettings: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   goals?: boolean | UserCountOutputTypeCountGoalsArgs
   tasks?: boolean | UserCountOutputTypeCountTasksArgs
+  accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  teacherMessages?: boolean | UserCountOutputTypeCountTeacherMessagesArgs
+  userSettings?: boolean | UserCountOutputTypeCountUserSettingsArgs
 }
 
 /**
@@ -571,17 +1091,51 @@ export type UserCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Exte
   where?: Prisma.DailyTaskWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTeacherMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeacherMessageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserSettingWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   email?: boolean
+  passwordHash?: boolean
+  image?: boolean
   role?: boolean
   timezone?: boolean
   preferredExam?: boolean
   wechatId?: boolean
   goals?: boolean | Prisma.User$goalsArgs<ExtArgs>
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
+  accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  teacherMessages?: boolean | Prisma.User$teacherMessagesArgs<ExtArgs>
+  userSettings?: boolean | Prisma.User$userSettingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -589,6 +1143,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   email?: boolean
+  passwordHash?: boolean
+  image?: boolean
   role?: boolean
   timezone?: boolean
   preferredExam?: boolean
@@ -599,6 +1155,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   email?: boolean
+  passwordHash?: boolean
+  image?: boolean
   role?: boolean
   timezone?: boolean
   preferredExam?: boolean
@@ -609,16 +1167,22 @@ export type UserSelectScalar = {
   id?: boolean
   name?: boolean
   email?: boolean
+  passwordHash?: boolean
+  image?: boolean
   role?: boolean
   timezone?: boolean
   preferredExam?: boolean
   wechatId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "role" | "timezone" | "preferredExam" | "wechatId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "image" | "role" | "timezone" | "preferredExam" | "wechatId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   goals?: boolean | Prisma.User$goalsArgs<ExtArgs>
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
+  accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  teacherMessages?: boolean | Prisma.User$teacherMessagesArgs<ExtArgs>
+  userSettings?: boolean | Prisma.User$userSettingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -629,11 +1193,17 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     goals: Prisma.$GoalPayload<ExtArgs>[]
     tasks: Prisma.$DailyTaskPayload<ExtArgs>[]
+    accounts: Prisma.$AccountPayload<ExtArgs>[]
+    sessions: Prisma.$SessionPayload<ExtArgs>[]
+    teacherMessages: Prisma.$TeacherMessagePayload<ExtArgs>[]
+    userSettings: Prisma.$UserSettingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     email: string
+    passwordHash: string | null
+    image: string | null
     role: $Enums.UserRole
     timezone: string
     preferredExam: $Enums.ExamType
@@ -1034,6 +1604,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   goals<T extends Prisma.User$goalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  teacherMessages<T extends Prisma.User$teacherMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$teacherMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userSettings<T extends Prisma.User$userSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userSettingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserSettingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1066,6 +1640,8 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly passwordHash: Prisma.FieldRef<"User", 'String'>
+  readonly image: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly timezone: Prisma.FieldRef<"User", 'String'>
   readonly preferredExam: Prisma.FieldRef<"User", 'ExamType'>
@@ -1508,6 +2084,102 @@ export type User$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.DailyTaskScalarFieldEnum | Prisma.DailyTaskScalarFieldEnum[]
+}
+
+/**
+ * User.accounts
+ */
+export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Account
+   */
+  select?: Prisma.AccountSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Account
+   */
+  omit?: Prisma.AccountOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountInclude<ExtArgs> | null
+  where?: Prisma.AccountWhereInput
+  orderBy?: Prisma.AccountOrderByWithRelationInput | Prisma.AccountOrderByWithRelationInput[]
+  cursor?: Prisma.AccountWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.sessions
+ */
+export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Session
+   */
+  select?: Prisma.SessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Session
+   */
+  omit?: Prisma.SessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionInclude<ExtArgs> | null
+  where?: Prisma.SessionWhereInput
+  orderBy?: Prisma.SessionOrderByWithRelationInput | Prisma.SessionOrderByWithRelationInput[]
+  cursor?: Prisma.SessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * User.teacherMessages
+ */
+export type User$teacherMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeacherMessage
+   */
+  select?: Prisma.TeacherMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeacherMessage
+   */
+  omit?: Prisma.TeacherMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeacherMessageInclude<ExtArgs> | null
+  where?: Prisma.TeacherMessageWhereInput
+  orderBy?: Prisma.TeacherMessageOrderByWithRelationInput | Prisma.TeacherMessageOrderByWithRelationInput[]
+  cursor?: Prisma.TeacherMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TeacherMessageScalarFieldEnum | Prisma.TeacherMessageScalarFieldEnum[]
+}
+
+/**
+ * User.userSettings
+ */
+export type User$userSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserSetting
+   */
+  select?: Prisma.UserSettingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserSetting
+   */
+  omit?: Prisma.UserSettingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserSettingInclude<ExtArgs> | null
+  where?: Prisma.UserSettingWhereInput
+  orderBy?: Prisma.UserSettingOrderByWithRelationInput | Prisma.UserSettingOrderByWithRelationInput[]
+  cursor?: Prisma.UserSettingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserSettingScalarFieldEnum | Prisma.UserSettingScalarFieldEnum[]
 }
 
 /**

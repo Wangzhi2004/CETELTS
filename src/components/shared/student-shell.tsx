@@ -26,19 +26,19 @@ export function StudentShell({
         <main className="flex h-full min-h-0 flex-1 flex-col overflow-hidden rounded-[30px] border border-[#ece7f8] bg-white shadow-[0_12px_50px_rgba(124,92,250,0.08)] dark:border-[#2a2739] dark:bg-[#181722] dark:shadow-[0_12px_50px_rgba(0,0,0,0.35)]">
           <header className="shrink-0 flex items-center justify-between border-b border-[#f2eef9] px-4 py-1.5 sm:px-6 dark:border-[#2a2739]">
             <div className="flex items-center gap-3 lg:hidden">
-              <div className="text-sm font-semibold text-[#171717] dark:text-[#edeef1]">CET & IELTS</div>
+              <div className="text-sm font-bold text-[#171717] dark:text-[#edeef1]">提分教练</div>
               <div className="rounded-full bg-[#f4f0ff] px-2.5 py-1 text-xs font-medium text-[#7c5cfa] dark:bg-[rgba(149,128,255,0.12)] dark:text-[#9580ff]">
                 {config.shortLabel}
               </div>
             </div>
             <div className="hidden lg:block" />
             <div className="flex items-center gap-2 sm:gap-3">
-              <button className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] border border-[#ede8f7] bg-white text-[#56627c] dark:border-[#2a2739] dark:bg-[#1c1a28] dark:text-[#8b91a3]">
+              <button className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] border border-[#ede8f7] bg-white text-[#56627c] dark:border-[#2a2739] dark:bg-[#1c1a28] dark:text-[#8b91a3]" title="学习日历">
                 <CalendarDays className="h-4 w-4" />
               </button>
               <div className="inline-flex items-center gap-2 rounded-[10px] px-2 py-1 text-sm text-[#56627c] dark:text-[#8b91a3]">
                 <Flame className="h-4 w-4 text-[#ff9f43]" />
-                <span className="font-medium">7 天</span>
+                <span className="font-medium">连续 7 天</span>
               </div>
               <div className="hidden items-center gap-2 rounded-[12px] border border-[#ede8f7] px-1.5 py-1 sm:inline-flex dark:border-[#2a2739]">
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#eef2ff] text-[#4c5c8a] dark:bg-[rgba(149,128,255,0.12)] dark:text-[#9580ff]">
@@ -46,7 +46,7 @@ export function StudentShell({
                 </span>
                 <span className="text-sm font-medium text-[#222] dark:text-[#edeef1]">{mockUser.name}</span>
               </div>
-              <button className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] border border-[#ede8f7] bg-white text-[#56627c] lg:hidden dark:border-[#2a2739] dark:bg-[#1c1a28] dark:text-[#8b91a3]">
+              <button className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] border border-[#ede8f7] bg-white text-[#56627c] lg:hidden dark:border-[#2a2739] dark:bg-[#1c1a28] dark:text-[#8b91a3]" title="通知">
                 <Bell className="h-4 w-4" />
               </button>
             </div>

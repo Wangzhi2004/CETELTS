@@ -96,6 +96,7 @@ function createTeacherMessage(
   kind: TeacherMessage["kind"],
   content: string,
   role: TeacherMessage["role"] = "teacher",
+  extra?: { decisionSummary?: string; evidenceUsed?: TeacherMessage["evidenceUsed"]; boundCards?: string[]; userActionExpected?: string },
 ): TeacherMessage {
   return {
     id: `msg-${kind}-${Math.random().toString(36).slice(2, 9)}`,
@@ -103,6 +104,10 @@ function createTeacherMessage(
     kind,
     content,
     createdAt: nowIso(),
+    decisionSummary: extra?.decisionSummary,
+    evidenceUsed: extra?.evidenceUsed,
+    boundCards: extra?.boundCards,
+    userActionExpected: extra?.userActionExpected,
   };
 }
 
@@ -387,7 +392,7 @@ function buildUtilityBreakdown(
     .map((term) => term.label.toLowerCase());
 
   return {
-    summary: `Top drivers: ${topDrivers.join(", ")}`,
+    summary: `主要驱动：${topDrivers.join("、")}`,
     terms: resolvedTerms,
   };
 }
@@ -456,91 +461,91 @@ function scoreTaskUtility(input: {
   const breakdown = buildUtilityBreakdown([
     {
       key: "examWeight",
-      label: "Exam weight",
+      label: "考试权重",
       direction: "positive",
       weight: utilityWeights.examWeight,
       value: getExamWeight(input.task.taskType),
     },
     {
       key: "weaknessSeverity",
-      label: "Weakness severity",
+      label: "薄弱严重度",
       direction: "positive",
       weight: utilityWeights.weaknessSeverity,
       value: weaknessSeverity,
     },
     {
       key: "recurrence",
-      label: "Recurrence",
+      label: "复发频率",
       direction: "positive",
       weight: utilityWeights.recurrence,
       value: recurrence,
     },
     {
       key: "forgettingRisk",
-      label: "Forgetting risk",
+      label: "遗忘风险",
       direction: "positive",
       weight: utilityWeights.forgettingRisk,
       value: forgettingRisk,
     },
     {
       key: "transferGain",
-      label: "Transfer gain",
+      label: "迁移收益",
       direction: "positive",
       weight: utilityWeights.transferGain,
       value: transferGain,
     },
     {
       key: "deadlinePressure",
-      label: "Deadline pressure",
+      label: "截止压力",
       direction: "positive",
       weight: utilityWeights.deadlinePressure,
       value: deadlinePressure,
     },
     {
       key: "confidenceAdjustment",
-      label: "Confidence adjustment",
+      label: "置信度修正",
       direction: "positive",
       weight: utilityWeights.confidenceAdjustment,
       value: confidenceAdjustment,
     },
     {
       key: "irtAlignment",
-      label: "IRT alignment",
+      label: "IRT 对齐度",
       direction: "positive",
       weight: utilityWeights.irtAlignment,
       value: irtAlignment,
     },
     {
       key: "timeCost",
-      label: "Time cost",
+      label: "时间成本",
       direction: "negative",
       weight: utilityWeights.timeCost,
       value: timeCost,
     },
     {
       key: "fatigueCost",
-      label: "Fatigue cost",
+      label: "疲劳成本",
       direction: "negative",
       weight: utilityWeights.fatigueCost,
       value: fatigueCost,
     },
     {
       key: "modalityRepetitionPenalty",
-      label: "Modality repetition",
+      label: "模态重复惩罚",
       direction: "negative",
       weight: utilityWeights.modalityRepetitionPenalty,
       value: modalityPenalty,
     },
     {
       key: "preferredFocus",
-      label: "Preferred focus",
+      label: "偏好聚焦",
       direction: "positive",
       weight: 1,
       value: preferredBoost,
     },
     {
       key: "sprintBoost",
-      label: "Sprint boost",
+      label: "冲刺加成",
       direction: "positive",
       weight: 1,
       value: sprintBoost,
@@ -792,8 +797,17 @@ export function createScoreCenterState(input: {
     cards,
     teacherMessages: [
       createTeacherMessage(
-        "briefing",
-        `今天我先给你排好任务顺序：先复习校准，再做最值钱的主任务，尾部留验证或恢复卡收口。当前总预算 ${totalMinutes} 分钟。`,
+        "opening_strategy",
+        `今天我先给你排好任务顺序：先复习校准，再做最值钱的主任务，尾部留验证或恢复卡收口。当前总预算 ${totalMinutes} 分钟，模式 ${mode}。`,
+        "teacher",
+        {
+          decisionSummary: `当前预算 ${totalMinutes} 分钟，模式 ${mode}，已按效用排序生成任务栈。`,
+          evidenceUsed: [
+            { source: "review_queue", signal: "forgetting_risk", quote: `复习队列中有到期条目，先处理可降低今天重复犯错概率`, confidence: 0.85 },
+          ],
+          boundCards: cards.slice(0, 2).map((c) => c.cardId),
+          userActionExpected: "查看任务栈并开始第一张卡",
+        },
       ),
     ],
     decisionSummary: [
@@ -837,8 +851,16 @@ function withBudgetReplan(state: ScoreCenterState, totalMinutes: number, input: 
       ...state.teacherMessages,
       createTeacherMessage("negotiating", input, "user"),
       createTeacherMessage(
-        "replanning",
+        "replan_explanation",
         explainBudgetReplan(totalMinutes, cards.length, removedCount),
+        "teacher",
+        {
+          evidenceUsed: [
+            { source: "weight_breakdown", signal: "budget_constraint", quote: `预算压缩到 ${totalMinutes} 分钟后，保留前置复习卡和最高收益主卡`, confidence: 0.88 },
+          ],
+          boundCards: cards.slice(0, 2).map((c) => c.cardId),
+          userActionExpected: "确认新的任务栈并开始执行",
+        },
       ),
     ],
     decisionSummary: [
@@ -889,8 +911,15 @@ export function applyTeacherCommand(state: ScoreCenterState, input: string): Sco
         ...state.teacherMessages,
         createTeacherMessage("negotiating", input, "user"),
         createTeacherMessage(
-          "replanning",
+          "constraint_ack",
           "已切到轻量模式。我保留节奏，但会降低任务长度和认知负荷，不让你今天彻底脱线。",
+          "teacher",
+          {
+            evidenceUsed: [
+              { source: "conversation_summary", signal: "energy_low", quote: "用户自报状态差，系统降级到轻量模式", confidence: 0.92 },
+            ],
+            userActionExpected: "确认轻量模式并开始第一张卡",
+          },
         ),
       ],
       lastUpdatedAt: nowIso(),
@@ -909,8 +938,15 @@ export function applyTeacherCommand(state: ScoreCenterState, input: string): Sco
         ...state.teacherMessages,
         createTeacherMessage("negotiating", input, "user"),
         createTeacherMessage(
-          "explaining",
+          "constraint_ack",
           "我会提高阅读卡的权重，但不会牺牲今天必须完成的复习内容。",
+          "teacher",
+          {
+            evidenceUsed: [
+              { source: "weight_breakdown", signal: "preferred_focus", quote: "用户偏好阅读，提升阅读相关卡优先级", confidence: 0.90 },
+            ],
+            userActionExpected: "确认优先级调整",
+          },
         ),
       ],
       lastUpdatedAt: nowIso(),
@@ -936,8 +972,16 @@ export function applyTeacherCommand(state: ScoreCenterState, input: string): Sco
         ...state.teacherMessages,
         createTeacherMessage("negotiating", input, "user"),
         createTeacherMessage(
-          "replanning",
+          "replan_explanation",
           "已切到冲刺模式。后续任务会提高验证卡和高权重模块修补的占比。",
+          "teacher",
+          {
+            evidenceUsed: [
+              { source: "weight_breakdown", signal: "sprint_mode", quote: "冲刺模式激活，验证卡密度提升，主卡聚焦高权重模块", confidence: 0.88 },
+            ],
+            boundCards: state.cards.filter((c) => c.cardType !== "recovery").slice(0, 2).map((c) => c.cardId),
+            userActionExpected: "确认冲刺模式并开始执行",
+          },
         ),
       ],
       lastUpdatedAt: nowIso(),
@@ -952,8 +996,17 @@ export function applyTeacherCommand(state: ScoreCenterState, input: string): Sco
         ...state.teacherMessages,
         createTeacherMessage("negotiating", input, "user"),
         createTeacherMessage(
-          "explaining",
+          "replan_explanation",
           `第一张卡排在最前，是因为它同时命中了 ${state.panel.topMistakes[0] ?? "高频错因"} 和遗忘风险，先做它能保护后面的主卡收益。`,
+          "teacher",
+          {
+            evidenceUsed: [
+              { source: "diagnostic", signal: "top_mistake", quote: `当前最高频错因：${state.panel.topMistakes[0] ?? "暂无"}`, confidence: 0.82 },
+              { source: "review_queue", signal: "forgetting_risk", quote: "复习队列中有到期条目", confidence: 0.78 },
+            ],
+            boundCards: state.cards.slice(0, 1).map((c) => c.cardId),
+            userActionExpected: "确认理解后开始执行",
+          },
         ),
       ],
       lastUpdatedAt: nowIso(),
@@ -968,8 +1021,15 @@ export function applyTeacherCommand(state: ScoreCenterState, input: string): Sco
         ...state.teacherMessages,
         createTeacherMessage("negotiating", input, "user"),
         createTeacherMessage(
-          "diagnosing",
+          "constraint_ack",
           "收到你的反驳。我会先把这次归因降为低置信，并在下一张卡里补一个更短的校准动作，而不是直接固化这个判断。",
+          "teacher",
+          {
+            evidenceUsed: [
+              { source: "teacher_thread", signal: "user_rebuttal", quote: "用户反驳当前错因归因，系统降级该归因的置信度", confidence: 0.75 },
+            ],
+            userActionExpected: "继续执行下一张卡，系统会自动调整",
+          },
         ),
       ],
       lastUpdatedAt: nowIso(),
@@ -1001,7 +1061,10 @@ export function startScoreCenterCard(state: ScoreCenterState, cardId: string): S
     ),
     teacherMessages: [
       ...state.teacherMessages,
-      createTeacherMessage("idle", "已进入执行页，完成后我会根据结果立即重排后续任务。"),
+      createTeacherMessage("task_push", "已进入执行页，完成后我会根据结果立即重排后续任务。", "teacher", {
+        boundCards: [cardId],
+        userActionExpected: "完成任务后返回提分中心查看结果",
+      }),
     ],
     lastUpdatedAt: nowIso(),
   };
@@ -1017,9 +1080,9 @@ function appendCardDecision(
   const label = card?.title ?? cardId;
   const statusText =
     status === "postponed"
-      ? "postponed"
+      ? "已延后"
       : status === "skipped"
-        ? "skipped"
+        ? "已跳过"
         : status;
 
   return {
@@ -1038,12 +1101,12 @@ function appendCardDecision(
       ...state.teacherMessages,
       createTeacherMessage(
         "negotiating",
-        `${label} marked ${statusText}. Reason: ${reason}. I will keep it traceable instead of dropping it silently.`,
+        `${label} 已标记为 ${statusText}。原因：${reason}。系统会保持追踪，不会静默丢弃。`,
       ),
     ],
     decisionSummary: [
       ...state.decisionSummary,
-      `${label} was ${statusText}. Reason: ${reason}.`,
+      `${label} 被标记为 ${statusText}。原因：${reason}。`,
     ],
     lastUpdatedAt: nowIso(),
   };
@@ -1079,12 +1142,12 @@ export function completeScoreCenterDay(state: ScoreCenterState): ScoreCenterStat
       ...state.teacherMessages,
       createTeacherMessage(
         "closing",
-        `Today is closed: ${completed} card(s) completed, ${unfinished} card(s) left for the next planning pass.`,
+        `今日已关闭：${completed} 张卡已完成，${unfinished} 张卡留待下次规划。`,
       ),
     ],
     decisionSummary: [
       ...state.decisionSummary,
-      `Day closed with ${completed} completed card(s) and ${unfinished} unfinished card(s).`,
+      `今日关闭，${completed} 张已完成，${unfinished} 张未完成。`,
     ],
     lastUpdatedAt: nowIso(),
   };
@@ -1237,10 +1300,18 @@ export function replanScoreCenterAfterTaskResult(
     teacherMessages: [
       ...state.teacherMessages,
       createTeacherMessage(
-        shouldRepair ? "diagnosing" : "replanning",
+        shouldRepair ? "post_result_feedback" : "post_result_feedback",
         shouldRepair
-          ? `你刚刚在“${primaryError}”上掉分明显。我先插入修补卡和一张连带微练卡，补完再回主任务。`
+          ? `你刚刚在"${primaryError}"上掉分明显。我先插入修补卡和一张连带微练卡，补完再回主任务。`
           : "这张卡完成得不错，我已经根据最新结果同步刷新了后续任务顺序。",
+        "teacher",
+        {
+          evidenceUsed: shouldRepair
+            ? [{ source: "diagnostic", signal: "error_detected", quote: `检测到错因：${primaryError}，触发修补路径`, confidence: 0.90 }]
+            : [{ source: "weight_breakdown", signal: "task_completed", quote: "任务完成，后续任务按最新表现轻量重排", confidence: 0.85 }],
+          boundCards: shouldRepair ? repairCards.map((c) => c.cardId) : undefined,
+          userActionExpected: shouldRepair ? "先完成修补卡，再回到主任务" : "继续执行下一张卡",
+        },
       ),
     ],
     decisionSummary: [

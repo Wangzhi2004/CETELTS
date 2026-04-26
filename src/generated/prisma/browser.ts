@@ -122,3 +122,23 @@ export type PolicyLog = Prisma.PolicyLogModel
  * 
  */
 export type OPEReport = Prisma.OPEReportModel
+/**
+ * Model Account
+ * 
+ */
+export type Account = Prisma.AccountModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
+ * Model TeacherMessage
+ * 
+ */
+export type TeacherMessage = Prisma.TeacherMessageModel
+/**
+ * Model UserSetting
+ * 
+ */
+export type UserSetting = Prisma.UserSettingModel

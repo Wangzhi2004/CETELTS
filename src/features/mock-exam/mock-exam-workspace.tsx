@@ -68,10 +68,10 @@ export function MockExamWorkspace({ exam }: { exam: "cet6" | "ielts" }) {
           </div>
           <div className="space-y-3">
             {[
-              { part: "Part I", label: "听力理解", meta: "25题 ｜ 30分钟", icon: Headphones },
-              { part: "Part II", label: "阅读理解", meta: "35题 ｜ 40分钟", icon: ScrollText },
-              { part: "Part III", label: "翻译", meta: "15题 ｜ 30分钟", icon: ScrollText },
-              { part: "Part IV", label: "写作", meta: "2题 ｜ 30分钟", icon: PenLine },
+              { part: "第一部分", label: "听力理解", meta: "25题 ｜ 30分钟", icon: Headphones },
+              { part: "第二部分", label: "阅读理解", meta: "35题 ｜ 40分钟", icon: ScrollText },
+              { part: "第三部分", label: "翻译", meta: "15题 ｜ 30分钟", icon: ScrollText },
+              { part: "第四部分", label: "写作", meta: "2题 ｜ 30分钟", icon: PenLine },
             ].map((item) => {
               const Icon = item.icon;
               return (
@@ -147,10 +147,10 @@ export function MockExamWorkspace({ exam }: { exam: "cet6" | "ielts" }) {
             <h3 className="text-[24px] font-[800] tracking-[-0.03em] text-[#232734]">模考流程</h3>
             <div className="mt-6 space-y-6">
               {[
-                { part: "Part I", label: "听力理解", meta: "25题 ｜ 30分钟", icon: Headphones },
-                { part: "Part II", label: "阅读理解", meta: "35题 ｜ 40分钟", icon: ScrollText },
-                { part: "Part III", label: "翻译", meta: "15题 ｜ 30分钟", icon: ScrollText },
-                { part: "Part IV", label: "写作", meta: "2题 ｜ 30分钟", icon: PenLine },
+                { part: "第一部分", label: "听力理解", meta: "25题 ｜ 30分钟", icon: Headphones },
+                { part: "第二部分", label: "阅读理解", meta: "35题 ｜ 40分钟", icon: ScrollText },
+                { part: "第三部分", label: "翻译", meta: "15题 ｜ 30分钟", icon: ScrollText },
+                { part: "第四部分", label: "写作", meta: "2题 ｜ 30分钟", icon: PenLine },
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (

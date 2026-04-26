@@ -249,7 +249,7 @@ export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
         <div className="space-y-4">
           <div className="rounded-[26px] border border-[#efebf8] bg-white px-7 py-6">
             <h2 className="text-[34px] font-[800] tracking-[-0.04em] text-[#20232d]">
-              {currentPassage?.title ?? "Passage"}
+              {currentPassage?.title ?? "文章"}
             </h2>
             <div className="mt-5 space-y-7 text-[18px] leading-[2.15] text-[#27303b]">
               {currentPassage

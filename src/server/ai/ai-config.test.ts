@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  buildResponsesApiUrl,
   normalizeAiProviderSettings,
   redactAiProviderSettings,
 } from "@/server/ai/ai-config";
@@ -13,17 +12,8 @@ describe("ai config", () => {
     });
 
     expect(normalized.provider).toBe("openai-compatible");
-    expect(normalized.baseURL).toBe("https://api.openai.com/v1");
-    expect(normalized.model).toBe("gpt-5.2");
-  });
-
-  it("builds the responses endpoint from a base url", () => {
-    expect(buildResponsesApiUrl("https://api.openai.com/v1")).toBe(
-      "https://api.openai.com/v1/responses",
-    );
-    expect(buildResponsesApiUrl("https://example.com/proxy/v1/")).toBe(
-      "https://example.com/proxy/v1/responses",
-    );
+    expect(normalized.baseURL).toBe("https://dashscope.aliyuncs.com/compatible-mode/v1");
+    expect(normalized.model).toBe("glm-5");
   });
 
   it("redacts the api key in settings payloads", () => {

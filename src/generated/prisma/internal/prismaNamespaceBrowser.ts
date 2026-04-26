@@ -71,7 +71,11 @@ export const ModelName = {
   BanditArm: 'BanditArm',
   ConversationSummary: 'ConversationSummary',
   PolicyLog: 'PolicyLog',
-  OPEReport: 'OPEReport'
+  OPEReport: 'OPEReport',
+  Account: 'Account',
+  Session: 'Session',
+  TeacherMessage: 'TeacherMessage',
+  UserSetting: 'UserSetting'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -94,6 +98,8 @@ export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  passwordHash: 'passwordHash',
+  image: 'image',
   role: 'role',
   timezone: 'timezone',
   preferredExam: 'preferredExam',
@@ -438,6 +444,64 @@ export const OPEReportScalarFieldEnum = {
 } as const
 
 export type OPEReportScalarFieldEnum = (typeof OPEReportScalarFieldEnum)[keyof typeof OPEReportScalarFieldEnum]
+
+
+export const AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state'
+} as const
+
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  sessionToken: 'sessionToken',
+  userId: 'userId',
+  expires: 'expires'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const TeacherMessageScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  examType: 'examType',
+  sessionId: 'sessionId',
+  role: 'role',
+  kind: 'kind',
+  content: 'content',
+  decisionSummary: 'decisionSummary',
+  evidenceUsed: 'evidenceUsed',
+  boundCards: 'boundCards',
+  userActionExpected: 'userActionExpected',
+  createdAt: 'createdAt'
+} as const
+
+export type TeacherMessageScalarFieldEnum = (typeof TeacherMessageScalarFieldEnum)[keyof typeof TeacherMessageScalarFieldEnum]
+
+
+export const UserSettingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  key: 'key',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserSettingScalarFieldEnum = (typeof UserSettingScalarFieldEnum)[keyof typeof UserSettingScalarFieldEnum]
 
 
 export const SortOrder = {

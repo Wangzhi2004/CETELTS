@@ -9,9 +9,11 @@ echo ""
 if [ ! -f .env.production ]; then
   echo "❌ 错误: .env.production 文件不存在!"
   echo ""
-  echo "请先创建 .env.production 文件，参考 .env.production.example:"
+  echo "请先创建 .env.production 文件，参考以下格式:"
   echo ""
   echo "  DATABASE_URL=postgresql://user:password@ep-xxx.region.aws.neon.tech/cetelts?sslmode=require"
+  echo "  NEXTAUTH_SECRET=你的随机密钥"
+  echo "  NEXTAUTH_URL=https://你的域名.com"
   echo "  OPENAI_API_KEY=sk-你的DashScope-Key"
   echo "  OPENAI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1"
   echo "  OPENAI_MODEL=glm-5"
@@ -26,7 +28,7 @@ fi
 echo "✅ 找到 .env.production"
 echo ""
 
-echo "▶ 步骤 1/5: 检查 Docker..."
+echo "▶ 步骤 1/7: 检查 Docker..."
 if ! command -v docker &> /dev/null; then
   echo "❌ Docker 未安装，正在安装..."
   curl -fsSL https://get.docker.com | sh
@@ -45,7 +47,7 @@ else
 fi
 echo ""
 
-echo "▶ 步骤 2/6: 推送数据库 schema..."
+echo "▶ 步骤 2/7: 推送数据库 schema..."
 export $(grep -v '^#' .env.production | xargs)
 if ! command -v node &> /dev/null; then
   echo "⚠️  Node.js 未安装，跳过 db push（假设数据库 schema 已存在）"
@@ -56,28 +58,40 @@ else
 fi
 echo ""
 
-echo "▶ 步骤 3/6: 填充种子数据..."
+echo "▶ 步骤 3/7: 填充种子数据（管理员+演示账户+题目）..."
 if command -v node &> /dev/null; then
   npx tsx prisma/seed.ts
   echo "✅ 种子数据已填充"
+  echo ""
+  echo "  管理员账户: admin@cetelts.com / admin123"
+  echo "  演示账户:   demo@cetelts.com / demo123"
 else
   echo "⚠️  Node.js 未安装，跳过 seed"
 fi
 echo ""
 
-echo "▶ 步骤 4/6: 构建镜像..."
+echo "▶ 步骤 4/7: 构建镜像..."
 docker compose build
 echo "✅ 构建完成"
 echo ""
 
-echo "▶ 步骤 5/6: 启动服务..."
+echo "▶ 步骤 5/7: 启动服务..."
 docker compose up -d
 echo "✅ 服务启动完成"
 echo ""
 
-echo "▶ 步骤 6/6: 检查状态..."
+echo "▶ 步骤 6/7: 检查状态..."
 sleep 3
 docker compose ps
+echo ""
+
+echo "▶ 步骤 7/7: 验证..."
+sleep 2
+if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 | grep -q "200\|302"; then
+  echo "✅ 网站响应正常"
+else
+  echo "⚠️  网站可能还在启动中，请稍等后检查"
+fi
 echo ""
 
 echo "========================================="
@@ -85,6 +99,10 @@ echo "  🎉 部署完成！"
 echo "========================================="
 echo ""
 echo "网站运行在 http://localhost:80"
+echo ""
+echo "账户信息:"
+echo "  管理员: admin@cetelts.com / admin123"
+echo "  演示:   demo@cetelts.com / demo123"
 echo ""
 echo "常用命令:"
 echo "  查看日志:    docker compose logs -f"

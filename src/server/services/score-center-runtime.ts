@@ -237,9 +237,13 @@ export function buildTeacherMessages(input: {
     {
       id: "teacher-briefing",
       role: "teacher",
-      kind: "briefing",
+      kind: "opening_strategy",
       content: `我已经按今天 ${input.totalMinutes} 分钟的预算整理好任务顺序。当前模式是 ${input.mode}。`,
       createdAt: new Date().toISOString(),
+      evidenceUsed: [
+        { source: "weight_breakdown", signal: "budget_allocated", quote: `预算 ${input.totalMinutes} 分钟，模式 ${input.mode}`, confidence: 0.88 },
+      ],
+      userActionExpected: "查看任务栈并开始第一张卡",
     },
   ];
 
@@ -247,9 +251,13 @@ export function buildTeacherMessages(input: {
     messages.push({
       id: "teacher-command",
       role: "teacher",
-      kind: "replanning",
-      content: `我已经根据你刚刚的要求“${input.latestCommand}”完成重排，新的任务栈已经生效。`,
+      kind: "replan_explanation",
+      content: `我已经根据你刚刚的要求"${input.latestCommand}"完成重排，新的任务栈已经生效。`,
       createdAt: new Date().toISOString(),
+      evidenceUsed: [
+        { source: "conversation_summary", signal: "user_constraint", quote: `用户约束：${input.latestCommand}`, confidence: 0.90 },
+      ],
+      userActionExpected: "确认新的任务栈并开始执行",
     });
   }
 
@@ -257,17 +265,25 @@ export function buildTeacherMessages(input: {
     messages.push({
       id: "teacher-diagnosing",
       role: "teacher",
-      kind: "diagnosing",
-      content: `你刚刚主要卡在“${input.latestSubmit.primaryError ?? "关键错因"}”，所以我先插入修补路径，再继续主任务。`,
+      kind: "post_result_feedback",
+      content: `你刚刚主要卡在"${input.latestSubmit.primaryError ?? "关键错因"}"，所以我先插入修补路径，再继续主任务。`,
       createdAt: new Date().toISOString(),
+      evidenceUsed: [
+        { source: "diagnostic", signal: "error_detected", quote: `检测到错因：${input.latestSubmit.primaryError ?? "关键错因"}`, confidence: 0.88 },
+      ],
+      userActionExpected: "先完成修补卡，再回到主任务",
     });
   } else if (input.latestSubmit?.status === "completed") {
     messages.push({
       id: "teacher-replanning-after-complete",
       role: "teacher",
-      kind: "replanning",
+      kind: "post_result_feedback",
       content: "这张卡完成得不错，我已经根据最新结果刷新了后续任务顺序。",
       createdAt: new Date().toISOString(),
+      evidenceUsed: [
+        { source: "weight_breakdown", signal: "task_completed", quote: "任务完成，后续任务按最新表现轻量重排", confidence: 0.85 },
+      ],
+      userActionExpected: "继续执行下一张卡",
     });
   }
 
