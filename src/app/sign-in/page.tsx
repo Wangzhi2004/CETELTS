@@ -197,58 +197,46 @@ export default function SignInPage() {
         </div>
       </div>
 
-      {/* ==================== MOBILE: Vertical Layout ==================== */}
-      <div className="lg:hidden flex flex-col min-h-screen">
-        {/* Mobile Header Area */}
-        <div className="flex-shrink-0 pt-10 pb-4 px-7 relative overflow-visible">
-          {/* Logo & Subtitle */}
-          <div className="mb-3">
-            <h1 className="text-[28px] font-extrabold text-[#1a1625] tracking-tight leading-tight">提分教练</h1>
-            <p className="mt-1 text-[13px] font-medium tracking-widest text-[#7c5cfa]/70 uppercase">CET-6 · IELTS</p>
-          </div>
+      {/* ==================== MOBILE: Clean Form Layout ==================== */}
+      <div className="lg:hidden flex min-h-screen items-center justify-center bg-[#f4f2fdf0] px-5 py-8 relative overflow-hidden">
+        {/* Subtle background blurs */}
+        <div className="absolute top-[-10%] left-[-15%] w-[60%] h-[60%] rounded-full bg-gradient-to-br from-[#e8e0ff] to-[#f3eeff] blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-15%] w-[55%] h-[55%] rounded-full bg-gradient-to-tl from-[#ddd6ff] to-[#f0ebff] blur-[90px] pointer-events-none" />
 
-          {/* Tagline with underline accent */}
-          <div className="mt-4 mb-1">
-            <p className="text-[14px] text-[#645e76] leading-relaxed">你的学习成长伙伴</p>
-            <div className="mt-2 w-8 h-[3px] rounded-full bg-gradient-to-r from-[#7c5cfa] to-[#9580ff]" />
-          </div>
-
-          {/* Illustration as subtle background */}
-          <div className="relative mt-4 -mr-4 pointer-events-none select-none opacity-[0.15]">
-            <Image
-              src="/images/login-illustration.png"
-              alt=""
-              width={500}
-              height={400}
-              className="w-full h-auto object-contain"
-              priority
-            />
-          </div>
-        </div>
-
-        {/* Mobile Form Card */}
-        <div className="flex-1 bg-white rounded-t-[2rem] -mt-6 relative z-10 px-7 pt-8 pb-10 shadow-[0_-4px_30px_rgba(124,92,250,0.08)]">
-          <div className="max-w-[380px] mx-auto">
-            {/* Title */}
-            <div className="mb-7">
-              <h2 className="text-[22px] font-bold text-[#1a1625] tracking-tight">欢迎回来 👋</h2>
-              <p className="mt-1.5 text-[13px] text-[#8b85a3]">登录你的账号，继续学习之旅</p>
+        <div className="relative w-full max-w-[400px]">
+          {/* Logo */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="flex h-11 w-11 items-center justify-center rounded-[14px] bg-gradient-to-br from-[#7c5cfa] to-[#5b3eb8] text-white shadow-lg shadow-[#7c5cfa]/25">
+              <span className="text-lg font-bold">提</span>
             </div>
+            <div>
+              <div className="text-[20px] font-bold text-[#1a1625] tracking-tight">提分教练</div>
+              <div className="text-[11px] font-medium tracking-widest text-[#7c5cfa]/60 uppercase mt-0.5">CET-6 · IELTS</div>
+            </div>
+          </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {error && (
-                <div className="rounded-2xl border border-red-100 bg-red-50/80 px-4 py-3 text-[13px] text-red-600 flex items-center gap-2">
-                  <span className="flex-shrink-0">⚠️</span>
-                  {error}
-                </div>
-              )}
+          {/* Title */}
+          <div className="mb-7">
+            <h2 className="text-[22px] font-bold text-[#1a1625] tracking-tight leading-snug">欢迎回来 👋</h2>
+            <p className="mt-1.5 text-[13px] text-[#8b85a3]">登录你的账号，继续学习之旅</p>
+          </div>
 
-              {/* Email Input */}
+          <form onSubmit={handleSubmit} className="space-y-4.5">
+            {error && (
+              <div className="rounded-xl border border-red-100 bg-red-50/80 px-4 py-3 text-[13px] text-red-600 flex items-center gap-2">
+                <span className="flex-shrink-0 text-sm">⚠️</span>
+                {error}
+              </div>
+            )}
+
+            {/* Email Input */}
+            <div className="space-y-1.5">
+              <label className="block text-[13px] font-semibold text-[#1a1625]">邮箱</label>
               <div className="relative group">
                 <Mail className="absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#a19bad] transition-colors group-focus-within:text-[#7c5cfa]" />
                 <input
                   autoComplete="email"
-                  className="h-12 w-full rounded-xl border border-[#e4e0ef] bg-[#faf8ff] pl-11 pr-4 text-[14px] text-[#1a1625] outline-none transition-all placeholder:text-[#c4bdd8] focus:border-[#7c5cfa] focus:bg-white focus:ring-4 focus:ring-[#7c5cfa]/10"
+                  className="h-12 w-full rounded-xl border border-[#e4e0ef] bg-white pl-11 pr-4 text-[14px] text-[#1a1625] outline-none transition-all placeholder:text-[#c4bdd8] focus:border-[#7c5cfa] focus:ring-3 focus:ring-[#7c5cfa]/10 hover:border-[#d4cff0]"
                   placeholder="admin@cetelts.com"
                   required
                   type="email"
@@ -257,13 +245,21 @@ export default function SignInPage() {
                   disabled={isLoading}
                 />
               </div>
+            </div>
 
-              {/* Password Input */}
+            {/* Password Input */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <label className="block text-[13px] font-semibold text-[#1a1625]">密码</label>
+                <Link href="#" className="text-[12px] font-medium text-[#7c5cfa] hover:text-[#5b3eb8] transition-colors">
+                  忘记密码？
+                </Link>
+              </div>
               <div className="relative group">
                 <Lock className="absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-[#a19bad] transition-colors group-focus-within:text-[#7c5cfa]" />
                 <input
                   autoComplete="current-password"
-                  className="h-12 w-full rounded-xl border border-[#e4e0ef] bg-[#faf8ff] pl-11 pr-11 text-[14px] text-[#1a1625] outline-none transition-all placeholder:text-[#c4bdd8] focus:border-[#7c5cfa] focus:bg-white focus:ring-4 focus:ring-[#7c5cfa]/10"
+                  className="h-12 w-full rounded-xl border border-[#e4e0ef] bg-white pl-11 pr-11 text-[14px] text-[#1a1625] outline-none transition-all placeholder:text-[#c4bdd8] focus:border-[#7c5cfa] focus:ring-3 focus:ring-[#7c5cfa]/10 hover:border-[#d4cff0]"
                   placeholder="请输入密码"
                   required
                   type={showPassword ? "text" : "password"}
@@ -279,59 +275,54 @@ export default function SignInPage() {
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-
-              {/* Remember Me + Forgot Password Row */}
-              <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 cursor-pointer select-none">
-                  <input
-                    checked={rememberMe}
-                    className="h-[18px] w-[18px] rounded-[5px] border-[#d4cff0] accent-[#7c5cfa]"
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    type="checkbox"
-                  />
-                  <span className="text-[13px] text-[#645e76]">记住我</span>
-                </label>
-                <Link href="#" className="text-[13px] font-medium text-[#7c5cfa] hover:text-[#5b3eb8] transition-colors">
-                  忘记密码？
-                </Link>
-              </div>
-
-              {/* Login Button */}
-              <button
-                className="group relative flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#9580ff] to-[#7c5cfa] px-6 text-[15px] font-semibold text-white shadow-lg shadow-[#7c5cfa]/25 transition-all hover:shadow-[#7c5cfa]/35 active:scale-[0.98] disabled:opacity-70"
-                disabled={isLoading}
-                type="submit"
-              >
-                {isLoading ? "登录中…" : "登录"}
-                {!isLoading && <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-1" />}
-              </button>
-            </form>
-
-            {/* Divider */}
-            <div className="my-6 flex items-center gap-4">
-              <div className="flex-1 h-px bg-[#ede8f7]" />
-              <span className="text-[12px] text-[#b5aed1] whitespace-nowrap">或使用其他方式登录</span>
-              <div className="flex-1 h-px bg-[#ede8f7]" />
             </div>
 
-            {/* WeChat Login */}
+            {/* Remember Me */}
+            <label className="flex items-center gap-2 cursor-pointer select-none pt-1">
+              <input
+                checked={rememberMe}
+                className="h-[17px] w-[17px] rounded-[5px] border-[#d4cff0] accent-[#7c5cfa]"
+                onChange={(e) => setRememberMe(e.target.checked)}
+                type="checkbox"
+              />
+              <span className="text-[13px] text-[#645e76]">记住我</span>
+            </label>
+
+            {/* Login Button */}
             <button
-              className="flex h-12 w-full items-center justify-center gap-2.5 rounded-xl border border-[#e4e0ef] bg-white text-[14px] font-medium text-[#4a4558] transition-all hover:bg-[#faf8ff] hover:border-[#d4cff0] active:scale-[0.98]"
-              type="button"
+              className="group flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#9580ff] to-[#7c5cfa] px-6 text-[15px] font-semibold text-white shadow-lg shadow-[#7c5cfa]/25 transition-all hover:shadow-[#7c5cfa]/35 active:scale-[0.98] disabled:opacity-70"
+              disabled={isLoading}
+              type="submit"
             >
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="#07C160">
-                <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.32.32 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 01.598.082l1.584.926a.272.272 0 00.139.045c.134 0 .24-.111.24-.245 0-.06-.023-.118-.038-.177l-.327-1.233a.582.582 0 01-.023-.156.49.49 0 01.201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-7.062-6.122zM14.03 13.254c.535 0 .969.44.969.982a.976.976 0 01-.97.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 01-.97.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982z"/>
-              </svg>
-              微信登录
+              {isLoading ? "登录中…" : "登录"}
+              {!isLoading && <ArrowRight className="h-[18px] w-[18px] transition-transform group-hover:translate-x-1" />}
             </button>
+          </form>
 
-            {/* Sign Up Link */}
-            <div className="mt-6 text-center">
-              <span className="text-[13px] text-[#8b85a3]">还没有账号？</span>{" "}
-              <Link className="text-[13px] font-semibold text-[#7c5cfa] transition-colors hover:text-[#5b3eb8]" href="/sign-up">
-                立即注册
-              </Link>
-            </div>
+          {/* Divider */}
+          <div className="my-6 flex items-center gap-4">
+            <div className="flex-1 h-px bg-[#ede8f7]" />
+            <span className="text-[12px] text-[#b5aed1] whitespace-nowrap">或使用其他方式登录</span>
+            <div className="flex-1 h-px bg-[#ede8f7]" />
+          </div>
+
+          {/* WeChat Login */}
+          <button
+            className="flex h-12 w-full items-center justify-center gap-2.5 rounded-xl border border-[#e4e0ef] bg-white text-[14px] font-medium text-[#4a4558] transition-all hover:bg-[#faf8ff] hover:border-[#d4cff0] active:scale-[0.98]"
+            type="button"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="#07C160">
+              <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.32.32 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 01.598.082l1.584.926a.272.272 0 00.139.045c.134 0 .24-.111.24-.245 0-.06-.023-.118-.038-.177l-.327-1.233a.582.582 0 01-.023-.156.49.49 0 01.201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-7.062-6.122zM14.03 13.254c.535 0 .969.44.969.982a.976.976 0 01-.97.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 01-.97.983.976.976 0 01-.969-.983c0-.542.434-.982.97-.982z"/>
+            </svg>
+            微信登录
+          </button>
+
+          {/* Sign Up Link */}
+          <div className="mt-6 text-center">
+            <span className="text-[13px] text-[#8b85a3]">还没有账号？</span>{" "}
+            <Link className="text-[13px] font-semibold text-[#7c5cfa] transition-colors hover:text-[#5b3eb8]" href="/sign-up">
+              立即注册
+            </Link>
           </div>
         </div>
       </div>

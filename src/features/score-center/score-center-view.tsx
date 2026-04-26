@@ -413,19 +413,19 @@ function MobileView({
   const studyProgress = Math.min(100, (studiedMinutes / scoreCenter.budget.totalMinutes) * 100);
 
   return (
-    <div className="space-y-4 pb-20">
+    <div className="space-y-5 pb-24">
       {/* 顶部栏：今日模式 + 图标 */}
       <div className="flex items-center justify-between px-1">
-        <button className="flex items-center gap-2 rounded-2xl bg-white px-4 py-2.5 shadow-sm border border-[#f0e8ff]">
-          <span className="text-sm font-semibold text-[#1d1730]">今日模式</span>
-          <span className="text-xs font-medium text-[#7c5cfa]">· {config.label}</span>
+        <button className="flex items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow-sm border border-[#f0e8ff]">
+          <span className="text-[15px] font-semibold text-[#1d1730]">今日模式</span>
+          <span className="text-sm font-medium text-[#7c5cfa]">· {config.label}</span>
           <ChevronDown className="h-4 w-4 text-[#7c5cfa]" />
         </button>
-        <div className="flex items-center gap-2">
-          <button className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#f0e8ff] text-[#6b748a] shadow-sm">
+        <div className="flex items-center gap-2.5">
+          <button className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-[#f0e8ff] text-[#6b748a] shadow-sm">
             <CalendarDays className="h-5 w-5" />
           </button>
-          <button className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#f0e8ff] text-[#6b748a] shadow-sm relative">
+          <button className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-[#f0e8ff] text-[#6b748a] shadow-sm relative">
             <Bell className="h-5 w-5" />
             <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white" />
           </button>
@@ -435,27 +435,27 @@ function MobileView({
       {/* 统计行 - 4个紧凑指标卡片 */}
       <div className="grid grid-cols-2 gap-3">
         {/* 距考试 */}
-        <div className="col-span-2 rounded-2xl bg-gradient-to-br from-[#9580ff] to-[#7c5cfa] p-4 text-white shadow-lg shadow-purple-200/40">
+        <div className="col-span-2 rounded-2xl bg-gradient-to-br from-[#9580ff] to-[#7c5cfa] p-5 text-white shadow-lg shadow-purple-200/40">
           <p className="text-xs font-medium text-white/80">距考试</p>
           <div className="mt-1 flex items-baseline gap-2">
-            <span className="text-3xl font-black">{scoreCenter.panel.daysToExam}</span>
-            <span className="text-base font-semibold">天</span>
+            <span className="text-4xl font-black">{scoreCenter.panel.daysToExam}</span>
+            <span className="text-lg font-semibold">天</span>
           </div>
-          <p className="mt-1 text-xs text-white/70">{new Date(Date.now() + scoreCenter.panel.daysToExam * 86400000).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.')}</p>
+          <p className="mt-1.5 text-sm text-white/70">{new Date(Date.now() + scoreCenter.panel.daysToExam * 86400000).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.')}</p>
         </div>
 
         {/* 今日学习 */}
         <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#f0e8ff]">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-[#6b748a]">今日学习</p>
+            <p className="text-sm font-medium text-[#6b748a]">今日学习</p>
             <Clock className="h-4 w-4 text-[#7c5cfa]" />
           </div>
-          <div className="mt-1.5 flex items-baseline gap-1.5">
-            <span className="text-xl font-bold text-[#1d1730]">{studiedMinutes}</span>
-            <span className="text-sm text-[#9ca3af]">/</span>
+          <div className="mt-2 flex items-baseline gap-1.5">
+            <span className="text-2xl font-bold text-[#1d1730]">{studiedMinutes}</span>
+            <span className="text-base text-[#9ca3af]">/</span>
             <span className="text-sm font-medium text-[#6b748a]">{scoreCenter.budget.totalMinutes} 分钟</span>
           </div>
-          <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#f0e8ff]">
+          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-[#f0e8ff]">
             <div
               className="h-full rounded-full bg-gradient-to-r from-[#9580ff] to-[#7c5cfa] transition-all duration-500"
               style={{ width: `${studyProgress}%` }}
@@ -466,49 +466,49 @@ function MobileView({
         {/* 预计得分 */}
         <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#f0e8ff]">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-medium text-[#6b748a]">预计得分</p>
+            <p className="text-sm font-medium text-[#6b748a]">预计得分</p>
             <TrendingUp className="h-4 w-4 text-emerald-500" />
           </div>
-          <div className="mt-1.5 flex items-baseline gap-1.5">
-            <span className="text-xl font-bold text-emerald-600">+{scoreCenter.panel.expectedGain}</span>
+          <div className="mt-2 flex items-baseline gap-1.5">
+            <span className="text-2xl font-bold text-emerald-600">+{scoreCenter.panel.expectedGain}</span>
           </div>
-          <p className="mt-1 text-xs text-emerald-600/70">较昨日 +3</p>
+          <p className="mt-1.5 text-sm text-emerald-600/70">较昨日 +3</p>
         </div>
 
         {/* 本周风险 */}
         <div className="col-span-2 rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50 p-4 shadow-sm border border-orange-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-[#92400e]">本周风险</p>
-              <div className="mt-1 flex items-center gap-2">
-                <span className="text-xl font-bold text-orange-600">中</span>
+              <p className="text-sm font-medium text-[#92400e]">本周风险</p>
+              <div className="mt-1.5 flex items-center gap-2">
+                <span className="text-2xl font-bold text-orange-600">中</span>
                 <AlertTriangle className="h-4 w-4 text-orange-500" />
               </div>
             </div>
-            <p className="max-w-[140px] text-right text-xs leading-relaxed text-orange-700/80">努力正确率下滑</p>
+            <p className="max-w-[160px] text-right text-sm leading-relaxed text-orange-700/80">努力正确率下滑</p>
           </div>
         </div>
       </div>
 
       {/* AI教师聊天区域 */}
       {latestTeacherMessage && (
-        <div className="space-y-3 rounded-2xl bg-white p-4 shadow-sm border border-[#f0e8ff]">
-          <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#9580ff] to-[#7c5cfa] text-white shadow-md">
-              <Sparkles className="h-5 w-5" />
+        <div className="space-y-4 rounded-2xl bg-white p-5 shadow-sm border border-[#f0e8ff]">
+          <div className="flex items-start gap-3.5">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#9580ff] to-[#7c5cfa] text-white shadow-md">
+              <Sparkles className="h-6 w-6" />
             </div>
-            <div className="flex-1 space-y-2">
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-[#f4edff] px-2.5 py-1 text-xs font-semibold text-[#7c5cfa]">
+            <div className="flex-1 space-y-2.5">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-[#f4edff] px-3 py-1.5 text-xs font-semibold text-[#7c5cfa]">
                 {messageKindIconMap[latestTeacherMessage.kind] ?? <Sparkles className="h-3.5 w-3.5" />}
                 {messageKindLabelMap[latestTeacherMessage.kind]}
               </div>
-              <div className="rounded-2xl rounded-tl-md bg-[#faf8ff] px-4 py-3 text-sm leading-relaxed text-[#30384e] border border-[#efe8fb]">
+              <div className="rounded-2xl rounded-tl-md bg-[#faf8ff] px-4 py-4 text-[15px] leading-relaxed text-[#30384e] border border-[#efe8fb]">
                 {latestTeacherMessage.content}
               </div>
               {latestTeacherMessage.evidenceUsed && latestTeacherMessage.evidenceUsed.length > 0 && (
-                <div className="space-y-1.5 pl-1">
+                <div className="space-y-2 pl-1">
                   {latestTeacherMessage.evidenceUsed.slice(0, 2).map((ev, i) => (
-                    <div key={i} className="rounded-lg bg-white/80 px-3 py-2 text-xs text-[#6b748a] border border-[#f0e8ff]">
+                    <div key={i} className="rounded-xl bg-white/80 px-3 py-2.5 text-sm text-[#6b748a] border border-[#f0e8ff]">
                       <span className="font-medium text-[#7c5cfa]">{ev.source}</span>：{ev.quote}
                     </div>
                   ))}
@@ -520,7 +520,7 @@ function MobileView({
       )}
 
       {/* 任务卡片列表 */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {mobileCards.map((card, index) => (
           <MobileTaskCard
             key={card.cardId}
@@ -545,16 +545,16 @@ function MobileView({
       </div>
 
       {/* 快捷操作区 */}
-      <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#f0e8ff]">
+      <div className="rounded-2xl bg-white p-5 shadow-sm border border-[#f0e8ff]">
         <div className="mb-3 flex items-center gap-2">
           <MessageSquareText className="h-5 w-5 text-[#7c5cfa]" />
-          <h3 className="text-base font-bold text-[#1d1730]">和老师说一句</h3>
+          <h3 className="text-lg font-bold text-[#1d1730]">和老师说一句</h3>
         </div>
         <div className="mb-3 flex flex-wrap gap-2">
           {quickActions.slice(0, 4).map((action) => (
             <button
               key={action}
-              className="rounded-xl bg-[#f5f0ff] px-3 py-2 text-left text-xs font-medium text-[#6f57eb] transition hover:bg-[#ede5ff]"
+              className="rounded-xl bg-[#f5f0ff] px-3 py-2.5 text-left text-sm font-medium text-[#6f57eb] transition hover:bg-[#ede5ff]"
               onClick={() => submitCommand(action)}
               type="button"
             >
@@ -562,13 +562,14 @@ function MobileView({
             </button>
           ))}
         </div>
-        <form className="space-y-2" onSubmit={handleSubmit}>
+        <form className="space-y-3" onSubmit={handleSubmit}>
           <Input
             placeholder="告诉老师你的时间、状态或优先级变化"
             value={message}
             onChange={(event) => setMessage(event.target.value)}
+            className="h-12 text-[15px]"
           />
-          <Button className="w-full justify-between" disabled={isPending} type="submit">
+          <Button className="w-full h-12 justify-between text-[15px]" disabled={isPending} type="submit">
             让老师调整计划
             <MessageSquareText className="h-4 w-4" />
           </Button>
@@ -594,16 +595,16 @@ function MobileTaskCard({
 }) {
   const isDone = ["completed", "skipped", "postponed", "cancelled", "expired"].includes(card.status);
   const iconMap: Record<ScoreCenterCard["cardType"], { icon: React.ReactNode; color: string; bgColor: string }> = {
-    review: { icon: <ListRestart className="h-5 w-5" />, color: "text-slate-600", bgColor: "bg-slate-100" },
-    score_boost: { icon: <Zap className="h-5 w-5" />, color: "text-violet-600", bgColor: "bg-violet-100" },
-    repair: { icon: <ShieldAlert className="h-5 w-5" />, color: "text-amber-600", bgColor: "bg-amber-100" },
-    pitfall: { icon: <AlertTriangle className="h-5 w-5" />, color: "text-amber-600", bgColor: "bg-amber-100" },
-    verification: { icon: <Eye className="h-5 w-5" />, color: "text-emerald-600", bgColor: "bg-emerald-100" },
-    recovery: { icon: <Clock3 className="h-5 w-5" />, color: "text-slate-500", bgColor: "bg-slate-50" },
-    sprint: { icon: <Flame className="h-5 w-5" />, color: "text-violet-600", bgColor: "bg-violet-100" },
-    foundation: { icon: <Layers2 className="h-5 w-5" />, color: "text-gray-600", bgColor: "bg-gray-100" },
-    bridge: { icon: <Link2 className="h-5 w-5" />, color: "text-teal-600", bgColor: "bg-teal-100" },
-    mock_anchor: { icon: <Target className="h-5 w-5" />, color: "text-purple-600", bgColor: "bg-purple-100" },
+    review: { icon: <ListRestart className="h-6 w-6" />, color: "text-slate-600", bgColor: "bg-slate-100" },
+    score_boost: { icon: <Zap className="h-6 w-6" />, color: "text-violet-600", bgColor: "bg-violet-100" },
+    repair: { icon: <ShieldAlert className="h-6 w-6" />, color: "text-amber-600", bgColor: "bg-amber-100" },
+    pitfall: { icon: <AlertTriangle className="h-6 w-6" />, color: "text-amber-600", bgColor: "bg-amber-100" },
+    verification: { icon: <Eye className="h-6 w-6" />, color: "text-emerald-600", bgColor: "bg-emerald-100" },
+    recovery: { icon: <Clock3 className="h-6 w-6" />, color: "text-slate-500", bgColor: "bg-slate-50" },
+    sprint: { icon: <Flame className="h-6 w-6" />, color: "text-violet-600", bgColor: "bg-violet-100" },
+    foundation: { icon: <Layers2 className="h-6 w-6" />, color: "text-gray-600", bgColor: "bg-gray-100" },
+    bridge: { icon: <Link2 className="h-6 w-6" />, color: "text-teal-600", bgColor: "bg-teal-100" },
+    mock_anchor: { icon: <Target className="h-6 w-6" />, color: "text-purple-600", bgColor: "bg-purple-100" },
   };
 
   const cardStyle = iconMap[card.cardType] || iconMap.score_boost;
@@ -614,53 +615,53 @@ function MobileTaskCard({
       card.isNew && "ring-2 ring-[#cdbdfd]",
       isDone && "opacity-60"
     )}>
-      <div className="p-4">
+      <div className="p-5">
         {/* 卡片头部：图标 + 标题 + 元信息 */}
-        <div className="flex items-start gap-3">
-          <div className={cn("flex h-11 w-11 shrink-0 items-center justify-center rounded-xl", cardStyle.bgColor, cardStyle.color)}>
+        <div className="flex items-start gap-3.5">
+          <div className={cn("flex h-12 w-12 shrink-0 items-center justify-center rounded-xl", cardStyle.bgColor, cardStyle.color)}>
             {cardStyle.icon}
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-semibold text-[#7c5cfa]">{cardLabelMap[card.cardType]}</span>
               <span className="text-xs text-[#9ca3af]">|</span>
-              <span className="text-xs font-medium text-[#6b748a]">预计 {card.expectedImpact}</span>
+              <span className="text-sm font-medium text-[#6b748a]">预计 {card.expectedImpact}</span>
               <span className="text-xs text-[#9ca3af]">|</span>
-              <span className="text-xs font-medium text-[#6b748a]">{card.estimatedTime}分钟</span>
+              <span className="text-sm font-medium text-[#6b748a]">{card.estimatedTime}分钟</span>
             </div>
-            <h3 className="mt-1 text-base font-bold text-[#1d1730] leading-snug">{card.title}</h3>
+            <h3 className="mt-1.5 text-lg font-bold text-[#1d1730] leading-snug">{card.title}</h3>
           </div>
         </div>
 
         {/* 描述文字 */}
-        <p className="mt-3 text-sm leading-relaxed text-[#627089]">{card.whyThisNow}</p>
+        <p className="mt-3.5 text-[15px] leading-relaxed text-[#627089]">{card.whyThisNow}</p>
 
         {/* 操作按钮行 */}
         {!isDone && (
-          <div className="mt-4 flex items-center gap-2">
+          <div className="mt-5 flex items-center gap-2.5">
             <button
-              className="flex-1 inline-flex h-10 items-center justify-center rounded-xl bg-gradient-to-r from-[#9580ff] to-[#7c5cfa] text-sm font-semibold text-white shadow-md shadow-purple-200/50 transition hover:shadow-lg active:scale-[0.98]"
+              className="flex-1 inline-flex h-11 items-center justify-center rounded-xl bg-gradient-to-r from-[#9580ff] to-[#7c5cfa] text-base font-semibold text-white shadow-md shadow-purple-200/50 transition hover:shadow-lg active:scale-[0.98]"
               onClick={onStart}
               type="button"
             >
               开始
             </button>
             <button
-              className="inline-flex h-10 w-16 items-center justify-center rounded-xl border border-[#ece4fb] bg-white text-sm font-medium text-[#647089] transition hover:bg-[#faf7ff]"
+              className="inline-flex h-11 min-w-[64px] items-center justify-center rounded-xl border border-[#ece4fb] bg-white text-sm font-medium text-[#647089] transition hover:bg-[#faf7ff]"
               onClick={onPostpone}
               type="button"
             >
               推迟
             </button>
             <button
-              className="inline-flex h-10 w-16 items-center justify-center rounded-xl border border-[#f1d7d7] bg-white text-sm font-medium text-[#a94e4e] transition hover:bg-[#fff8f8]"
+              className="inline-flex h-11 min-w-[64px] items-center justify-center rounded-xl border border-[#f1d7d7] bg-white text-sm font-medium text-[#a94e4e] transition hover:bg-[#fff8f8]"
               onClick={onSkip}
               type="button"
             >
               跳过
             </button>
             <button
-              className="inline-flex h-10 w-16 items-center justify-center rounded-xl border border-[#ece4fb] bg-white text-sm font-medium text-[#647089] transition hover:bg-[#faf7ff]"
+              className="inline-flex h-11 min-w-[64px] items-center justify-center rounded-xl border border-[#ece4fb] bg-white text-sm font-medium text-[#647089] transition hover:bg-[#faf7ff]"
               type="button"
             >
               换一个
