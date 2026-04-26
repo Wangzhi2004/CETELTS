@@ -408,7 +408,14 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   TeacherMessage: 'TeacherMessage',
-  UserSetting: 'UserSetting'
+  UserSetting: 'UserSetting',
+  Paper: 'Paper',
+  QuestionShell: 'QuestionShell',
+  SectionText: 'SectionText',
+  AnswerResource: 'AnswerResource',
+  AnswerQuestionDetail: 'AnswerQuestionDetail',
+  PaperAnswerLink: 'PaperAnswerLink',
+  WordBankItem: 'WordBankItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -424,7 +431,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "goal" | "dailyTask" | "sourceDocument" | "examPaper" | "section" | "passage" | "question" | "choice" | "parsingJob" | "userState" | "skillState" | "scoreCenterSession" | "taskCard" | "learningEvent" | "diagnosticRecord" | "reviewQueue" | "banditArm" | "conversationSummary" | "policyLog" | "oPEReport" | "account" | "session" | "teacherMessage" | "userSetting"
+    modelProps: "user" | "goal" | "dailyTask" | "sourceDocument" | "examPaper" | "section" | "passage" | "question" | "choice" | "parsingJob" | "userState" | "skillState" | "scoreCenterSession" | "taskCard" | "learningEvent" | "diagnosticRecord" | "reviewQueue" | "banditArm" | "conversationSummary" | "policyLog" | "oPEReport" | "account" | "session" | "teacherMessage" | "userSetting" | "paper" | "questionShell" | "sectionText" | "answerResource" | "answerQuestionDetail" | "paperAnswerLink" | "wordBankItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2278,6 +2285,524 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Paper: {
+      payload: Prisma.$PaperPayload<ExtArgs>
+      fields: Prisma.PaperFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PaperFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PaperFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>
+        }
+        findFirst: {
+          args: Prisma.PaperFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PaperFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>
+        }
+        findMany: {
+          args: Prisma.PaperFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>[]
+        }
+        create: {
+          args: Prisma.PaperCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>
+        }
+        createMany: {
+          args: Prisma.PaperCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PaperCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>[]
+        }
+        delete: {
+          args: Prisma.PaperDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>
+        }
+        update: {
+          args: Prisma.PaperUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>
+        }
+        deleteMany: {
+          args: Prisma.PaperDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PaperUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PaperUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>[]
+        }
+        upsert: {
+          args: Prisma.PaperUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperPayload>
+        }
+        aggregate: {
+          args: Prisma.PaperAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePaper>
+        }
+        groupBy: {
+          args: Prisma.PaperGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaperGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PaperCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaperCountAggregateOutputType> | number
+        }
+      }
+    }
+    QuestionShell: {
+      payload: Prisma.$QuestionShellPayload<ExtArgs>
+      fields: Prisma.QuestionShellFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuestionShellFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuestionShellFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>
+        }
+        findFirst: {
+          args: Prisma.QuestionShellFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuestionShellFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>
+        }
+        findMany: {
+          args: Prisma.QuestionShellFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>[]
+        }
+        create: {
+          args: Prisma.QuestionShellCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>
+        }
+        createMany: {
+          args: Prisma.QuestionShellCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuestionShellCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>[]
+        }
+        delete: {
+          args: Prisma.QuestionShellDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>
+        }
+        update: {
+          args: Prisma.QuestionShellUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuestionShellDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuestionShellUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuestionShellUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuestionShellUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionShellPayload>
+        }
+        aggregate: {
+          args: Prisma.QuestionShellAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuestionShell>
+        }
+        groupBy: {
+          args: Prisma.QuestionShellGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionShellGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuestionShellCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionShellCountAggregateOutputType> | number
+        }
+      }
+    }
+    SectionText: {
+      payload: Prisma.$SectionTextPayload<ExtArgs>
+      fields: Prisma.SectionTextFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SectionTextFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SectionTextFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>
+        }
+        findFirst: {
+          args: Prisma.SectionTextFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SectionTextFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>
+        }
+        findMany: {
+          args: Prisma.SectionTextFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>[]
+        }
+        create: {
+          args: Prisma.SectionTextCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>
+        }
+        createMany: {
+          args: Prisma.SectionTextCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SectionTextCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>[]
+        }
+        delete: {
+          args: Prisma.SectionTextDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>
+        }
+        update: {
+          args: Prisma.SectionTextUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>
+        }
+        deleteMany: {
+          args: Prisma.SectionTextDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SectionTextUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SectionTextUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>[]
+        }
+        upsert: {
+          args: Prisma.SectionTextUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SectionTextPayload>
+        }
+        aggregate: {
+          args: Prisma.SectionTextAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSectionText>
+        }
+        groupBy: {
+          args: Prisma.SectionTextGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SectionTextGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SectionTextCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SectionTextCountAggregateOutputType> | number
+        }
+      }
+    }
+    AnswerResource: {
+      payload: Prisma.$AnswerResourcePayload<ExtArgs>
+      fields: Prisma.AnswerResourceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AnswerResourceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AnswerResourceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>
+        }
+        findFirst: {
+          args: Prisma.AnswerResourceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AnswerResourceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>
+        }
+        findMany: {
+          args: Prisma.AnswerResourceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>[]
+        }
+        create: {
+          args: Prisma.AnswerResourceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>
+        }
+        createMany: {
+          args: Prisma.AnswerResourceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AnswerResourceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>[]
+        }
+        delete: {
+          args: Prisma.AnswerResourceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>
+        }
+        update: {
+          args: Prisma.AnswerResourceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>
+        }
+        deleteMany: {
+          args: Prisma.AnswerResourceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AnswerResourceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AnswerResourceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>[]
+        }
+        upsert: {
+          args: Prisma.AnswerResourceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerResourcePayload>
+        }
+        aggregate: {
+          args: Prisma.AnswerResourceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAnswerResource>
+        }
+        groupBy: {
+          args: Prisma.AnswerResourceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnswerResourceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AnswerResourceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnswerResourceCountAggregateOutputType> | number
+        }
+      }
+    }
+    AnswerQuestionDetail: {
+      payload: Prisma.$AnswerQuestionDetailPayload<ExtArgs>
+      fields: Prisma.AnswerQuestionDetailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AnswerQuestionDetailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AnswerQuestionDetailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>
+        }
+        findFirst: {
+          args: Prisma.AnswerQuestionDetailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AnswerQuestionDetailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>
+        }
+        findMany: {
+          args: Prisma.AnswerQuestionDetailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>[]
+        }
+        create: {
+          args: Prisma.AnswerQuestionDetailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>
+        }
+        createMany: {
+          args: Prisma.AnswerQuestionDetailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AnswerQuestionDetailCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>[]
+        }
+        delete: {
+          args: Prisma.AnswerQuestionDetailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>
+        }
+        update: {
+          args: Prisma.AnswerQuestionDetailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>
+        }
+        deleteMany: {
+          args: Prisma.AnswerQuestionDetailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AnswerQuestionDetailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AnswerQuestionDetailUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>[]
+        }
+        upsert: {
+          args: Prisma.AnswerQuestionDetailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnswerQuestionDetailPayload>
+        }
+        aggregate: {
+          args: Prisma.AnswerQuestionDetailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAnswerQuestionDetail>
+        }
+        groupBy: {
+          args: Prisma.AnswerQuestionDetailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnswerQuestionDetailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AnswerQuestionDetailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnswerQuestionDetailCountAggregateOutputType> | number
+        }
+      }
+    }
+    PaperAnswerLink: {
+      payload: Prisma.$PaperAnswerLinkPayload<ExtArgs>
+      fields: Prisma.PaperAnswerLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PaperAnswerLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PaperAnswerLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.PaperAnswerLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PaperAnswerLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>
+        }
+        findMany: {
+          args: Prisma.PaperAnswerLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>[]
+        }
+        create: {
+          args: Prisma.PaperAnswerLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>
+        }
+        createMany: {
+          args: Prisma.PaperAnswerLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PaperAnswerLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.PaperAnswerLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>
+        }
+        update: {
+          args: Prisma.PaperAnswerLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.PaperAnswerLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PaperAnswerLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PaperAnswerLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.PaperAnswerLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaperAnswerLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.PaperAnswerLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePaperAnswerLink>
+        }
+        groupBy: {
+          args: Prisma.PaperAnswerLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaperAnswerLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PaperAnswerLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaperAnswerLinkCountAggregateOutputType> | number
+        }
+      }
+    }
+    WordBankItem: {
+      payload: Prisma.$WordBankItemPayload<ExtArgs>
+      fields: Prisma.WordBankItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WordBankItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WordBankItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>
+        }
+        findFirst: {
+          args: Prisma.WordBankItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WordBankItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>
+        }
+        findMany: {
+          args: Prisma.WordBankItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>[]
+        }
+        create: {
+          args: Prisma.WordBankItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>
+        }
+        createMany: {
+          args: Prisma.WordBankItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WordBankItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>[]
+        }
+        delete: {
+          args: Prisma.WordBankItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>
+        }
+        update: {
+          args: Prisma.WordBankItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.WordBankItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WordBankItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WordBankItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.WordBankItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WordBankItemPayload>
+        }
+        aggregate: {
+          args: Prisma.WordBankItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWordBankItem>
+        }
+        groupBy: {
+          args: Prisma.WordBankItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WordBankItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WordBankItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WordBankItemCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2727,6 +3252,110 @@ export const UserSettingScalarFieldEnum = {
 export type UserSettingScalarFieldEnum = (typeof UserSettingScalarFieldEnum)[keyof typeof UserSettingScalarFieldEnum]
 
 
+export const PaperScalarFieldEnum = {
+  paperId: 'paperId',
+  year: 'year',
+  month: 'month',
+  setNo: 'setNo',
+  originalPdf: 'originalPdf',
+  answerPdf: 'answerPdf',
+  answerDocx: 'answerDocx',
+  answerPairStatus: 'answerPairStatus',
+  originalPageCount: 'originalPageCount',
+  answerTextCoverage: 'answerTextCoverage',
+  notes: 'notes',
+  writingPrompt: 'writingPrompt',
+  translationPrompt: 'translationPrompt'
+} as const
+
+export type PaperScalarFieldEnum = (typeof PaperScalarFieldEnum)[keyof typeof PaperScalarFieldEnum]
+
+
+export const QuestionShellScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  questionNo: 'questionNo',
+  sectionCode: 'sectionCode',
+  questionType: 'questionType',
+  stem: 'stem',
+  optionA: 'optionA',
+  optionB: 'optionB',
+  optionC: 'optionC',
+  optionD: 'optionD',
+  answerKey: 'answerKey',
+  answerStatus: 'answerStatus',
+  sourceUpdatedFrom: 'sourceUpdatedFrom'
+} as const
+
+export type QuestionShellScalarFieldEnum = (typeof QuestionShellScalarFieldEnum)[keyof typeof QuestionShellScalarFieldEnum]
+
+
+export const SectionTextScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  sectionCode: 'sectionCode',
+  sourceType: 'sourceType',
+  text: 'text'
+} as const
+
+export type SectionTextScalarFieldEnum = (typeof SectionTextScalarFieldEnum)[keyof typeof SectionTextScalarFieldEnum]
+
+
+export const AnswerResourceScalarFieldEnum = {
+  answerId: 'answerId',
+  year: 'year',
+  month: 'month',
+  setPart: 'setPart',
+  answerPdf: 'answerPdf',
+  answerDocx: 'answerDocx',
+  sourceFormat: 'sourceFormat',
+  textCoverage: 'textCoverage',
+  parsedQuestionCount: 'parsedQuestionCount',
+  answerKeyCount: 'answerKeyCount',
+  linkedPapers: 'linkedPapers'
+} as const
+
+export type AnswerResourceScalarFieldEnum = (typeof AnswerResourceScalarFieldEnum)[keyof typeof AnswerResourceScalarFieldEnum]
+
+
+export const AnswerQuestionDetailScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  answerId: 'answerId',
+  questionNo: 'questionNo',
+  answerKey: 'answerKey',
+  sourceType: 'sourceType',
+  explanationText: 'explanationText',
+  rawBlock: 'rawBlock',
+  provenance: 'provenance',
+  confidence: 'confidence',
+  reviewStatus: 'reviewStatus'
+} as const
+
+export type AnswerQuestionDetailScalarFieldEnum = (typeof AnswerQuestionDetailScalarFieldEnum)[keyof typeof AnswerQuestionDetailScalarFieldEnum]
+
+
+export const PaperAnswerLinkScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  answerId: 'answerId',
+  linkType: 'linkType'
+} as const
+
+export type PaperAnswerLinkScalarFieldEnum = (typeof PaperAnswerLinkScalarFieldEnum)[keyof typeof PaperAnswerLinkScalarFieldEnum]
+
+
+export const WordBankItemScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  sectionCode: 'sectionCode',
+  letter: 'letter',
+  word: 'word'
+} as const
+
+export type WordBankItemScalarFieldEnum = (typeof WordBankItemScalarFieldEnum)[keyof typeof WordBankItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3104,6 +3733,13 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   teacherMessage?: Prisma.TeacherMessageOmit
   userSetting?: Prisma.UserSettingOmit
+  paper?: Prisma.PaperOmit
+  questionShell?: Prisma.QuestionShellOmit
+  sectionText?: Prisma.SectionTextOmit
+  answerResource?: Prisma.AnswerResourceOmit
+  answerQuestionDetail?: Prisma.AnswerQuestionDetailOmit
+  paperAnswerLink?: Prisma.PaperAnswerLinkOmit
+  wordBankItem?: Prisma.WordBankItemOmit
 }
 
 /* Types for Logging */

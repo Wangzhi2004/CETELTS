@@ -75,7 +75,14 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   TeacherMessage: 'TeacherMessage',
-  UserSetting: 'UserSetting'
+  UserSetting: 'UserSetting',
+  Paper: 'Paper',
+  QuestionShell: 'QuestionShell',
+  SectionText: 'SectionText',
+  AnswerResource: 'AnswerResource',
+  AnswerQuestionDetail: 'AnswerQuestionDetail',
+  PaperAnswerLink: 'PaperAnswerLink',
+  WordBankItem: 'WordBankItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -502,6 +509,110 @@ export const UserSettingScalarFieldEnum = {
 } as const
 
 export type UserSettingScalarFieldEnum = (typeof UserSettingScalarFieldEnum)[keyof typeof UserSettingScalarFieldEnum]
+
+
+export const PaperScalarFieldEnum = {
+  paperId: 'paperId',
+  year: 'year',
+  month: 'month',
+  setNo: 'setNo',
+  originalPdf: 'originalPdf',
+  answerPdf: 'answerPdf',
+  answerDocx: 'answerDocx',
+  answerPairStatus: 'answerPairStatus',
+  originalPageCount: 'originalPageCount',
+  answerTextCoverage: 'answerTextCoverage',
+  notes: 'notes',
+  writingPrompt: 'writingPrompt',
+  translationPrompt: 'translationPrompt'
+} as const
+
+export type PaperScalarFieldEnum = (typeof PaperScalarFieldEnum)[keyof typeof PaperScalarFieldEnum]
+
+
+export const QuestionShellScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  questionNo: 'questionNo',
+  sectionCode: 'sectionCode',
+  questionType: 'questionType',
+  stem: 'stem',
+  optionA: 'optionA',
+  optionB: 'optionB',
+  optionC: 'optionC',
+  optionD: 'optionD',
+  answerKey: 'answerKey',
+  answerStatus: 'answerStatus',
+  sourceUpdatedFrom: 'sourceUpdatedFrom'
+} as const
+
+export type QuestionShellScalarFieldEnum = (typeof QuestionShellScalarFieldEnum)[keyof typeof QuestionShellScalarFieldEnum]
+
+
+export const SectionTextScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  sectionCode: 'sectionCode',
+  sourceType: 'sourceType',
+  text: 'text'
+} as const
+
+export type SectionTextScalarFieldEnum = (typeof SectionTextScalarFieldEnum)[keyof typeof SectionTextScalarFieldEnum]
+
+
+export const AnswerResourceScalarFieldEnum = {
+  answerId: 'answerId',
+  year: 'year',
+  month: 'month',
+  setPart: 'setPart',
+  answerPdf: 'answerPdf',
+  answerDocx: 'answerDocx',
+  sourceFormat: 'sourceFormat',
+  textCoverage: 'textCoverage',
+  parsedQuestionCount: 'parsedQuestionCount',
+  answerKeyCount: 'answerKeyCount',
+  linkedPapers: 'linkedPapers'
+} as const
+
+export type AnswerResourceScalarFieldEnum = (typeof AnswerResourceScalarFieldEnum)[keyof typeof AnswerResourceScalarFieldEnum]
+
+
+export const AnswerQuestionDetailScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  answerId: 'answerId',
+  questionNo: 'questionNo',
+  answerKey: 'answerKey',
+  sourceType: 'sourceType',
+  explanationText: 'explanationText',
+  rawBlock: 'rawBlock',
+  provenance: 'provenance',
+  confidence: 'confidence',
+  reviewStatus: 'reviewStatus'
+} as const
+
+export type AnswerQuestionDetailScalarFieldEnum = (typeof AnswerQuestionDetailScalarFieldEnum)[keyof typeof AnswerQuestionDetailScalarFieldEnum]
+
+
+export const PaperAnswerLinkScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  answerId: 'answerId',
+  linkType: 'linkType'
+} as const
+
+export type PaperAnswerLinkScalarFieldEnum = (typeof PaperAnswerLinkScalarFieldEnum)[keyof typeof PaperAnswerLinkScalarFieldEnum]
+
+
+export const WordBankItemScalarFieldEnum = {
+  id: 'id',
+  paperId: 'paperId',
+  sectionCode: 'sectionCode',
+  letter: 'letter',
+  word: 'word'
+} as const
+
+export type WordBankItemScalarFieldEnum = (typeof WordBankItemScalarFieldEnum)[keyof typeof WordBankItemScalarFieldEnum]
 
 
 export const SortOrder = {

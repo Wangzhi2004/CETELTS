@@ -461,3 +461,100 @@ model UserSetting {
 
   @@unique([userId, key])
 }
+
+model Paper {
+  paperId             String   @id @map("paper_id")
+  year                Int?
+  month               Int?
+  setNo               Int?     @map("set_no")
+  originalPdf         String?  @map("original_pdf")
+  answerPdf           String?  @map("answer_pdf")
+  answerDocx          String?  @map("answer_docx")
+  answerPairStatus    String?  @map("answer_pair_status")
+  originalPageCount   Int?     @map("original_page_count")
+  answerTextCoverage  String?  @map("answer_text_coverage")
+  notes               String?
+  writingPrompt       String?  @map("writing_prompt")
+  translationPrompt   String?  @map("translation_prompt")
+
+  @@map("papers")
+}
+
+model QuestionShell {
+  id                Int     @id @default(autoincrement())
+  paperId           String? @map("paper_id")
+  questionNo        Int?    @map("question_no")
+  sectionCode       String? @map("section_code")
+  questionType      String? @map("question_type")
+  stem              String?
+  optionA           String? @map("option_a")
+  optionB           String? @map("option_b")
+  optionC           String? @map("option_c")
+  optionD           String? @map("option_d")
+  answerKey         String? @map("answer_key")
+  answerStatus      String? @map("answer_status")
+  sourceUpdatedFrom String? @map("source_updated_from")
+
+  @@map("question_shells")
+}
+
+model SectionText {
+  id         Int     @id @default(autoincrement())
+  paperId    String? @map("paper_id")
+  sectionCode String? @map("section_code")
+  sourceType String? @map("source_type")
+  text       String?
+
+  @@map("section_texts")
+}
+
+model AnswerResource {
+  answerId          String  @id @map("answer_id")
+  year              Int?
+  month             Int?
+  setPart           String? @map("set_part")
+  answerPdf         String? @map("answer_pdf")
+  answerDocx        String? @map("answer_docx")
+  sourceFormat      String? @map("source_format")
+  textCoverage      String? @map("text_coverage")
+  parsedQuestionCount Int?  @map("parsed_question_count")
+  answerKeyCount    Int?    @map("answer_key_count")
+  linkedPapers      String? @map("linked_papers")
+
+  @@map("answer_resources")
+}
+
+model AnswerQuestionDetail {
+  id              Int     @id @default(autoincrement())
+  paperId         String? @map("paper_id")
+  answerId        String? @map("answer_id")
+  questionNo      Int?    @map("question_no")
+  answerKey       String? @map("answer_key")
+  sourceType      String? @map("source_type")
+  explanationText String? @map("explanation_text")
+  rawBlock        String? @map("raw_block")
+  provenance      String?
+  confidence      Float?
+  reviewStatus    String? @map("review_status")
+
+  @@map("answer_question_details")
+}
+
+model PaperAnswerLink {
+  id        Int     @id @default(autoincrement())
+  paperId   String? @map("paper_id")
+  answerId  String? @map("answer_id")
+  linkType  String? @map("link_type")
+
+  @@map("paper_answer_links")
+}
+
+model WordBankItem {
+  id          Int     @id @default(autoincrement())
+  paperId     String? @map("paper_id")
+  sectionCode String? @map("section_code")
+  letter      String?
+  word        String?
+
+  @@map("word_bank_items")
+}

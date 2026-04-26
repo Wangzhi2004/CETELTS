@@ -142,3 +142,38 @@ export type TeacherMessage = Prisma.TeacherMessageModel
  * 
  */
 export type UserSetting = Prisma.UserSettingModel
+/**
+ * Model Paper
+ * 
+ */
+export type Paper = Prisma.PaperModel
+/**
+ * Model QuestionShell
+ * 
+ */
+export type QuestionShell = Prisma.QuestionShellModel
+/**
+ * Model SectionText
+ * 
+ */
+export type SectionText = Prisma.SectionTextModel
+/**
+ * Model AnswerResource
+ * 
+ */
+export type AnswerResource = Prisma.AnswerResourceModel
+/**
+ * Model AnswerQuestionDetail
+ * 
+ */
+export type AnswerQuestionDetail = Prisma.AnswerQuestionDetailModel
+/**
+ * Model PaperAnswerLink
+ * 
+ */
+export type PaperAnswerLink = Prisma.PaperAnswerLinkModel
+/**
+ * Model WordBankItem
+ * 
+ */
+export type WordBankItem = Prisma.WordBankItemModel
