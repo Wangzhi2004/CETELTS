@@ -233,9 +233,17 @@ async function ensureSeedData(userId: string, examType: ExamType) {
       data: mockTasks
         .filter((task) => task.examType === examType)
         .map((task) => ({
-          ...task,
+          id: task.id,
           userId,
+          taskType: task.taskType,
+          status: task.status,
+          title: task.title,
+          subtitle: task.subtitle,
+          estimatedMinutes: task.estimatedMinutes,
           scheduledAt: new Date(task.scheduledAt),
+          sourceEntityType: task.sourceEntityType,
+          sourceEntityId: task.sourceEntityId,
+          priority: task.priority ?? 0,
         })),
     });
   }

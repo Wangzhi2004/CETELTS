@@ -1,4 +1,4 @@
-"use client";
+﻿﻿"use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -181,8 +181,8 @@ export function ScoreCenterView({
   standalone?: boolean;
 }) {
   const router = useRouter();
-  const { data: session } = useSession();
-  const userId = session?.user?.id ?? "demo";
+  const { data: session, status: sessionStatus } = useSession();
+  const userId = session?.user?.id ?? "";
   const [message, setMessage] = useState("");
   const [scoreCenter, setScoreCenter] = useState<ScoreCenterState | null>(null);
   const [showAllCards, setShowAllCards] = useState(false);
@@ -196,10 +196,11 @@ export function ScoreCenterView({
   }
 
   useEffect(() => {
+    if (sessionStatus !== "authenticated" || !userId) return;
     let mounted = true;
     loadScoreCenter().then(() => { if (!mounted) return; });
     return () => { mounted = false; };
-  }, [exam]);
+  }, [exam, userId, sessionStatus]);
 
   function refreshScoreCenter() {
     setIsRefreshing(true);
