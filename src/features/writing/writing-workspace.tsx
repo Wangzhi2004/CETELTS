@@ -5,7 +5,7 @@ import { useEffect, useState, useTransition } from "react";
 import { Check, ChevronLeft, Clock3, Link2, List, Pause, RotateCcw, RotateCw } from "lucide-react";
 
 import { submitTaskResult } from "@/app/actions/score-center";
-import { getWritingQuestions } from "@/app/actions/questions";
+import { getWritingPrompts } from "@/app/actions/questions";
 
 export function WritingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; taskId?: string }) {
   const router = useRouter();
@@ -19,7 +19,7 @@ export function WritingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
 
   useEffect(() => {
     let mounted = true;
-    getWritingQuestions(exam).then((questions) => {
+    getWritingPrompts(exam).then((questions) => {
       if (mounted && questions.length > 0) {
         setPrompts(questions.map((q) => ({ id: q.id, stem: q.stem })));
       }

@@ -7,7 +7,7 @@ export default async function ReadingSessionPage({
   params: Promise<{ exam: "cet6" | "ielts"; paperId: string; sectionId: string }>;
   searchParams: Promise<{ taskId?: string }>;
 }) {
-  const { exam } = await params;
+  const { exam, paperId, sectionId } = await params;
   const { taskId } = await searchParams;
-  return <ReadingWorkspace exam={exam} taskId={taskId} />;
+  return <ReadingWorkspace exam={exam} paperId={paperId} sectionId={sectionId} taskId={taskId} />;
 }

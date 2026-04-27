@@ -14,8 +14,8 @@ import type {
 } from "@/types/domain";
 
 const taskRoutes: Record<Exclude<TaskType, "review">, string> = {
-  reading: "/reading/paper-2019-12-set2/section-reading-2019-12-a",
-  listening: "/listening/paper-2020-06-set1/section-listening-2020-06-a",
+  reading: "/reading",
+  listening: "/listening",
   vocab: "/vocab",
   writing: "/writing",
   mock: "/mock",

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, ChevronLeft, Clock3 } from "lucide-react";
 
 import { submitTaskResult } from "@/app/actions/score-center";
-import { getReadingSections, type SectionWithData } from "@/app/actions/questions";
+import { getSectionDetail, type SectionWithRealData, type QuestionShellData } from "@/app/actions/questions";
 import { evaluateReadingAttempt } from "@/domain/study-engine";
 import { MistakeTag, StandardErrorType } from "@/types/domain";
 
@@ -32,42 +32,44 @@ const mapMistakeTagToStandardError = (tag: MistakeTag): StandardErrorType => {
   return mapping[tag] || "inference_failure";
 };
 
-export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; taskId?: string }) {
+function getQuestionOptions(q: QuestionShellData) {
+  return [
+    { label: "A", content: q.optionA ?? "" },
+    { label: "B", content: q.optionB ?? "" },
+    { label: "C", content: q.optionC ?? "" },
+    { label: "D", content: q.optionD ?? "" },
+  ];
+}
+
+export function ReadingWorkspace({ exam, paperId, sectionId, taskId }: { exam: "cet6" | "ielts"; paperId: string; sectionId: string; taskId?: string }) {
   const router = useRouter();
-  const [sectionData, setSectionData] = useState<SectionWithData | null>(null);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [selfTags, setSelfTags] = useState<Record<string, MistakeTag>>({});
-  const [selectedQuestionId, setSelectedQuestionId] = useState<string>("");
+  const [sectionData, setSectionData] = useState<SectionWithRealData | null>(null);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [selfTags, setSelfTags] = useState<Record<number, MistakeTag>>({});
+  const [selectedQuestionId, setSelectedQuestionId] = useState<number>(0);
   const [reviewMode, setReviewMode] = useState(false);
   const [showDetail, setShowDetail] = useState(true);
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     let mounted = true;
-    getReadingSections(exam).then((sections) => {
-      if (mounted && sections.length > 0) {
-        const section = sections[0];
+    getSectionDetail(exam, paperId, sectionId).then((section) => {
+      if (mounted && section) {
         setSectionData(section);
-        const allQuestions = section.passages.flatMap((p) => p.questions).concat(section.questions);
-        if (allQuestions.length > 0) {
-          setSelectedQuestionId(allQuestions[0].id);
+        if (section.questions.length > 0) {
+          setSelectedQuestionId(section.questions[0].id);
         }
       }
     });
     return () => { mounted = false; };
-  }, [exam]);
+  }, [exam, paperId, sectionId]);
 
   const allQuestions = useMemo(() => {
     if (!sectionData) return [];
-    return sectionData.passages.flatMap((p) => p.questions).concat(sectionData.questions);
+    return sectionData.questions;
   }, [sectionData]);
 
   const selectedQuestion = allQuestions.find((q) => q.id === selectedQuestionId) ?? allQuestions[0];
-
-  const currentPassage = useMemo(() => {
-    if (!sectionData || !selectedQuestion) return null;
-    return sectionData.passages.find((p) => p.questions.some((q) => q.id === selectedQuestion.id)) ?? null;
-  }, [sectionData, selectedQuestion]);
 
   const wrongQuestions = useMemo(
     () =>
@@ -75,7 +77,7 @@ export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
         ? allQuestions.filter(
             (question) =>
               answers[question.id] &&
-              answers[question.id] !== question.choices.find((c) => c.isCorrect)?.label,
+              answers[question.id] !== question.answerKey,
           )
         : [],
     [answers, reviewMode, allQuestions],
@@ -85,12 +87,12 @@ export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
     () =>
       reviewMode && sectionData
         ? evaluateReadingAttempt({
-            sectionId: sectionData.id,
+            sectionId: sectionData.sectionCode,
             sourceWeight: 1.2,
             responses: allQuestions.map((question) => ({
-              questionId: question.id,
+              questionId: String(question.id),
               answer: answers[question.id] ?? "",
-              correctAnswer: question.choices.find((c) => c.isCorrect)?.label ?? "",
+              correctAnswer: question.answerKey ?? "",
               selfTag: selfTags[question.id],
               elapsedSec: 45,
             })),
@@ -152,13 +154,13 @@ export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
 
         <div className="rounded-[20px] border border-[#efebf8] bg-white px-4 py-3">
           <div className="flex items-center justify-between gap-3 text-[12px] text-[#6d7690]">
-            <span>{sectionData.title}</span>
+            <span>{sectionData.sectionCode}</span>
             <span className="rounded-full bg-[#f3efff] px-2.5 py-1 font-medium text-[#7c5cfa]">
               阅读专项
             </span>
           </div>
           <div className="mt-2 flex items-center justify-between gap-3">
-            <p className="text-[15px] font-semibold text-[#252834]">{currentPassage?.title ?? sectionData.title}</p>
+            <p className="text-[15px] font-semibold text-[#252834]">{sectionData.paperId}</p>
             <div className="inline-flex items-center gap-1.5 rounded-[12px] border border-[#ece7f8] px-3 py-2 text-[13px] text-[#232734]">
               <Clock3 className="h-3.5 w-3.5" />
               29:35
@@ -207,11 +209,11 @@ export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
             <p className="text-[15px] leading-7 text-[#232734]">{selectedQuestion.stem}</p>
 
             <div className="mt-3 space-y-2.5">
-              {selectedQuestion.choices.map((choice) => {
+              {getQuestionOptions(selectedQuestion).map((choice) => {
                 const active = answers[selectedQuestion.id] === choice.label;
                 return (
                   <button
-                    key={choice.id}
+                    key={choice.label}
                     className={`flex w-full items-center justify-between rounded-[14px] border px-4 py-3 text-left text-[14px] ${
                       active
                         ? "border-[#8b63ff] bg-[#fbf9ff] text-[#2f3450]"
@@ -231,12 +233,12 @@ export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
               })}
             </div>
 
-            {showDetail && currentPassage ? (
+            {showDetail && sectionData.passageText ? (
               <div className="mt-4 rounded-[14px] border border-[#f0ebf8] px-3 py-3">
                 <p className="text-[14px] font-medium text-[#232734]">原文</p>
                 <div className="mt-2 space-y-4">
-                  {currentPassage.body.split("\n\n").map((paragraph) => (
-                    <p key={paragraph.slice(0, 20)} className="text-[14px] leading-7 text-[#303542]">{paragraph}</p>
+                  {sectionData.passageText.split("\n\n").map((paragraph, i) => (
+                    <p key={i} className="text-[14px] leading-7 text-[#303542]">{paragraph}</p>
                   ))}
                 </div>
               </div>
@@ -249,12 +251,12 @@ export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
         <div className="space-y-4">
           <div className="rounded-[26px] border border-[#efebf8] bg-white px-7 py-6">
             <h2 className="text-[34px] font-[800] tracking-[-0.04em] text-[#20232d]">
-              {currentPassage?.title ?? "文章"}
+              文章
             </h2>
             <div className="mt-5 space-y-7 text-[18px] leading-[2.15] text-[#27303b]">
-              {currentPassage
-                ? currentPassage.body.split("\n\n").map((paragraph) => (
-                    <p key={paragraph.slice(0, 20)}>{paragraph}</p>
+              {sectionData.passageText
+                ? sectionData.passageText.split("\n\n").map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
                   ))
                 : <p>暂无文章内容</p>
               }
@@ -268,11 +270,11 @@ export function ReadingWorkspace({ exam, taskId }: { exam: "cet6" | "ielts"; tas
               <h3 className="text-[28px] font-[800] tracking-[-0.04em] text-[#232734]">题目</h3>
               <p className="mt-5 text-[18px] leading-[1.8] text-[#232734]">{selectedQuestion.stem}</p>
               <div className="mt-4 space-y-3">
-                {selectedQuestion.choices.map((choice) => {
+                {getQuestionOptions(selectedQuestion).map((choice) => {
                   const active = answers[selectedQuestion.id] === choice.label;
                   return (
                     <button
-                      key={choice.id}
+                      key={choice.label}
                       className={`flex w-full items-center justify-between rounded-[18px] border px-5 py-4 text-left text-[16px] ${
                         active
                           ? "border-[#8b63ff] bg-[#fbf9ff] text-[#2f3450]"
