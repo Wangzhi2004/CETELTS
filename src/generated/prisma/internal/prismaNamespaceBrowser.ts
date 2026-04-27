@@ -82,7 +82,8 @@ export const ModelName = {
   AnswerResource: 'AnswerResource',
   AnswerQuestionDetail: 'AnswerQuestionDetail',
   PaperAnswerLink: 'PaperAnswerLink',
-  WordBankItem: 'WordBankItem'
+  WordBankItem: 'WordBankItem',
+  AppConfig: 'AppConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -613,6 +614,15 @@ export const WordBankItemScalarFieldEnum = {
 } as const
 
 export type WordBankItemScalarFieldEnum = (typeof WordBankItemScalarFieldEnum)[keyof typeof WordBankItemScalarFieldEnum]
+
+
+export const AppConfigScalarFieldEnum = {
+  key: 'key',
+  value: 'value',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AppConfigScalarFieldEnum = (typeof AppConfigScalarFieldEnum)[keyof typeof AppConfigScalarFieldEnum]
 
 
 export const SortOrder = {

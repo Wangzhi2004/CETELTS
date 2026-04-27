@@ -558,3 +558,11 @@ model WordBankItem {
 
   @@map("word_bank_items")
 }
+
+model AppConfig {
+  key   String @id
+  value String
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("app_config")
+}

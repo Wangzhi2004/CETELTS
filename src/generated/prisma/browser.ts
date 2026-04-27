@@ -177,3 +177,8 @@ export type PaperAnswerLink = Prisma.PaperAnswerLinkModel
  * 
  */
 export type WordBankItem = Prisma.WordBankItemModel
+/**
+ * Model AppConfig
+ * 
+ */
+export type AppConfig = Prisma.AppConfigModel
