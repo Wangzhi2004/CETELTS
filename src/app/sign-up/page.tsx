@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { Eye, EyeOff, UserPlus } from "lucide-react";
 
@@ -11,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,11 +38,21 @@ export default function SignUpPage() {
         return;
       }
 
-      await signIn("credentials", {
+      const signInResult = await signIn("credentials", {
         email,
         password,
-        callbackUrl: "/",
+        redirect: false,
       });
+
+      if (signInResult?.error) {
+        setError("注册成功但自动登录失败，请手动登录");
+        return;
+      }
+
+      router.refresh();
+      setTimeout(() => {
+        router.replace("/");
+      }, 500);
     });
   }
 

@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { Eye, EyeOff, ArrowRight, Mail, Lock, BarChart3, Sparkles } from "lucide-react";
 
 function SignInForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
   const urlError = searchParams.get("error");
@@ -23,11 +24,22 @@ function SignInForm() {
     setError("");
     setIsLoading(true);
 
-    await signIn("credentials", {
+    const result = await signIn("credentials", {
       email,
       password,
-      callbackUrl,
+      redirect: false,
     });
+
+    if (result?.error) {
+      setError("邮箱或密码不正确");
+      setIsLoading(false);
+      return;
+    }
+
+    router.refresh();
+    setTimeout(() => {
+      router.replace(callbackUrl);
+    }, 500);
   }
 
   return (
