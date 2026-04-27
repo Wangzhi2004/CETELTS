@@ -711,7 +711,10 @@ export async function submitCommand(
 
   const enhancedState = {
     ...nextState,
-    teacherMessages: aiBundle.teacherMessages,
+    teacherMessages: [
+      ...nextState.teacherMessages.filter((m) => m.role === "user"),
+      ...aiBundle.teacherMessages,
+    ],
     decisionSummary: aiBundle.decisionSummary,
   } satisfies ScoreCenterState;
 
