@@ -29,4 +29,5 @@ export const authConfig = {
     maxAge: 30 * 24 * 60 * 60,
   },
   secret: process.env.NEXTAUTH_SECRET ?? "cetelts-dev-secret-change-in-production",
+  trustHost: true,
 } satisfies NextAuthConfig;
