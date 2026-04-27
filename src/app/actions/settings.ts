@@ -3,6 +3,7 @@
 import { prisma } from "@/server/db/prisma";
 import { auth } from "@/server/auth";
 import { updateUserProfile, changePassword } from "@/app/actions/auth";
+import { saveAiProviderSettings } from "@/server/ai/ai-config";
 
 export type UserSettings = {
   name: string;
@@ -15,6 +16,7 @@ export type UserSettings = {
   aiProvider: string;
   aiModel: string;
   aiApiKey: string;
+  aiBaseUrl: string;
 };
 
 const defaultSettings: Omit<UserSettings, "name" | "email"> = {
@@ -26,6 +28,7 @@ const defaultSettings: Omit<UserSettings, "name" | "email"> = {
   aiProvider: "dashscope",
   aiModel: "glm-5",
   aiApiKey: "",
+  aiBaseUrl: "https://dashscope.aliyuncs.com/compatible-mode/v1",
 };
 
 export async function getUserSettings(): Promise<UserSettings> {
@@ -58,6 +61,11 @@ export async function getUserSettings(): Promise<UserSettings> {
 
   const settingsMap = new Map(settingsRows.map((s) => [s.key, s.value]));
 
+  const aiConfigs = await prisma.appConfig.findMany({
+    where: { key: { in: ["ai_api_key", "ai_base_url", "ai_model", "ai_enabled"] } },
+  });
+  const aiConfigMap = new Map(aiConfigs.map((c) => [c.key, c.value]));
+
   return {
     name: user.name,
     email: user.email,
@@ -67,8 +75,9 @@ export async function getUserSettings(): Promise<UserSettings> {
     targetScore: goal?.targetScore ?? defaultSettings.targetScore,
     examDate: goal?.examDate ? goal.examDate.toISOString().split("T")[0] : defaultSettings.examDate,
     aiProvider: (settingsMap.get("aiProvider") as string) ?? defaultSettings.aiProvider,
-    aiModel: (settingsMap.get("aiModel") as string) ?? defaultSettings.aiModel,
-    aiApiKey: (settingsMap.get("aiApiKey") as string) ?? "",
+    aiModel: aiConfigMap.get("ai_model") ?? (settingsMap.get("aiModel") as string) ?? defaultSettings.aiModel,
+    aiApiKey: aiConfigMap.get("ai_api_key") ?? (settingsMap.get("aiApiKey") as string) ?? "",
+    aiBaseUrl: aiConfigMap.get("ai_base_url") ?? defaultSettings.aiBaseUrl,
   };
 }
 
@@ -128,6 +137,15 @@ export async function saveUserSettings(input: Partial<UserSettings>) {
         update: { value: input[key]! },
       });
     }
+  }
+
+  if (input.aiApiKey || input.aiModel || input.aiBaseUrl) {
+    await saveAiProviderSettings({
+      apiKey: input.aiApiKey,
+      model: input.aiModel,
+      baseURL: input.aiBaseUrl,
+      enabled: Boolean(input.aiApiKey),
+    });
   }
 
   return { success: true };

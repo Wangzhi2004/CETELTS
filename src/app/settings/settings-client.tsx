@@ -196,6 +196,13 @@ export function SettingsClient() {
                 placeholder="dashscope"
               />
             </SettingsField>
+            <SettingsField label="API Base URL">
+              <Input
+                value={settings.aiBaseUrl}
+                onChange={(e) => setSettings({ ...settings, aiBaseUrl: e.target.value })}
+                placeholder="https://dashscope.aliyuncs.com/compatible-mode/v1"
+              />
+            </SettingsField>
             <SettingsField label="模型名称">
               <Input
                 value={settings.aiModel}
