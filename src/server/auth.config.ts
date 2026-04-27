@@ -7,16 +7,6 @@ export const authConfig = {
     error: "/sign-in",
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const pathname = nextUrl.pathname;
-      const publicPaths = ["/sign-in", "/sign-up", "/api/auth"];
-      const isPublic = publicPaths.some((p) => pathname.startsWith(p));
-      const isStatic = pathname.startsWith("/_next") || pathname.startsWith("/favicon");
-
-      if (isPublic || isStatic) return true;
-
-      return !!auth;
-    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;

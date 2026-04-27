@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { Eye, EyeOff, ArrowRight, Mail, Lock, BarChart3, Sparkles } from "lucide-react";
 
-export default function SignInPage() {
-  const router = useRouter();
+function SignInForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
   const urlError = searchParams.get("error");
@@ -24,19 +23,11 @@ export default function SignInPage() {
     setError("");
     setIsLoading(true);
 
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       email,
       password,
-      redirect: false,
+      callbackUrl,
     });
-
-    if (result?.error) {
-      setError("邮箱或密码不正确");
-      setIsLoading(false);
-      return;
-    }
-
-    window.location.href = callbackUrl;
   }
 
   return (
@@ -327,5 +318,13 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense>
+      <SignInForm />
+    </Suspense>
   );
 }
