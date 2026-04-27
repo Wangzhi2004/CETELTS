@@ -652,48 +652,55 @@ export async function submitCommand(
     return nextState;
   }
 
-  await prisma.userState.update({
-    where: { userId_targetExam: { userId, targetExam: examType } },
-    data: {
-      dailyBudgetMinutes: nextState.budget.totalMinutes,
-      mode: nextState.mode,
-    },
-  });
+  const modeChanged = nextState.mode !== state.mode;
+  const budgetChanged = nextState.budget.totalMinutes !== state.budget.totalMinutes;
+  const cardsChanged = nextState.cards.length !== state.cards.length || nextState.cards.some((nc, i) => nc.cardId !== state.cards[i]?.cardId || nc.cardType !== state.cards[i]?.cardType || nc.status !== state.cards[i]?.status);
+  const hasReplan = modeChanged || budgetChanged || cardsChanged;
 
-  await prisma.scoreCenterSession.update({
-    where: { sessionId },
-    data: {
-      budgetMinutes: nextState.budget.totalMinutes,
-      mode: nextState.mode,
-    },
-  });
+  if (hasReplan) {
+    await prisma.userState.update({
+      where: { userId_targetExam: { userId, targetExam: examType } },
+      data: {
+        dailyBudgetMinutes: nextState.budget.totalMinutes,
+        mode: nextState.mode,
+      },
+    });
 
-  await logEvent({
-    userId,
-    sessionId,
-    pageType: "score-center",
-    action: "constraint_update",
-    payload: {
-      command,
-      previousBudget: userState.dailyBudgetMinutes,
-      nextBudget: nextState.budget.totalMinutes,
-      previousMode: userState.mode,
-      nextMode: nextState.mode,
-    },
-  });
+    await prisma.scoreCenterSession.update({
+      where: { sessionId },
+      data: {
+        budgetMinutes: nextState.budget.totalMinutes,
+        mode: nextState.mode,
+      },
+    });
 
-  await logEvent({
-    userId,
-    sessionId,
-    pageType: "score-center",
-    action: "replan",
-    payload: createReplanAuditPayload({
-      trigger: "constraint_update",
-      reason: command,
-      oldCards: state.cards,
-      newCards: nextState.cards,
-    }),
-  });
+    await logEvent({
+      userId,
+      sessionId,
+      pageType: "score-center",
+      action: "constraint_update",
+      payload: {
+        command,
+        previousBudget: userState.dailyBudgetMinutes,
+        nextBudget: nextState.budget.totalMinutes,
+        previousMode: userState.mode,
+        nextMode: nextState.mode,
+      },
+    });
+
+    await logEvent({
+      userId,
+      sessionId,
+      pageType: "score-center",
+      action: "replan",
+      payload: createReplanAuditPayload({
+        trigger: "constraint_update",
+        reason: command,
+        oldCards: state.cards,
+        newCards: nextState.cards,
+      }),
+    });
+  }
 
   const aiBundle = await generateTeacherExplanationBundle({
     userId,
@@ -708,7 +715,9 @@ export async function submitCommand(
     decisionSummary: aiBundle.decisionSummary,
   } satisfies ScoreCenterState;
 
-  await persistScoreCenterCards(userId, sessionId, enhancedState.cards);
+  if (hasReplan) {
+    await persistScoreCenterCards(userId, sessionId, enhancedState.cards);
+  }
   await persistTeacherMessages(userId, examType, sessionId, enhancedState.teacherMessages);
   return enhancedState;
 }

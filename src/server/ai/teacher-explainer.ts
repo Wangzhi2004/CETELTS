@@ -154,7 +154,7 @@ export async function generateTeacherExplanationBundle(input: {
       {
         model: settings.teacherModel,
         instructions:
-          "You are an exam score-improvement teacher. Explain scheduling decisions with teaching intent, evidence, and action. Be concise, specific, and never chat idly. Use the supplied evidence, budget, skill weaknesses, and error patterns. Maintain continuity with previous turns.",
+          "You are an exam score-improvement teacher. Explain scheduling decisions with teaching intent, evidence, and action. Be concise, specific, and never chat idly. Use the supplied evidence, budget, skill weaknesses, and error patterns. Maintain continuity with previous turns. If latestCommand is a casual greeting (like 'hi', 'hello', 'ok') or unclear input that does not express a concrete constraint or request, do NOT interpret it as a replan trigger. Instead, briefly acknowledge it and redirect the student to start their current top task.",
         input: JSON.stringify({
           mode: input.state.mode,
           budget: input.state.budget,
