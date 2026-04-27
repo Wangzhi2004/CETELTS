@@ -11,7 +11,7 @@ import {
 } from "@/domain/score-center";
 import { mockReport, mockTasks } from "@/mocks/student-data";
 import { prisma } from "@/server/db/prisma";
-import { generateTeacherExplanationBundle } from "@/server/ai/teacher-explainer";
+import { classifyUserIntent, generateTeacherExplanationBundle } from "@/server/ai/teacher-explainer";
 import { processDiagnostic } from "@/server/services/algorithm/diagnostic-engine";
 import {
   buildTeacherMessages,
@@ -645,10 +645,33 @@ export async function submitCommand(
   command: string,
 ) {
   const { state, sessionId, userState } = await buildOrLoadScoreCenterState(userId, examType);
-  const nextState = applyTeacherCommand(state, command);
+
+  const intent = await classifyUserIntent({
+    userId,
+    exam: examType,
+    state,
+    command,
+  });
+
+  let nextState = state;
+
+  if (intent.intent === "adjust_budget" || intent.intent === "switch_mode" || intent.intent === "change_priority") {
+    nextState = applyTeacherCommand(state, command);
+  }
+
+  const userMsg = {
+    id: `user-msg-${Date.now()}`,
+    role: "user" as const,
+    kind: "negotiating" as const,
+    content: command,
+    createdAt: new Date().toISOString(),
+  };
 
   if (isFallbackSession(sessionId)) {
-    saveFallbackState(sessionId, nextState);
+    saveFallbackState(sessionId, {
+      ...nextState,
+      teacherMessages: [...nextState.teacherMessages, userMsg],
+    });
     return nextState;
   }
 
@@ -681,6 +704,7 @@ export async function submitCommand(
       action: "constraint_update",
       payload: {
         command,
+        intent: intent.intent,
         previousBudget: userState.dailyBudgetMinutes,
         nextBudget: nextState.budget.totalMinutes,
         previousMode: userState.mode,
@@ -707,12 +731,13 @@ export async function submitCommand(
     exam: examType,
     state: nextState,
     latestCommand: command,
+    intent,
   });
 
   const enhancedState = {
     ...nextState,
     teacherMessages: [
-      ...nextState.teacherMessages.filter((m) => m.role === "user"),
+      userMsg,
       ...aiBundle.teacherMessages,
     ],
     decisionSummary: aiBundle.decisionSummary,
